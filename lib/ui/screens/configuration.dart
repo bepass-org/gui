@@ -1,3 +1,4 @@
+import 'package:defacto/states/global/global_state.dart';
 import 'package:defacto/ui/widgets/bottom_nav_bar.dart';
 import 'package:defacto/ui/widgets/configuration_tile.dart';
 import 'package:defacto/ui/widgets/main_drawer.dart';
@@ -5,11 +6,44 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ionicons/ionicons.dart';
 
-class SkeletonScreen extends ConsumerWidget {
+class SkeletonScreen extends ConsumerStatefulWidget {
   const SkeletonScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<SkeletonScreen> createState() {
+    return _SkeletonScreen();
+  }
+}
+
+class _SkeletonScreen extends ConsumerState<SkeletonScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 300),
+      vsync: this,
+    );
+    _animation = CurvedAnimation(parent: _controller, curve: Curves.easeOut);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final globalState = ref.watch(globalStateProvider);
+
+    // Start the animation
+    globalState.isConnectionActive
+        ? _controller.forward()
+        : _controller.reverse();
 
     return Scaffold(
       appBar: AppBar(
@@ -30,16 +64,24 @@ class SkeletonScreen extends ConsumerWidget {
         ],
       ),
       drawer: const MainDrawer(),
-
       backgroundColor: Theme.of(context).colorScheme.background,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        shape: const CircleBorder(),
-        child: const Icon(Ionicons.paper_plane_outline),
-        onPressed: () {},
+      floatingActionButton: AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        margin: EdgeInsets.only(bottom: globalState.isConnectionActive ? 0.0 : 10.0), // Adjust the value based on the height of your BottomNavigationBar
+        child: FloatingActionButton(
+          shape: const CircleBorder(),
+          child: const Icon(Ionicons.paper_plane_outline),
+          onPressed: () {
+            ref.read(globalStateProvider.notifier).isConnectionAlive(!globalState.isConnectionActive);
+          },
+        ),
       ),
-      bottomNavigationBar: const BottomNavBar(),
-
+      bottomNavigationBar: SizeTransition(
+        sizeFactor: _animation,
+        axisAlignment: -1.0,
+        child: const BottomNavBar(),
+      ),
       body: Material(
         color: Theme.of(context).colorScheme.background,
         child: ListView(
