@@ -5,6 +5,7 @@ import 'package:defacto/ui/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:defacto/ui/screens/new_configuration.dart';
 
 class ConfigurationScreen extends ConsumerStatefulWidget {
   const ConfigurationScreen({super.key});
@@ -38,13 +39,6 @@ class _ConfigurationScreen extends ConsumerState<ConfigurationScreen>
 
   @override
   Widget build(BuildContext context) {
-    final globalState = ref.watch(globalStateProvider);
-
-    // Start the animation
-    globalState.isConnectionActive
-        ? _controller.forward()
-        : _controller.reverse();
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("Bepass"),
@@ -54,7 +48,12 @@ class _ConfigurationScreen extends ConsumerState<ConfigurationScreen>
             icon: const Icon(Ionicons.search),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => NewConfigurationPage()),
+              );
+            },
             icon: const Icon(Icons.note_add),
           ),
           IconButton(
