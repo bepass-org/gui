@@ -8,7 +8,7 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Routing And Rules"),
+        title: const Text("Settings"),
       ),
       drawer: const MainDrawer(),
       backgroundColor: Theme.of(context).colorScheme.background,
