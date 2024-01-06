@@ -4,13 +4,13 @@ import 'package:defacto/ui/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:defacto/ui/screens/new_configuration.dart';
 
 class SkeletonScreen extends ConsumerWidget {
   const SkeletonScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("Bepass"),
@@ -20,7 +20,12 @@ class SkeletonScreen extends ConsumerWidget {
             icon: const Icon(Ionicons.search),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => NewConfigurationPage()),
+              );
+            },
             icon: const Icon(Icons.note_add),
           ),
           IconButton(
@@ -30,7 +35,6 @@ class SkeletonScreen extends ConsumerWidget {
         ],
       ),
       drawer: const MainDrawer(),
-
       backgroundColor: Theme.of(context).colorScheme.background,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
@@ -39,7 +43,6 @@ class SkeletonScreen extends ConsumerWidget {
         onPressed: () {},
       ),
       bottomNavigationBar: const BottomNavBar(),
-
       body: Material(
         color: Theme.of(context).colorScheme.background,
         child: ListView(
