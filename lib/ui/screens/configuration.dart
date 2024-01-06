@@ -39,6 +39,13 @@ class _ConfigurationScreen extends ConsumerState<ConfigurationScreen>
 
   @override
   Widget build(BuildContext context) {
+    final globalState = ref.watch(globalStateProvider);
+
+    // Start the animation
+    globalState.isConnectionActive
+        ? _controller.forward()
+        : _controller.reverse();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Bepass"),
