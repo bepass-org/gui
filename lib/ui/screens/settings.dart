@@ -1,12 +1,23 @@
-import 'package:flutter/cupertino.dart';
+import 'package:defacto/ui/widgets/main_drawer.dart';
+import 'package:flutter/material.dart';
 
-class Settings extends StatelessWidget {
-  const Settings({super.key});
+class SettingsScreen extends StatelessWidget {
+  const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Routing And Rules"),
+      ),
+      drawer: const MainDrawer(),
+      backgroundColor: Theme.of(context).colorScheme.background,
+      body: Material(
+        color: Theme.of(context).colorScheme.background,
+        child: const Center(
+          child: Text("Settings"),
+        ),
+      ),
+    );
   }
-
 }

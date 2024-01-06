@@ -6,16 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ionicons/ionicons.dart';
 
-class SkeletonScreen extends ConsumerStatefulWidget {
-  const SkeletonScreen({super.key});
+class ConfigurationScreen extends ConsumerStatefulWidget {
+  const ConfigurationScreen({super.key});
 
   @override
-  ConsumerState<SkeletonScreen> createState() {
-    return _SkeletonScreen();
+  ConsumerState<ConfigurationScreen> createState() {
+    return _ConfigurationScreen();
   }
 }
 
-class _SkeletonScreen extends ConsumerState<SkeletonScreen>
+class _ConfigurationScreen extends ConsumerState<ConfigurationScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
