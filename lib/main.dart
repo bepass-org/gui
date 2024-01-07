@@ -1,5 +1,10 @@
 import 'dart:io';
 
+import 'package:defacto/ui/screens/about.dart';
+import 'package:defacto/ui/screens/configuration.dart';
+import 'package:defacto/ui/screens/logs.dart';
+import 'package:defacto/ui/screens/routing.dart';
+import 'package:defacto/ui/screens/settings.dart';
 import 'package:defacto/ui/skeleton/skeleton_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -48,20 +53,27 @@ class MyApp extends ConsumerWidget {
     final ThemeModeState currentTheme = ref.watch(themeProvider);
 
     return MaterialApp(
-      /// Localization is not available for the title.
       title: 'Flutter Production Boilerplate',
-
-      /// Theme stuff
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: currentTheme.themeMode,
-
-      /// Localization stuff
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       debugShowCheckedModeBanner: false,
-      home: const SkeletonScreen(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const SkeletonScreen(),
+        '/configuration': (context) => const ConfigurationScreen(),
+        '/routingAndRules': (context) => const RoutingScreen(),
+        '/settings': (context) => const SettingsScreen(),
+        '/logs': (context) => const LogsScreen(),
+        '/about': (context) => const AboutScreen(),
+      },
+      onGenerateRoute: (settings) {
+        // If the route is not found, just get moved to the skeleton screen
+        return MaterialPageRoute(builder: (context) => const SkeletonScreen());
+      },
     );
   }
 }
