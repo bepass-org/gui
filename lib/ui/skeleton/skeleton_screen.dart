@@ -28,9 +28,9 @@ class SkeletonScreen extends ConsumerWidget {
           return const LogsScreen();
         case AppPage.about:
           return const AboutScreen();
-      // Add more cases for additional pages
+        // Add more cases for additional pages
         default:
-          return const Text('Page not found');
+          return const ConfigurationScreen();
       }
     }
 
