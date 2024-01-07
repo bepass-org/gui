@@ -1,6 +1,8 @@
 import 'package:defacto/ui/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
 
+import 'configuration.dart';
+
 class RoutingScreen extends StatefulWidget {
   const RoutingScreen({super.key});
 
@@ -30,104 +32,115 @@ class _RoutingScreenState extends State<RoutingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Routing And Rules"),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.add_road),
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const ConfigurationScreen(),
           ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.more_vert),
-          ),
-        ],
-      ),
-      drawer: const MainDrawer(),
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: Material(
-        color: Theme.of(context).colorScheme.background,
-        child: ListView(
-          padding: const EdgeInsets.all(4),
-          physics: const BouncingScrollPhysics(),
-          children: rulesActive.keys.map((rule) {
-            return Card(
-              elevation: 2,
-              shadowColor: Theme.of(context).colorScheme.onPrimary,
+        );
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Routing And Rules"),
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.add_road),
+            ),
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.more_vert),
+            ),
+          ],
+        ),
+        drawer: const MainDrawer(),
+        backgroundColor: Theme.of(context).colorScheme.background,
+        body: Material(
+          color: Theme.of(context).colorScheme.background,
+          child: ListView(
+            padding: const EdgeInsets.all(4),
+            physics: const BouncingScrollPhysics(),
+            children: rulesActive.keys.map((rule) {
+              return Card(
+                elevation: 2,
+                shadowColor: Theme.of(context).colorScheme.onPrimary,
 
-              /// Example: Many items have their own colors inside of the ThemData
-              /// You can overwrite them in [config/theme.dart].
-              color: Theme.of(context).colorScheme.onPrimaryContainer,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(12)),
-              ),
-              margin: const EdgeInsets.all(4.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.onPrimaryContainer,
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(6),
-                  ),
+                /// Example: Many items have their own colors inside of the ThemData
+                /// You can overwrite them in [config/theme.dart].
+                color: Theme.of(context).colorScheme.onPrimaryContainer,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(12)),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            rule,
-                            style: const TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.edit),
-                            onPressed: () {
-                              // TODO: Implement edit action
-                            },
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              // TODO: Replace with actual subtitle(s)
-                              'Protocol: TCP\nSource:',
-                              style: TextStyle(fontSize: 14, color: Colors.red.shade400),
+                margin: const EdgeInsets.all(4.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.onPrimaryContainer,
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(6),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              rule,
+                              style: const TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
                             ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            'Bypass', // TODO: Replace with dynamic action label
-                            style: TextStyle(fontSize: 14, color: Colors.green),
-                          ),
-                          Transform.scale(
-                            scale: 0.8,
-                            child: Switch(
-                              value: rulesActive[rule]!,
-                              onChanged: (newValue) {
-                                setState(() {
-                                  rulesActive[rule] = newValue;
-                                });
+                            IconButton(
+                              icon: const Icon(Icons.edit),
+                              onPressed: () {
+                                // TODO: Implement edit action
                               },
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                // TODO: Replace with actual subtitle(s)
+                                'Protocol: TCP\nSource:',
+                                style: TextStyle(fontSize: 14, color: Colors.red.shade400),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              'Bypass', // TODO: Replace with dynamic action label
+                              style: TextStyle(fontSize: 14, color: Colors.green),
+                            ),
+                            Transform.scale(
+                              scale: 0.8,
+                              child: Switch(
+                                value: rulesActive[rule]!,
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    rulesActive[rule] = newValue;
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            );
-          }).toList(),
+              );
+            }).toList(),
+          ),
         ),
       ),
     );

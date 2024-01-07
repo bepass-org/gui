@@ -1,6 +1,8 @@
 import 'package:defacto/ui/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
 
+import 'configuration.dart';
+
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
 
@@ -52,28 +54,39 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Settings"),
-      ),
-      drawer: const MainDrawer(),
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: ListView(
-        children: <Widget>[
-          _buildGroupTitle('Route Settings'),
-          _buildSwitchSetting('Apps VPN mode', 'Configure VPN mode for selected apps', 'Enable Sniffing'),
-          _buildSwitchSetting('Bypass LAN', 'Bypass LAN in Core', 'Bypass LAN'),
-          _buildEditableSetting('Resolve Destination', 'If the destination address is a domainIf the destination address is a domainIf the destination address is a domain', 'Resolve Destination'),
-          _buildEditableSetting('IPv6 Route', 'Disable', 'Use Proxy'),
-          Divider(),
-          _buildGroupTitle('Protocol Settings'),
-          _buildSwitchSetting('Enable Multiplexer', 'Mux is designed to reduce TCP handshake latency...', 'Enable Sniffing'),
-          _buildEditableSetting('Rule Assets Provider', 'Chocolate4U/Iran-sing-box-rules', 'Use Proxy'),
-          _buildSwitchSetting('Enable Traffic Sniffing', 'Sniff result for routing', 'Resolve Destination'),
-          _buildEditableSetting('Protocol Selection', 'Automatic', 'Use Proxy'),
-          Divider(),
-          // Add more groups and settings here
-        ],
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const ConfigurationScreen(),
+          ),
+        );
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Settings"),
+        ),
+        drawer: const MainDrawer(),
+        backgroundColor: Theme.of(context).colorScheme.background,
+        body: ListView(
+          children: <Widget>[
+            _buildGroupTitle('Route Settings'),
+            _buildSwitchSetting('Apps VPN mode', 'Configure VPN mode for selected apps', 'Enable Sniffing'),
+            _buildSwitchSetting('Bypass LAN', 'Bypass LAN in Core', 'Bypass LAN'),
+            _buildEditableSetting('Resolve Destination', 'If the destination address is a domainIf the destination address is a domainIf the destination address is a domain', 'Resolve Destination'),
+            _buildEditableSetting('IPv6 Route', 'Disable', 'Use Proxy'),
+            Divider(),
+            _buildGroupTitle('Protocol Settings'),
+            _buildSwitchSetting('Enable Multiplexer', 'Mux is designed to reduce TCP handshake latency...', 'Enable Sniffing'),
+            _buildEditableSetting('Rule Assets Provider', 'Chocolate4U/Iran-sing-box-rules', 'Use Proxy'),
+            _buildSwitchSetting('Enable Traffic Sniffing', 'Sniff result for routing', 'Resolve Destination'),
+            _buildEditableSetting('Protocol Selection', 'Automatic', 'Use Proxy'),
+            Divider(),
+            // Add more groups and settings here
+          ],
+        ),
       ),
     );
   }

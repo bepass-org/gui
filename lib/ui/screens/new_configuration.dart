@@ -2,8 +2,10 @@ import 'package:defacto/ui/widgets/components.dart';
 import 'package:flutter/material.dart';
 
 class NewConfigurationPage extends StatefulWidget {
+  const NewConfigurationPage({super.key});
+
   @override
-  _NewConfigurationPageState createState() => _NewConfigurationPageState();
+  State<NewConfigurationPage> createState() => _NewConfigurationPageState();
 }
 
 class _NewConfigurationPageState extends State<NewConfigurationPage> {

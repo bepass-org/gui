@@ -6,7 +6,7 @@ class LogsScreen extends StatefulWidget {
   const LogsScreen({super.key});
 
   @override
-  _LogsScreenState createState() => _LogsScreenState();
+  State<LogsScreen> createState() => _LogsScreenState();
 }
 
 class _LogsScreenState extends State<LogsScreen> {
