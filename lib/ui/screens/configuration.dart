@@ -1,6 +1,7 @@
 import 'package:defacto/states/global/global_state.dart';
 import 'package:defacto/ui/widgets/bottom_nav_bar.dart';
 import 'package:defacto/ui/widgets/configuration/add_config.dart';
+import 'package:defacto/ui/widgets/configuration/more_options.dart';
 import 'package:defacto/ui/widgets/configuration_tile.dart';
 import 'package:defacto/ui/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
@@ -38,31 +39,6 @@ class _ConfigurationScreen extends ConsumerState<ConfigurationScreen>
     super.dispose();
   }
 
-  void _onAddClicked() async {
-    final RenderBox overlay = Overlay.of(context)!.context.findRenderObject() as RenderBox;
-    await showMenu(
-      context: context,
-      position: RelativeRect.fromRect(
-        Rect.fromPoints(
-          overlay.localToGlobal(Offset.zero), // The position in the overlay
-          overlay.localToGlobal(overlay.size.bottomRight(Offset.zero)), // The bottom right corner of the overlay
-        ),
-        Offset.zero & overlay.size, // The size of the overlay
-      ),
-      items: <PopupMenuEntry>[
-        PopupMenuItem(
-          child: Text('Option 1'),
-          value: 'Option1',
-        ),
-        PopupMenuItem(
-          child: Text('Option 2'),
-          value: 'Option2',
-        ),
-        // Add more menu items if you want
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final globalState = ref.watch(globalStateProvider);
@@ -81,10 +57,7 @@ class _ConfigurationScreen extends ConsumerState<ConfigurationScreen>
             icon: const Icon(Ionicons.search),
           ),
           const AddConfig(),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.more_vert),
-          ),
+          const MoreOptions(),
         ],
       ),
       drawer: const MainDrawer(),

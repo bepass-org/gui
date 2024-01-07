@@ -6,85 +6,95 @@ class AddConfig extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PopupMenuButton(
-      child: const Icon(Icons.note_add),
-      onSelected: (value) {
-        if (value == "profile") {
-          // add desired output
-        }else if(value == "settings"){
-          // add desired output
-        }else if(value == "logout"){
-          // add desired output
-        }
-      },
-      itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-        const PopupMenuItem(
-          value: "scan",
-          child: Row(
-            children: [
-              Padding(
-                  padding: EdgeInsets.only(right: 8.0),
-                  child: Icon(Icons.qr_code)
-              ),
-              Text(
-                'Scan QR Code',
-                style: TextStyle(fontSize: 15),
-              ),
-            ],
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(24),
+      // The PopupMenuButton handles its own onTap through itemBuilder
+      child: Material(
+        color: Colors.transparent,
+        child: PopupMenuButton(
+          child: const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Icon(Icons.note_add),
           ),
-        ),
-        const PopupMenuItem(
-          value: "clipboard",
-          child: Row(
-            children: [
-              Padding(
-                  padding: EdgeInsets.only(right: 8.0),
-                  child: Icon(Icons.content_paste)
-              ),
-              Text(
-                'Import from Clipboard',
-                style: TextStyle(fontSize: 15),
-              ),
-            ],
-          ),
-        ),
-        const PopupMenuItem(
-          value: "fromFile",
-          child: Row(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(right: 8.0),
-                child: Icon(Icons.document_scanner),
-              ),
-              Text(
-                'Import from file',
-                style: TextStyle(fontSize: 15),
-              ),
-            ],
-          ),
-        ),
-        PopupMenuItem(
-          value: "manual",
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => NewConfigurationPage()),
-            );
+          onSelected: (value) {
+            if (value == "profile") {
+              // add desired output
+            }else if(value == "settings"){
+              // add desired output
+            }else if(value == "logout"){
+              // add desired output
+            }
           },
-          child: const Row(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(right: 8.0),
-                child: Icon(Icons.handyman_outlined),
+          itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+            const PopupMenuItem(
+              value: "scan",
+              child: Row(
+                children: [
+                  Padding(
+                      padding: EdgeInsets.only(right: 8.0),
+                      child: Icon(Icons.qr_code)
+                  ),
+                  Text(
+                    'Scan QR Code',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                ],
               ),
-              Text(
-                'Manual Settings',
-                style: TextStyle(fontSize: 15),
+            ),
+            const PopupMenuItem(
+              value: "clipboard",
+              child: Row(
+                children: [
+                  Padding(
+                      padding: EdgeInsets.only(right: 8.0),
+                      child: Icon(Icons.content_paste)
+                  ),
+                  Text(
+                    'Import from Clipboard',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+            const PopupMenuItem(
+              value: "fromFile",
+              child: Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(right: 8.0),
+                    child: Icon(Icons.document_scanner),
+                  ),
+                  Text(
+                    'Import from file',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                ],
+              ),
+            ),
+            PopupMenuItem(
+              value: "manual",
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => NewConfigurationPage()),
+                );
+              },
+              child: const Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(right: 8.0),
+                    child: Icon(Icons.handyman_outlined),
+                  ),
+                  Text(
+                    'Manual Settings',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
