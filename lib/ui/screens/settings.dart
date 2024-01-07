@@ -16,6 +16,39 @@ class _SettingsScreenState extends State<SettingsScreen> {
     'Use Proxy': false,
     // Other toggles...
   };
+  String ipv6Route = 'Disable'; // Example value for the IPv6 Route setting
+
+  void _showEditDialog(String title, String currentValue, Function(String) onUpdate) {
+    TextEditingController _controller = TextEditingController(text: currentValue);
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: TextField(
+            controller: _controller,
+            decoration: InputDecoration(hintText: "Enter your value here"),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                onUpdate(_controller.text);
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +100,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
       title: Text(title),
       subtitle: Text(subtitle),
       onTap: () {
-        // Handle tap to edit
+        _showEditDialog('IPv6 Route', ipv6Route, (newValue) {
+          setState(() {
+            ipv6Route = newValue;
+          });
+        });
       },
     );
   }
