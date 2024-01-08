@@ -32,7 +32,7 @@ class AddConfig extends StatelessWidget {
                 children: [
                   Padding(
                       padding: EdgeInsets.only(right: 8.0),
-                      child: Icon(Icons.qr_code)
+                      child: Icon(Icons.qr_code, color: Colors.black45)
                   ),
                   Text(
                     'Scan QR Code',
@@ -47,7 +47,7 @@ class AddConfig extends StatelessWidget {
                 children: [
                   Padding(
                       padding: EdgeInsets.only(right: 8.0),
-                      child: Icon(Icons.content_paste)
+                      child: Icon(Icons.content_paste, color: Colors.black45)
                   ),
                   Text(
                     'Import from Clipboard',
@@ -62,7 +62,7 @@ class AddConfig extends StatelessWidget {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(right: 8.0),
-                    child: Icon(Icons.document_scanner),
+                    child: Icon(Icons.document_scanner, color: Colors.black45),
                   ),
                   Text(
                     'Import from file',
@@ -83,7 +83,7 @@ class AddConfig extends StatelessWidget {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(right: 8.0),
-                    child: Icon(Icons.handyman_outlined),
+                    child: Icon(Icons.handyman_outlined, color: Colors.black45),
                   ),
                   Text(
                     'Manual Settings',

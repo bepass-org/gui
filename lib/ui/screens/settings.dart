@@ -66,10 +66,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Settings"),
+          iconTheme: IconThemeData(color: Colors.white),
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          title: const Text("Settings", style: TextStyle(color: Colors.white)),
         ),
         drawer: const MainDrawer(),
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Colors.white,
         body: ListView(
           children: <Widget>[
             _buildGroupTitle('Route Settings'),
@@ -94,7 +96,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   ListTile _buildSwitchSetting(String title, String subtitle, String switchKey) {
     return ListTile(
       leading: Icon(Icons.settings),
-      title: Text(title),
+      title: Text(title, style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Theme.of(context).colorScheme.onBackground, fontWeight: FontWeight.bold)),
       subtitle: Text(subtitle),
       trailing: Switch(
         value: switchStates[switchKey]!,
@@ -110,7 +112,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   ListTile _buildEditableSetting(String title, String subtitle, String switchKey) {
     return ListTile(
       leading: Icon(Icons.edit),
-      title: Text(title),
+      title: Text(title, style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Theme.of(context).colorScheme.onBackground, fontWeight: FontWeight.bold)),
       subtitle: Text(subtitle),
       onTap: () {
         _showEditDialog('IPv6 Route', ipv6Route, (newValue) {
@@ -125,7 +127,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget _buildGroupTitle(String title) {
     return ListTile(
       leading: const Text(""),
-      title: Text(title, style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Theme.of(context).colorScheme.onBackground, fontWeight: FontWeight.bold)),
+      title: Text(title, style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Theme.of(context).colorScheme.primary, fontWeight: FontWeight.bold)),
     );
   }
 }

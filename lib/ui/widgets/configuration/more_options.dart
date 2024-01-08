@@ -34,7 +34,7 @@ class MoreOptions extends StatelessWidget {
                   children: [
                     Padding(
                         padding: EdgeInsets.only(right: 8.0),
-                        child: Icon(Icons.clear_all)
+                        child: Icon(Icons.clear_all, color: Colors.black45)
                     ),
                     Text(
                       'Clear traffic statistics',
@@ -49,7 +49,7 @@ class MoreOptions extends StatelessWidget {
                   children: [
                     Padding(
                         padding: EdgeInsets.only(right: 8.0),
-                        child: Icon(Icons.control_point_duplicate)
+                        child: Icon(Icons.control_point_duplicate, color: Colors.black45)
                     ),
                     Text(
                       'Remove duplicates',
@@ -64,7 +64,7 @@ class MoreOptions extends StatelessWidget {
                   children: [
                     Padding(
                       padding: EdgeInsets.only(right: 8.0),
-                      child: Icon(Icons.network_ping),
+                      child: Icon(Icons.network_ping, color: Colors.black45),
                     ),
                     Text(
                       'Connection test',
@@ -85,7 +85,7 @@ class MoreOptions extends StatelessWidget {
                   children: [
                     Padding(
                       padding: EdgeInsets.only(right: 8.0),
-                      child: Icon(Icons.reorder),
+                      child: Icon(Icons.reorder, color: Colors.black45),
                     ),
                     Text(
                       'Order',

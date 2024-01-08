@@ -27,7 +27,9 @@ class _LogsScreenState extends State<LogsScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Logs"),
+          iconTheme: IconThemeData(color: Colors.white),
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          title: const Text("Logs", style: TextStyle(color: Colors.white)),
           actions: [
             IconButton(
               onPressed: () {

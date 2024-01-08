@@ -22,7 +22,9 @@ class AboutScreen extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("About"),
+          iconTheme: IconThemeData(color: Colors.white),
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          title: const Text("About", style: TextStyle(color: Colors.white)),
         ),
         drawer: const MainDrawer(),
         backgroundColor: Theme.of(context).colorScheme.background,

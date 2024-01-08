@@ -44,7 +44,9 @@ class _RoutingScreenState extends State<RoutingScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Routing And Rules"),
+          iconTheme: IconThemeData(color: Colors.white),
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          title: const Text("Routing And Rules", style: TextStyle(color: Colors.white)),
           actions: [
             IconButton(
               onPressed: () {},

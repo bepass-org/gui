@@ -58,11 +58,13 @@ class _ConfigurationScreen extends ConsumerState<ConfigurationScreen>
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Bepass"),
+          iconTheme: IconThemeData(color: Colors.white),
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          title: const Text("Bepass", style: TextStyle(color: Colors.white)),
           actions: [
             IconButton(
               onPressed: () {},
-              icon: const Icon(Ionicons.search),
+              icon: const Icon(Ionicons.search, color: Colors.white),
             ),
             const AddConfig(),
             const MoreOptions(),

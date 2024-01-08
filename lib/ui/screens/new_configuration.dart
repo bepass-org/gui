@@ -1,6 +1,9 @@
 import 'package:defacto/ui/widgets/components.dart';
 import 'package:flutter/material.dart';
 
+import 'package:defacto/ui/widgets/components.dart';
+import 'package:flutter/material.dart';
+
 class NewConfigurationPage extends StatefulWidget {
   const NewConfigurationPage({super.key});
 
@@ -33,193 +36,227 @@ class _NewConfigurationPageState extends State<NewConfigurationPage> {
   bool _dnsOnly = false;
 
   void _successSaved() {
-    // TODO: Save new configuration
-    // INFO: Need to setup constructor to collect and make a new configuration
-    Navigator.pop(context);
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Success'),
+          content: Text('Configuration saved successfully'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                _saveConfiguration();
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    ThemeData themeData = Theme.of(context);
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: themeData.colorScheme.primary,
-        leading: IconButton(
-          icon: const Icon(Icons.close),
-          color: themeData.colorScheme.onPrimary,
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        actions: <Widget>[
+        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        actions: [
           IconButton(
-            icon: const Icon(Icons.check),
-            color: themeData.colorScheme.onPrimary,
-            onPressed: () {
-              _successSaved();
-            },
+            icon: Icon(Icons.save),
+            onPressed: _saveConfiguration,
           ),
         ],
-        title: Text(
+        title: const Text(
           'Add Configuration',
-          style:
-              TextStyle(color: themeData.colorScheme.onPrimary, fontSize: 16),
+          style: TextStyle(color: Colors.white),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            CustomTextField(
-                title: 'Profile Name',
-                hint: 'Not set',
-                controller: _profileName,
-                themeData: themeData),
-            CustomTextField(
-                title: 'TLS Header Length',
-                hint: '5',
-                controller: _tlsHeaderLength,
-                themeData: themeData),
-            CustomTextField(
-                title: 'DOH or SDNS Address',
-                hint: 'https://yarp.lefolgoc.net/dns-query',
-                controller: _dohSdnsAddress,
-                themeData: themeData),
-            Container(
-                color: themeData.colorScheme.surface,
-                child: Column(
-                  children: <Widget>[
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 3.0),
-                    ),
-                    CustomIntegerField(
-                        title: 'DNS Cache TTL',
-                        defaultInput: 1800,
-                        controller: _dnsCacheTtl,
-                        themeData: themeData),
-                    CustomIntegerField(
-                        title: 'DNS Request Timeout',
-                        defaultInput: 10,
-                        controller: _dnsReqTimeout,
-                        themeData: themeData),
-                    CustomSwitchListTile(
-                      title: 'Enable DNS Fragmentation',
-                      value: _dnsFragmentation,
-                      onChanged: (bool value) {
-                        setState(() {
-                          _dnsFragmentation = value;
-                        });
-                      },
-                    ),
-                    CustomTextField(
-                        title: 'Sni Chunks Length Range',
-                        hint: '1, 5',
-                        controller: _sniChunksLenRange,
-                        themeData: themeData),
-                    CustomTextField(
-                        title: 'Before and After Sni Chunks Length Range',
-                        hint: '5, 10',
-                        controller: _sniBFChunksLenRange,
-                        themeData: themeData),
-                    CustomTextField(
-                        title: 'Delay between each packet',
-                        hint: '30, 40',
-                        controller: _delayBetweenEachPacket,
-                        themeData: themeData),
-                    CustomMultilineField(
-                        title: 'Domain to IP mapping(hosts)',
-                        hint: '''
-example.com: 1.1.1.1
-yarp.lefolgoc.net: 5.39.88.20''',
-                        controller: _domainToIPMapping,
-                        themeData: themeData),
-                    CustomCheckboxListTile(
-                        title: 'AllowInSecure',
-                        value: _allowInSecure,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            _allowInSecure = value!;
-                          });
-                        }),
-                    CustomCheckboxListTile(
-                      title: 'Enable Worker',
-                      value: _enableWorker,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          _enableWorker = value!;
-                        });
-                      },
-                    ),
-                    Visibility(
-                        visible: _enableWorker,
-                        child: Column(
-                          children: [
-                            CustomCheckboxListTile(
-                                title: 'DNS Only',
-                                value: _dnsOnly,
-                                onChanged: (bool? value) {
-                                  setState(() {
-                                    _dnsOnly = value!;
-                                  });
-                                }),
-                            CustomTextField(
-                                title: 'Worker Address',
-                                hint:
-                                    'https://example.user.worker.dev/dns-query',
-                                controller: _workerAddress,
-                                themeData: themeData),
-                            CustomTextField(
-                                title: 'Worker Clean IP:PORT',
-                                hint: '104.31.16.104:443',
-                                controller: _workerCleanIpPort,
-                                themeData: themeData),
-                          ],
-                        )),
-                    CustomCheckboxListTile(
-                        title: 'Enable TLS Padding',
-                        value: _enableTlsPadding,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            _enableTlsPadding = value!;
-                          });
-                        }),
-                    if (_enableTlsPadding)
-                      CustomTextField(
-                          title: 'TLS Padding Range',
-                          hint: '200, 500',
-                          controller: _tlsPaddingRange,
-                          themeData: themeData),
-                    const Divider(
-                      height: 2.0,
-                      color: Colors.grey,
-                    ),
-                    CustomTextField(
-                        title: 'udpBindAddress',
-                        hint: '127.0.0.1',
-                        controller: _udpBindAddress,
-                        themeData: themeData),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 3.0),
-                    ),
-                    CustomIntegerField(
-                        title: 'udpReadTimeout',
-                        defaultInput: 120,
-                        controller: _udpReadTimeout,
-                        themeData: themeData),
-                    CustomIntegerField(
-                        title: 'udpWriteTimeout',
-                        defaultInput: 120,
-                        controller: _udpWriteTimeout,
-                        themeData: themeData),
-                    CustomIntegerField(
-                        title: 'udpLinkIdleTimeout',
-                        defaultInput: 120,
-                        controller: _udpLinkIdleTimeout,
-                        themeData: themeData),
-                  ],
-                )),
+      body: ListView(
+        children: [
+          _profileNameW(),
+          _buildGroup('General', [
+            _buildEditableSetting('TLS Header Length',
+                'Enter TLS header length', _tlsHeaderLength, Icons.security),
+            _buildEditableSetting('DOH or SDNS Address',
+                'Enter DOH or SDNS address', _dohSdnsAddress, Icons.http),
+          ]),
+          _buildGroup('DNS Settings', [
+            _buildEditableSetting('DNS Cache TTL', 'Enter DNS cache TTL',
+                _dnsCacheTtl, Icons.timer),
+            _buildEditableSetting('DNS Request Timeout',
+                'Enter DNS request timeout', _dnsReqTimeout, Icons.timelapse),
+            _buildToggleSetting(
+                'Enable DNS Fragmentation', _dnsFragmentation, Icons.dns),
+          ]),
+          _buildGroup('SNI Settings', [
+            _buildEditableSetting(
+                'SNI Chunks Length Range',
+                'Enter SNI chunks length range',
+                _sniChunksLenRange,
+                Icons.code),
+            _buildEditableSetting('Before and After SNI Chunks Length Range',
+                'Enter length range', _sniBFChunksLenRange, Icons.code_off),
+            _buildEditableSetting(
+                'Delay between each packet',
+                'Enter delay (ms)',
+                _delayBetweenEachPacket,
+                Icons.hourglass_empty),
+          ]),
+          _buildGroup('Worker Settings', [
+            _buildToggleSetting('Enable Worker', _enableWorker, Icons.work),
+            _buildToggleSetting('DNS Only', _dnsOnly, Icons.dns),
+            _buildEditableSetting('Worker Address', 'Enter worker address',
+                _workerAddress, Icons.web),
+            _buildEditableSetting('Worker Clean IP:PORT', 'Enter IP and port',
+                _workerCleanIpPort, Icons.portable_wifi_off),
+          ]),
+          _buildGroup('TLS Settings', [
+            _buildToggleSetting(
+                'Allow InSecure', _allowInSecure, Icons.dangerous),
+            _buildToggleSetting(
+                'Enable TLS Padding', _enableTlsPadding, Icons.lock_outline),
+            _buildEditableSetting(
+                'TLS Padding Range',
+                'Enter TLS padding range',
+                _tlsPaddingRange,
+                Icons.format_line_spacing),
+          ]),
+          _buildGroup(
+              'UDP Settings',
+              [
+                _buildEditableSetting('UDP Bind Address',
+                    'Enter UDP bind address', _udpBindAddress, Icons.radar),
+                _buildEditableSetting('UDP Read Timeout', 'Enter read timeout',
+                    _udpReadTimeout, Icons.timer_off),
+                _buildEditableSetting(
+                    'UDP Write Timeout',
+                    'Enter write timeout',
+                    _udpWriteTimeout,
+                    Icons.edit_attributes),
+                _buildEditableSetting(
+                    'UDP Link Idle Timeout',
+                    'Enter link idle timeout',
+                    _udpLinkIdleTimeout,
+                    Icons.link_off),
+              ],
+              lastOne: true),
+        ],
+      ),
+    );
+  }
+
+  Widget _profileNameW() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildEditableSetting(
+            'Profile Name', 'Enter profile name', _profileName, Icons.person),
+        const Divider(
+          color: Colors.black26,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildGroup(String title, List<Widget> settings, {lastOne = false}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ListTile(
+          leading: const Text(""),
+          title: Text(title,
+              style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                  color: Theme.of(context).colorScheme.primary,
+                  fontWeight: FontWeight.bold)),
+        ),
+        ...settings,
+        !lastOne
+            ? const Divider(
+                color: Colors.black26,
+              )
+            : const SizedBox(),
+      ],
+    );
+  }
+
+  Widget _buildToggleSetting(String title, bool value, IconData icon) {
+    return ListTile(
+      leading: Icon(icon),
+      title: Text(title),
+      subtitle: Text(value ? 'Enabled' : 'Disabled'),
+      trailing: Switch(
+        value: value,
+        onChanged: (newValue) {
+          setState(() {
+            // Update the respective state variable
+            switch (title) {
+              case 'Enable DNS Fragmentation':
+                _dnsFragmentation = newValue;
+                break;
+              case 'Allow InSecure':
+                _allowInSecure = newValue;
+                break;
+              case 'Enable Worker':
+                _enableWorker = newValue;
+                break;
+              case 'Enable TLS Padding':
+                _enableTlsPadding = newValue;
+                break;
+              case 'DNS Only':
+                _dnsOnly = newValue;
+                break;
+              default:
+                break;
+            }
+          });
+        },
+      ),
+    );
+  }
+
+  Widget _buildEditableSetting(String title, String hint,
+      TextEditingController controller, IconData icon) {
+    return ListTile(
+      leading: Icon(icon),
+      title: Text(title, style: Theme.of(context).textTheme.titleMedium!),
+      subtitle: Text(controller.text.isEmpty ? hint : controller.text),
+      onTap: () => _showEditDialog(title, controller),
+    );
+  }
+
+  void _saveConfiguration() {
+    // Implement your save logic here
+    Navigator.pop(context);
+  }
+
+  void _showEditDialog(String title, TextEditingController controller) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Edit $title'),
+          content: TextField(
+            controller: controller,
+            decoration: InputDecoration(hintText: 'Enter your value'),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                setState(() {}); // Update the UI with the new value
+                Navigator.of(context).pop();
+              },
+            ),
           ],
-        ),
-      ),
+        );
+      },
     );
   }
 }
