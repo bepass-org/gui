@@ -1,3 +1,8 @@
+import 'package:defacto/enums/editable_dialog_types.dart';
+import 'package:defacto/ui/widgets/form/group.dart';
+import 'package:defacto/ui/widgets/form/input_editable.dart';
+import 'package:defacto/ui/widgets/form/profile_name.dart';
+import 'package:defacto/ui/widgets/form/switch_editable.dart';
 import 'package:flutter/material.dart';
 
 class NewConfigurationPage extends StatefulWidget {
@@ -57,7 +62,7 @@ class _NewConfigurationPageState extends State<NewConfigurationPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Theme.of(context).colorScheme.primary,
         actions: [
           IconButton(
@@ -80,109 +85,195 @@ class _NewConfigurationPageState extends State<NewConfigurationPage> {
       ),
       body: ListView(
         children: [
-          _profileNameW(),
-          _buildGroup('General', [
-            _buildEditableSetting('TLS Header Length',
-                '5', _tlsHeaderLength, Icons.security),
-            _buildEditableSetting('DOH or SDNS Address',
-                'https://1.1.1.1/dns-query', _dohSdnsAddress, Icons.http),
-          ]),
-          _buildGroup('DNS Settings', [
-            _buildEditableSetting('DNS Cache TTL', '1500',
-                _dnsCacheTtl, Icons.timer),
-            _buildEditableSetting('DNS Request Timeout',
-                '10', _dnsReqTimeout, Icons.timelapse),
-            _buildToggleSetting(
-                'Enable DNS Fragmentation', _dnsFragmentation, Icons.dns),
-          ]),
-          _buildGroup('SNI Settings', [
-            _buildEditableSetting(
-                'SNI Chunks Length Range',
-                '1,2',
-                _sniChunksLenRange,
-                Icons.code),
-            _buildEditableSetting('Before and After SNI Chunks Length Range',
-                '1,5', _sniBFChunksLenRange, Icons.code_off),
-            _buildEditableSetting(
-                'Delay between each packet',
-                '10,20',
-                _delayBetweenEachPacket,
-                Icons.hourglass_empty),
-          ]),
-          _buildGroup('Worker Settings', [
-            _buildToggleSetting('Enable Worker', _enableWorker, Icons.work),
-            _buildToggleSetting('DNS Only', _dnsOnly, Icons.dns),
-            _buildEditableSetting('Worker Address', 'worker-name.username.workers.dev',
-                _workerAddress, Icons.web),
-            _buildEditableSetting('Worker Clean IP:PORT', '192.168.1.1:443',
-                _workerCleanIpPort, Icons.portable_wifi_off),
-          ]),
-          _buildGroup('TLS Settings', [
-            _buildToggleSetting(
-                'Allow InSecure', _allowInSecure, Icons.dangerous),
-            _buildToggleSetting(
-                'Enable TLS Padding', _enableTlsPadding, Icons.lock_outline),
-            _buildEditableSetting(
-                'TLS Padding Range',
-                '10,1000',
-                _tlsPaddingRange,
-                Icons.format_line_spacing),
-          ]),
-          _buildGroup(
-              'UDP Settings',
-              [
-                _buildEditableSetting('UDP Bind Address',
-                    '127.0.0.1', _udpBindAddress, Icons.radar),
-                _buildEditableSetting('UDP Read Timeout', '120',
-                    _udpReadTimeout, Icons.timer_off),
-                _buildEditableSetting(
-                    'UDP Write Timeout',
-                    '120',
-                    _udpWriteTimeout,
-                    Icons.edit_attributes),
-                _buildEditableSetting(
-                    'UDP Link Idle Timeout',
-                    '120',
-                    _udpLinkIdleTimeout,
-                    Icons.link_off),
-              ],
-              lastOne: true),
+          const ProfileName(),
+          GroupForm(
+            title: "General",
+            children: [
+              InputEditable(
+                icon: Icons.security,
+                title: 'TLS Header Length',
+                defaultValue: '5',
+                dialogType: EditableDialogType.number,
+                onChanged: (v) {},
+              ),
+              InputEditable(
+                icon: Icons.http,
+                title: 'DOH or SDNS Address',
+                defaultValue: 'https://1.1.1.1/dns-query',
+                dialogType: EditableDialogType.url,
+                onChanged: (v) {},
+              ),
+            ],
+          ),
+          GroupForm(
+            title: "DNS Settings",
+            children: [
+              InputEditable(
+                icon: Icons.timer,
+                title: 'DNS Cache TTL',
+                defaultValue: '1500',
+                dialogType: EditableDialogType.number,
+                onChanged: (v) {},
+              ),
+              InputEditable(
+                icon: Icons.timelapse,
+                title: 'DNS Request Timeout',
+                defaultValue: '10',
+                dialogType: EditableDialogType.number,
+                onChanged: (v) {},
+              ),
+              SwitchEditable(
+                icon: Icons.dns,
+                title: 'Enable DNS Fragmentation',
+                value: _dnsFragmentation,
+                onChanged: (v) {
+                  setState(() {
+                    _dnsFragmentation = v;
+                  });
+                },
+              ),
+            ],
+          ),
+          GroupForm(
+            title: "SNI Settings",
+            children: [
+              InputEditable(
+                icon: Icons.code,
+                title: 'SNI Chunks Length Range',
+                defaultValue: '1,2',
+                dialogType: EditableDialogType.numberRange,
+                onChanged: (v) {},
+              ),
+              InputEditable(
+                icon: Icons.code_off,
+                title: 'Before and After SNI Chunks Length Range',
+                defaultValue: '1,5',
+                dialogType: EditableDialogType.numberRange,
+                onChanged: (v) {},
+              ),
+              InputEditable(
+                icon: Icons.hourglass_empty,
+                title: 'Delay between each packet',
+                defaultValue: '10,20',
+                dialogType: EditableDialogType.numberRange,
+                onChanged: (v) {},
+              ),
+            ],
+          ),
+          GroupForm(
+            title: "Worker Settings",
+            children: [
+              SwitchEditable(
+                icon: Icons.work,
+                title: 'Enable Worker',
+                value: _enableWorker,
+                onChanged: (v) {
+                  setState(() {
+                    _enableWorker = v;
+                  });
+                },
+              ),
+              SwitchEditable(
+                icon: Icons.dns,
+                title: 'DNS Only',
+                value: _dnsOnly,
+                onChanged: (v) {
+                  setState(() {
+                    _dnsOnly = v;
+                  });
+                },
+              ),
+              InputEditable(
+                icon: Icons.web,
+                title: 'Worker Address',
+                defaultValue: '10,20',
+                dialogType: EditableDialogType.numberRange,
+                onChanged: (v) {},
+              ),
+              InputEditable(
+                icon: Icons.portable_wifi_off,
+                title: 'Worker Clean IP/Host',
+                defaultValue: '192.168.1.1',
+                dialogType: EditableDialogType.ip,
+                onChanged: (v) {},
+              ),
+              InputEditable(
+                icon: Icons.indeterminate_check_box_outlined,
+                title: 'Worker Port',
+                defaultValue: '443',
+                dialogType: EditableDialogType.port,
+                onChanged: (v) {},
+              ),
+            ],
+          ),
+          GroupForm(
+            title: "TLS Settings",
+            children: [
+              SwitchEditable(
+                icon: Icons.dangerous,
+                title: 'Allow InSecure',
+                value: _allowInSecure,
+                onChanged: (v) {
+                  setState(() {
+                    _allowInSecure = v;
+                  });
+                },
+              ),
+              SwitchEditable(
+                icon: Icons.lock_outline,
+                title: 'Enable TLS Padding',
+                value: _enableTlsPadding,
+                onChanged: (v) {
+                  setState(() {
+                    _enableTlsPadding = v;
+                  });
+                },
+              ),
+              InputEditable(
+                icon: Icons.format_line_spacing,
+                title: 'TLS Padding Range',
+                defaultValue: '10,1000',
+                dialogType: EditableDialogType.numberRange,
+                onChanged: (v) {},
+              ),
+            ],
+          ),
+          GroupForm(
+            title: "UDP Settings",
+            lastOne: true,
+            children: [
+              InputEditable(
+                icon: Icons.radar,
+                title: 'UDP Bind Address',
+                defaultValue: '127.0.0.1',
+                dialogType: EditableDialogType.ip,
+                onChanged: (v) {},
+              ),
+              InputEditable(
+                icon: Icons.timer_off,
+                title: 'UDP Read Timeout',
+                defaultValue: '120',
+                dialogType: EditableDialogType.number,
+                onChanged: (v) {},
+              ),
+              InputEditable(
+                icon: Icons.edit_attributes,
+                title: 'UDP Write Timeout',
+                defaultValue: '120',
+                dialogType: EditableDialogType.number,
+                onChanged: (v) {},
+              ),
+              InputEditable(
+                icon: Icons.link_off,
+                title: 'UDP Link Idle Timeout',
+                defaultValue: '120',
+                dialogType: EditableDialogType.number,
+                onChanged: (v) {},
+              ),
+            ],
+          ),
         ],
       ),
-    );
-  }
-
-  Widget _profileNameW() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildEditableSetting(
-            'Profile Name', 'Enter profile name', _profileName, Icons.person),
-        const Divider(
-          color: Colors.black26,
-        ),
-      ],
-    );
-  }
-
-  Widget _buildGroup(String title, List<Widget> settings, {lastOne = false}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ListTile(
-          leading: const Text(""),
-          title: Text(title,
-              style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                  color: Theme.of(context).colorScheme.primary,
-                  fontWeight: FontWeight.bold)),
-        ),
-        ...settings,
-        !lastOne
-            ? const Divider(
-                color: Colors.black26,
-              )
-            : const SizedBox(),
-      ],
     );
   }
 
@@ -220,45 +311,8 @@ class _NewConfigurationPageState extends State<NewConfigurationPage> {
     );
   }
 
-  Widget _buildEditableSetting(String title, String hint,
-      TextEditingController controller, IconData icon) {
-    return ListTile(
-      leading: Icon(icon),
-      title: Text(title, style: Theme.of(context).textTheme.titleMedium!),
-      subtitle: Text(controller.text.isEmpty ? hint : controller.text),
-      onTap: () => _showEditDialog(title, controller),
-    );
-  }
-
   void _saveConfiguration() {
     // Implement your save logic here
     Navigator.pop(context);
-  }
-
-  void _showEditDialog(String value, TextEditingController controller) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          content: TextField(
-            controller: controller,
-            decoration: InputDecoration(hintText: 'Enter your value'),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Cancel'),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-            TextButton(
-              child: const Text('OK'),
-              onPressed: () {
-                setState(() {}); // Update the UI with the new value
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
   }
 }

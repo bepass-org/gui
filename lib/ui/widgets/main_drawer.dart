@@ -47,7 +47,9 @@ class MainDrawer extends ConsumerWidget {
       leading: Icon(icon),
       title: Text(title),
       onTap: () {
-        ref.read(globalStateProvider.notifier).changeActivePage(page);
+        if(ref.watch(globalStateProvider).activePage != page){
+          ref.read(globalStateProvider.notifier).changeActivePage(page);
+        }
 
         // Check if the page is already in the navigation stack
         final isAlreadyInStack =

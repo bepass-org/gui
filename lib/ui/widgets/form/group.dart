@@ -5,12 +5,12 @@ class GroupForm extends StatelessWidget {
   const GroupForm({
     super.key,
     required this.title,
-    required this.settings,
-    required this.lastOne,
+    required this.children,
+    this.lastOne = false,
   });
 
   final String title;
-  final List<Widget> settings;
+  final List<Widget> children;
   final bool lastOne;
 
   @override
@@ -25,7 +25,7 @@ class GroupForm extends StatelessWidget {
                   color: Theme.of(context).colorScheme.primary,
                   fontWeight: FontWeight.bold)),
         ),
-        ...settings,
+        ...children,
         !lastOne
             ? const Divider(
                 color: Colors.black26,

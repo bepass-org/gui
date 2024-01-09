@@ -32,7 +32,7 @@ class InputEditable extends StatelessWidget {
         return EditableDialog(
           title: showTitleOnDialog ? 'Edit $title' : null,
           type: dialogType,
-          currentValue: value,
+          currentValue: value ?? defaultValue,
           placeholder: hint ?? 'Enter $title',
           onSuccess: onChanged,
         );

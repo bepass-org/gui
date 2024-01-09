@@ -11,9 +11,11 @@ class AboutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const gapBetweenCards = Gap(8);//this is the gap between cards
-    const gapBetweenHeaderAndElements = Gap(8);//this is the gap between header and elements in the card for example between title and description
-    const gapBetweenElementsInTheCard = Gap(0);//this is the gap between elements in the card
+    const gapBetweenCards = Gap(8); //this is the gap between cards
+    const gapBetweenHeaderAndElements = Gap(
+        8); //this is the gap between header and elements in the card for example between title and description
+    const gapBetweenElementsInTheCard =
+        Gap(0); //this is the gap between elements in the card
     return PopScope(
       canPop: false,
       onPopInvoked: (didPop) {
@@ -34,32 +36,28 @@ class AboutScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.background,
         //using listview to avoid overflow in small screen
         body: ListView(
-          padding: const EdgeInsets.all(16.0),//padding for all sides in the listview
+          padding: const EdgeInsets.all(8.0),
+          //padding for all sides in the listview
           children: [
-            const Card(
+            Card(
               child: Padding(
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       "Defacto Proxy App",
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                            color: Colors.black87,
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
                     gapBetweenHeaderAndElements,
-                    Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Text(
-                        "Bypassing the Great Firewall (GFW)",
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.black87,
-                        ),
-                      ),
+                    Text(
+                      "Bypassing the Great Firewall (GFW)",
+                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                            color: Theme.of(context).colorScheme.onBackground,
+                          ),
                     ),
                   ],
                 ),
@@ -69,7 +67,7 @@ class AboutScreen extends StatelessWidget {
             // Versions Card
             Card(
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -81,12 +79,13 @@ class AboutScreen extends StatelessWidget {
                     gapBetweenElementsInTheCard,
                     const MetaWithIcon(
                       icon: Icons.layers,
-                      title: "Version (sing-box)",
-                      description: "sing-box-1.0.0\nsing-box-1.0.1\nsing-box-2.0.0",
+                      title: "Version (bepass)",
+                      description:
+                          "bepass-proxy-1.0.0\nbepass-dns-1.0.1\nbepass-scanner-2.0.0",
                     ),
                     gapBetweenElementsInTheCard,
                     InkWell(
-                      onTap: (){
+                      onTap: () {
                         //todo: redirect to the donate page
                         debugPrint("I am tapped :)");
                       },
@@ -97,17 +96,18 @@ class AboutScreen extends StatelessWidget {
                       ),
                     ),
                     gapBetweenElementsInTheCard,
-                    if(Platform.isAndroid)
+                    if (Platform.isAndroid)
                       //add button to ignore battery optimization
                       InkWell(
-                        onTap: (){
+                        onTap: () {
                           //todo: ignore this feature requires install new package
                           debugPrint("I am tapped :)");
                         },
                         child: const MetaWithIcon(
                           icon: Icons.battery_1_bar_sharp,
                           title: "Ignore Battery Optimization",
-                          description: "This will help to keep the app running in background",
+                          description:
+                              "This will help to keep the app running in background",
                         ),
                       ),
                   ],
@@ -121,35 +121,31 @@ class AboutScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       "Project",
-                      style: TextStyle(
-                        fontSize: 14,
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        color: Colors.black87,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black,
                       ),
                     ),
                     gapBetweenHeaderAndElements,
                     InkWell(
-                      onTap: (){
+                      onTap: () {
                         //open github project page
                         launchUrlString("https://github.com/bepass-org");
                       },
                       child: const MetaWithIcon(
-                        icon: Icons.code,
-                        title: "Source code"
-                      ),
+                          icon: Icons.code, title: "Source code"),
                     ),
                     gapBetweenElementsInTheCard,
                     InkWell(
-                      onTap: (){
+                      onTap: () {
                         //todo: add telegram group link
                         debugPrint("I am tapped :)");
                       },
                       child: const MetaWithIcon(
                           icon: Icons.telegram,
-                          title: "Telegram update channel"
-                      ),
+                          title: "Telegram update channel"),
                     ),
                   ],
                 ),
@@ -164,24 +160,21 @@ class AboutScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       "License",
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                            color: Colors.black87,
+                            fontWeight: FontWeight.bold,
+                          )
                     ),
                     gapBetweenHeaderAndElements,
                     InkWell(
-                      onTap: (){
+                      onTap: () {
                         //open github project page
                         launchUrlString("https://github.com/bepass-org");
                       },
                       child: const MetaWithIcon(
-                          icon: Icons.copyright,
-                          title: "License details"
-                      ),
+                          icon: Icons.copyright, title: "License details"),
                     ),
                     gapBetweenHeaderAndElements,
                   ],
@@ -195,44 +188,43 @@ class AboutScreen extends StatelessWidget {
   }
 }
 
-
 class MetaWithIcon extends StatelessWidget {
-  const MetaWithIcon({super.key, required this.icon, required this.title, this.description});
+  const MetaWithIcon(
+      {super.key, required this.icon, required this.title, this.description});
+
   final IconData icon;
   final String title;
   final String? description;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),//this padding help clickable item easier to touch
+      padding: const EdgeInsets.all(8.0),
+      //this padding help clickable item easier to touch
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(
             icon,
-            size: 24,
+            size: 28,
           ),
           const Gap(16),
-          Expanded(//expanded to fill the remaining space
+          Expanded(
+            //expanded to fill the remaining space
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-                if(description != null)
+                Text(title,
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                          color: Colors.black87,
+                        )),
+                if (description != null)
                   Text(
-                  description!,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Colors.black87,
+                    description!,
+                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                          color: Theme.of(context).colorScheme.onBackground,
+                        ),
                   ),
-                ),
               ],
             ),
           )

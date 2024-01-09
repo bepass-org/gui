@@ -1,7 +1,9 @@
+import 'package:defacto/enums/editable_dialog_types.dart';
 import 'package:defacto/ui/widgets/main_drawer.dart';
+import 'package:defacto/ui/widgets/form/group.dart';
+import 'package:defacto/ui/widgets/form/input_editable.dart';
+import 'package:defacto/ui/widgets/form/switch_editable.dart';
 import 'package:flutter/material.dart';
-
-import 'configuration.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -16,118 +18,90 @@ class _SettingsScreenState extends State<SettingsScreen> {
     'Bypass LAN': false,
     'Resolve Destination': true,
     'Use Proxy': false,
-    // Other toggles...
+    'Enable Multiplexer': false,
+    'Enable Traffic Sniffing': false,
   };
-  String ipv6Route = 'Disable'; // Example value for the IPv6 Route setting
-
-  void _showEditDialog(String title, String currentValue, Function(String) onUpdate) {
-    TextEditingController _controller = TextEditingController(text: currentValue);
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(title),
-          content: TextField(
-            controller: _controller,
-            decoration: InputDecoration(hintText: "Enter your value here"),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text('Cancel'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: Text('OK'),
-              onPressed: () {
-                onUpdate(_controller.text);
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
+  String ipv6Route = 'Disable';
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: false,
-      onPopInvoked: (didPop) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const ConfigurationScreen(),
+    return Scaffold(
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        title: const Text("Settings", style: TextStyle(color: Colors.white)),
+      ),
+      drawer: const MainDrawer(),
+      backgroundColor: Colors.white,
+      body: ListView(
+        children: <Widget>[
+          GroupForm(
+            title: 'Route Settings',
+            children: [
+              SwitchEditable(
+                icon: Icons.settings,
+                title: 'Apps VPN mode',
+                value: switchStates['Enable Sniffing']!,
+                onChanged: (value) => setState(() => switchStates['Enable Sniffing'] = value),
+              ),
+              SwitchEditable(
+                icon: Icons.settings,
+                title: 'Bypass LAN',
+                value: switchStates['Bypass LAN']!,
+                onChanged: (value) => setState(() => switchStates['Bypass LAN'] = value),
+              ),
+              InputEditable(
+                icon: Icons.edit,
+                title: 'Resolve Destination',
+                defaultValue: 'If the destination address is a domain',
+                dialogType: EditableDialogType.string,
+                onChanged: (value) => setState(() {}),
+              ),
+              InputEditable(
+                icon: Icons.edit,
+                title: 'IPv6 Route',
+                defaultValue: ipv6Route,
+                dialogType: EditableDialogType.string,
+                onChanged: (value) => setState(() => ipv6Route = value),
+              ),
+            ],
           ),
-        );
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.white),
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          title: const Text("Settings", style: TextStyle(color: Colors.white)),
-        ),
-        drawer: const MainDrawer(),
-        backgroundColor: Colors.white,
-        body: ListView(
-          children: <Widget>[
-            _buildGroupTitle('Route Settings'),
-            _buildSwitchSetting('Apps VPN mode', 'Configure VPN mode for selected apps', 'Enable Sniffing'),
-            _buildSwitchSetting('Bypass LAN', 'Bypass LAN in Core', 'Bypass LAN'),
-            _buildEditableSetting('Resolve Destination', 'If the destination address is a domainIf the destination address is a domainIf the destination address is a domain', 'Resolve Destination'),
-            _buildEditableSetting('IPv6 Route', 'Disable', 'Use Proxy'),
-            Divider(),
-            _buildGroupTitle('Protocol Settings'),
-            _buildSwitchSetting('Enable Multiplexer', 'Mux is designed to reduce TCP handshake latency...', 'Enable Sniffing'),
-            _buildEditableSetting('Rule Assets Provider', 'Chocolate4U/Iran-sing-box-rules', 'Use Proxy'),
-            _buildSwitchSetting('Enable Traffic Sniffing', 'Sniff result for routing', 'Resolve Destination'),
-            _buildEditableSetting('Protocol Selection', 'Automatic', 'Use Proxy'),
-            Divider(),
-            // Add more groups and settings here
-          ],
-        ),
+          GroupForm(
+            title: 'Protocol Settings',
+            lastOne: true,
+            children: [
+              SwitchEditable(
+                icon: Icons.settings,
+                title: 'Enable Multiplexer',
+                value: switchStates['Enable Multiplexer']!,
+                onChanged: (value) => setState(() => switchStates['Enable Multiplexer'] = value),
+              ),
+              InputEditable(
+                icon: Icons.edit,
+                title: 'Rule Assets Provider',
+                hint: 'Chocolate4U/Iran-sing-box-rules',
+                defaultValue: 'If the destination address is a domain',
+                dialogType: EditableDialogType.string,
+                onChanged: (value) => setState(() {}),
+              ),
+              SwitchEditable(
+                icon: Icons.settings,
+                title: 'Enable Traffic Sniffing',
+                value: switchStates['Enable Traffic Sniffing']!,
+                onChanged: (value) => setState(() => switchStates['Enable Traffic Sniffing'] = value),
+              ),
+              InputEditable(
+                icon: Icons.edit,
+                title: 'Protocol Selection',
+                defaultValue: 'Automatic',
+                dialogType: EditableDialogType.string,
+                onChanged: (value) => setState(() => ipv6Route = value),
+              ),
+            ],
+          ),
+          // ... Add more GroupForm widgets for other settings groups ...
+        ],
       ),
-    );
-  }
-
-  ListTile _buildSwitchSetting(String title, String subtitle, String switchKey) {
-    return ListTile(
-      leading: Icon(Icons.settings),
-      title: Text(title, style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Theme.of(context).colorScheme.onBackground, fontWeight: FontWeight.bold)),
-      subtitle: Text(subtitle),
-      trailing: Switch(
-        value: switchStates[switchKey]!,
-        onChanged: (newValue) {
-          setState(() {
-            switchStates[switchKey] = newValue;
-          });
-        },
-      ),
-    );
-  }
-
-  ListTile _buildEditableSetting(String title, String subtitle, String switchKey) {
-    return ListTile(
-      leading: Icon(Icons.edit),
-      title: Text(title, style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Theme.of(context).colorScheme.onBackground, fontWeight: FontWeight.bold)),
-      subtitle: Text(subtitle),
-      onTap: () {
-        _showEditDialog('IPv6 Route', ipv6Route, (newValue) {
-          setState(() {
-            ipv6Route = newValue;
-          });
-        });
-      },
-    );
-  }
-
-  Widget _buildGroupTitle(String title) {
-    return ListTile(
-      leading: const Text(""),
-      title: Text(title, style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Theme.of(context).colorScheme.primary, fontWeight: FontWeight.bold)),
     );
   }
 }
