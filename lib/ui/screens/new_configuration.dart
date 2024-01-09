@@ -1,7 +1,3 @@
-import 'package:defacto/ui/widgets/components.dart';
-import 'package:flutter/material.dart';
-
-import 'package:defacto/ui/widgets/components.dart';
 import 'package:flutter/material.dart';
 
 class NewConfigurationPage extends StatefulWidget {
@@ -65,12 +61,20 @@ class _NewConfigurationPageState extends State<NewConfigurationPage> {
         backgroundColor: Theme.of(context).colorScheme.primary,
         actions: [
           IconButton(
-            icon: Icon(Icons.save),
+            icon: const Icon(Icons.delete),
+            onPressed: _saveConfiguration,
+          ),
+          IconButton(
+            icon: const Icon(Icons.check),
+            onPressed: _saveConfiguration,
+          ),
+          IconButton(
+            icon: const Icon(Icons.more_vert),
             onPressed: _saveConfiguration,
           ),
         ],
         title: const Text(
-          'Add Configuration',
+          'Profile Config',
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -79,38 +83,38 @@ class _NewConfigurationPageState extends State<NewConfigurationPage> {
           _profileNameW(),
           _buildGroup('General', [
             _buildEditableSetting('TLS Header Length',
-                'Enter TLS header length', _tlsHeaderLength, Icons.security),
+                '5', _tlsHeaderLength, Icons.security),
             _buildEditableSetting('DOH or SDNS Address',
-                'Enter DOH or SDNS address', _dohSdnsAddress, Icons.http),
+                'https://1.1.1.1/dns-query', _dohSdnsAddress, Icons.http),
           ]),
           _buildGroup('DNS Settings', [
-            _buildEditableSetting('DNS Cache TTL', 'Enter DNS cache TTL',
+            _buildEditableSetting('DNS Cache TTL', '1500',
                 _dnsCacheTtl, Icons.timer),
             _buildEditableSetting('DNS Request Timeout',
-                'Enter DNS request timeout', _dnsReqTimeout, Icons.timelapse),
+                '10', _dnsReqTimeout, Icons.timelapse),
             _buildToggleSetting(
                 'Enable DNS Fragmentation', _dnsFragmentation, Icons.dns),
           ]),
           _buildGroup('SNI Settings', [
             _buildEditableSetting(
                 'SNI Chunks Length Range',
-                'Enter SNI chunks length range',
+                '1,2',
                 _sniChunksLenRange,
                 Icons.code),
             _buildEditableSetting('Before and After SNI Chunks Length Range',
-                'Enter length range', _sniBFChunksLenRange, Icons.code_off),
+                '1,5', _sniBFChunksLenRange, Icons.code_off),
             _buildEditableSetting(
                 'Delay between each packet',
-                'Enter delay (ms)',
+                '10,20',
                 _delayBetweenEachPacket,
                 Icons.hourglass_empty),
           ]),
           _buildGroup('Worker Settings', [
             _buildToggleSetting('Enable Worker', _enableWorker, Icons.work),
             _buildToggleSetting('DNS Only', _dnsOnly, Icons.dns),
-            _buildEditableSetting('Worker Address', 'Enter worker address',
+            _buildEditableSetting('Worker Address', 'worker-name.username.workers.dev',
                 _workerAddress, Icons.web),
-            _buildEditableSetting('Worker Clean IP:PORT', 'Enter IP and port',
+            _buildEditableSetting('Worker Clean IP:PORT', '192.168.1.1:443',
                 _workerCleanIpPort, Icons.portable_wifi_off),
           ]),
           _buildGroup('TLS Settings', [
@@ -120,7 +124,7 @@ class _NewConfigurationPageState extends State<NewConfigurationPage> {
                 'Enable TLS Padding', _enableTlsPadding, Icons.lock_outline),
             _buildEditableSetting(
                 'TLS Padding Range',
-                'Enter TLS padding range',
+                '10,1000',
                 _tlsPaddingRange,
                 Icons.format_line_spacing),
           ]),
@@ -128,17 +132,17 @@ class _NewConfigurationPageState extends State<NewConfigurationPage> {
               'UDP Settings',
               [
                 _buildEditableSetting('UDP Bind Address',
-                    'Enter UDP bind address', _udpBindAddress, Icons.radar),
-                _buildEditableSetting('UDP Read Timeout', 'Enter read timeout',
+                    '127.0.0.1', _udpBindAddress, Icons.radar),
+                _buildEditableSetting('UDP Read Timeout', '120',
                     _udpReadTimeout, Icons.timer_off),
                 _buildEditableSetting(
                     'UDP Write Timeout',
-                    'Enter write timeout',
+                    '120',
                     _udpWriteTimeout,
                     Icons.edit_attributes),
                 _buildEditableSetting(
                     'UDP Link Idle Timeout',
-                    'Enter link idle timeout',
+                    '120',
                     _udpLinkIdleTimeout,
                     Icons.link_off),
               ],
@@ -186,7 +190,6 @@ class _NewConfigurationPageState extends State<NewConfigurationPage> {
     return ListTile(
       leading: Icon(icon),
       title: Text(title),
-      subtitle: Text(value ? 'Enabled' : 'Disabled'),
       trailing: Switch(
         value: value,
         onChanged: (newValue) {
@@ -232,23 +235,22 @@ class _NewConfigurationPageState extends State<NewConfigurationPage> {
     Navigator.pop(context);
   }
 
-  void _showEditDialog(String title, TextEditingController controller) {
+  void _showEditDialog(String value, TextEditingController controller) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Edit $title'),
           content: TextField(
             controller: controller,
             decoration: InputDecoration(hintText: 'Enter your value'),
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
               onPressed: () => Navigator.of(context).pop(),
             ),
             TextButton(
-              child: Text('OK'),
+              child: const Text('OK'),
               onPressed: () {
                 setState(() {}); // Update the UI with the new value
                 Navigator.of(context).pop();
