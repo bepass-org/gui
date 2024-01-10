@@ -5,14 +5,14 @@ import 'package:defacto/ui/widgets/form/profile_name.dart';
 import 'package:defacto/ui/widgets/form/switch_editable.dart';
 import 'package:flutter/material.dart';
 
-class NewConfigurationPage extends StatefulWidget {
-  const NewConfigurationPage({super.key});
+class NewProfilePage extends StatefulWidget {
+  const NewProfilePage({super.key});
 
   @override
-  State<NewConfigurationPage> createState() => _NewConfigurationPageState();
+  State<NewProfilePage> createState() => _NewProfilePageState();
 }
 
-class _NewConfigurationPageState extends State<NewConfigurationPage> {
+class _NewProfilePageState extends State<NewProfilePage> {
   final TextEditingController _profileName = TextEditingController();
   final TextEditingController _tlsHeaderLength = TextEditingController();
   final TextEditingController _dohSdnsAddress = TextEditingController();

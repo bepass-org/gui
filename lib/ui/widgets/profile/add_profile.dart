@@ -1,8 +1,8 @@
-import 'package:defacto/ui/screens/new_configuration.dart';
+import 'package:defacto/ui/screens/new_profile.dart';
 import 'package:flutter/material.dart';
 
-class AddConfig extends StatelessWidget {
-  const AddConfig({super.key});
+class AddProfile extends StatelessWidget {
+  const AddProfile({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class AddConfig extends StatelessWidget {
             child: Icon(Icons.note_add),
           ),
           onSelected: (value) {
-            if (value == "profile") {
+            if (value == "profile.dart") {
               // add desired output
             }else if(value == "settings"){
               // add desired output
@@ -76,7 +76,7 @@ class AddConfig extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => NewConfigurationPage()),
+                  MaterialPageRoute(builder: (context) => NewProfilePage()),
                 );
               },
               child: const Row(

@@ -1,4 +1,4 @@
-import 'package:defacto/ui/screens/new_configuration.dart';
+import 'package:defacto/ui/screens/new_profile.dart';
 import 'package:flutter/material.dart';
 
 class MoreOptions extends StatelessWidget {
@@ -19,7 +19,7 @@ class MoreOptions extends StatelessWidget {
               child: Icon(Icons.more_vert),
             ),
             onSelected: (value) {
-              if (value == "profile") {
+              if (value == "profile.dart") {
                 // add desired output
               }else if(value == "settings"){
                 // add desired output
@@ -78,7 +78,7 @@ class MoreOptions extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => NewConfigurationPage()),
+                    MaterialPageRoute(builder: (context) => NewProfilePage()),
                   );
                 },
                 child: const Row(

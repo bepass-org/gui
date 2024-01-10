@@ -1,10 +1,7 @@
-import 'dart:io';
-import 'dart:math';
-
 import 'package:defacto/states/global/global_state.dart';
 import 'package:defacto/ui/widgets/bottom_nav_bar.dart';
-import 'package:defacto/ui/widgets/configuration/add_config.dart';
-import 'package:defacto/ui/widgets/configuration/more_options.dart';
+import 'package:defacto/ui/widgets/profile/add_profile.dart';
+import 'package:defacto/ui/widgets/profile/more_options.dart';
 import 'package:defacto/ui/widgets/configuration_tile.dart';
 import 'package:defacto/ui/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
@@ -66,7 +63,7 @@ class _ConfigurationScreen extends ConsumerState<ConfigurationScreen>
               onPressed: () {},
               icon: const Icon(Ionicons.search, color: Colors.white),
             ),
-            const AddConfig(),
+            const AddProfile(),
             const MoreOptions(),
           ],
         ),
