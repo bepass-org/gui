@@ -20,6 +20,8 @@ class ConfigurationScreen extends ConsumerStatefulWidget {
 
 class _ConfigurationScreen extends ConsumerState<ConfigurationScreen>
     with SingleTickerProviderStateMixin {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -51,9 +53,15 @@ class _ConfigurationScreen extends ConsumerState<ConfigurationScreen>
     return PopScope(
       canPop: false,
       onPopInvoked: (didPop) {
-        SystemNavigator.pop();
+        if(_scaffoldKey.currentState!.isDrawerOpen){
+          _scaffoldKey.currentState!.closeDrawer();
+        }
+        else{
+          SystemNavigator.pop();
+        }
       },
       child: Scaffold(
+        key: _scaffoldKey,
         appBar: AppBar(
           iconTheme: IconThemeData(color: Colors.white),
           backgroundColor: Theme.of(context).colorScheme.primary,

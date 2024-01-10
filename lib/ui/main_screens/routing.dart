@@ -1,4 +1,4 @@
-import 'package:defacto/ui/screens/add_route_screen.dart';
+import 'package:defacto/ui/other_screens/add_route_screen.dart';
 import 'package:defacto/ui/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +12,8 @@ class RoutingScreen extends StatefulWidget {
 }
 
 class _RoutingScreenState extends State<RoutingScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   Map<String, bool> rulesActive = {
     'Rule 7': true,
     'Block QUIC': false,
@@ -36,14 +38,20 @@ class _RoutingScreenState extends State<RoutingScreen> {
     return PopScope(
       canPop: false,
       onPopInvoked: (didPop) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const ConfigurationScreen(),
-          ),
-        );
+        if(_scaffoldKey.currentState!.isDrawerOpen){
+          _scaffoldKey.currentState!.closeDrawer();
+        }
+        else{
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const ConfigurationScreen(),
+            ),
+          );
+        }
       },
       child: Scaffold(
+        key: _scaffoldKey,
         appBar: AppBar(
           iconTheme: const IconThemeData(color: Colors.white),
           backgroundColor: Theme.of(context).colorScheme.primary,

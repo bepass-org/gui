@@ -47,10 +47,7 @@ class MainDrawer extends ConsumerWidget {
       leading: Icon(icon),
       title: Text(title),
       onTap: () {
-        if(ref.watch(globalStateProvider).activePage != page){
-          ref.read(globalStateProvider.notifier).setActivePage(page);
-        }
-
+        ref.read(globalStateProvider.notifier).setActivePage(page);
         // Check if the page is already in the navigation stack
         final isAlreadyInStack =
             ModalRoute.of(context)?.settings is RouteSettings &&

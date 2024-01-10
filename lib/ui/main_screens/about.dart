@@ -1,6 +1,6 @@
 import 'package:defacto/ui/widgets/card/default_card_misc_data.dart';
 import 'package:defacto/ui/widgets/card/default_list_item.dart';
-import 'package:defacto/ui/screens/configuration.dart';
+import 'package:defacto/ui/main_screens/configuration.dart';
 import 'package:defacto/ui/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
@@ -16,19 +16,27 @@ class AboutScreen extends StatefulWidget {
 }
 
 class _AboutScreenState extends State<AboutScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
       onPopInvoked: (didPop) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const ConfigurationScreen(),
-          ),
-        );
+        if(_scaffoldKey.currentState!.isDrawerOpen){
+          _scaffoldKey.currentState!.closeDrawer();
+        }
+        else{
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const ConfigurationScreen(),
+            ),
+          );
+        }
       },
       child: Scaffold(
+        key: _scaffoldKey,
         appBar: AppBar(
           iconTheme: const IconThemeData(color: Colors.white),
           backgroundColor: Theme

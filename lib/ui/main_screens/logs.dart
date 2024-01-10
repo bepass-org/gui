@@ -1,4 +1,4 @@
-import 'package:defacto/ui/screens/configuration.dart';
+import 'package:defacto/ui/main_screens/configuration.dart';
 import 'package:defacto/ui/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +10,8 @@ class LogsScreen extends StatefulWidget {
 }
 
 class _LogsScreenState extends State<LogsScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   // List to store log entries
   final List<LogEntry> logEntries = [];
 
@@ -18,14 +20,20 @@ class _LogsScreenState extends State<LogsScreen> {
     return PopScope(
       canPop: false,
       onPopInvoked: (didPop) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const ConfigurationScreen(),
-          ),
-        );
+        if(_scaffoldKey.currentState!.isDrawerOpen){
+          _scaffoldKey.currentState!.closeDrawer();
+        }
+        else{
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const ConfigurationScreen(),
+            ),
+          );
+        }
       },
       child: Scaffold(
+        key: _scaffoldKey,
         appBar: AppBar(
           iconTheme: IconThemeData(color: Colors.white),
           backgroundColor: Theme.of(context).colorScheme.primary,

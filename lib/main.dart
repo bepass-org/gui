@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:defacto/ui/screens/about.dart';
-import 'package:defacto/ui/screens/configuration.dart';
-import 'package:defacto/ui/screens/logs.dart';
-import 'package:defacto/ui/screens/routing.dart';
-import 'package:defacto/ui/screens/settings.dart';
+import 'package:defacto/ui/main_screens/about.dart';
+import 'package:defacto/ui/main_screens/configuration.dart';
+import 'package:defacto/ui/main_screens/logs.dart';
+import 'package:defacto/ui/main_screens/routing.dart';
+import 'package:defacto/ui/main_screens/settings.dart';
 import 'package:defacto/ui/skeleton/skeleton_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';

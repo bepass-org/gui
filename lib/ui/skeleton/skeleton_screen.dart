@@ -1,9 +1,9 @@
 import 'package:defacto/states/global/global_state.dart';
-import 'package:defacto/ui/screens/about.dart';
-import 'package:defacto/ui/screens/configuration.dart';
-import 'package:defacto/ui/screens/logs.dart';
-import 'package:defacto/ui/screens/routing.dart';
-import 'package:defacto/ui/screens/settings.dart';
+import 'package:defacto/ui/main_screens/about.dart';
+import 'package:defacto/ui/main_screens/configuration.dart';
+import 'package:defacto/ui/main_screens/logs.dart';
+import 'package:defacto/ui/main_screens/routing.dart';
+import 'package:defacto/ui/main_screens/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

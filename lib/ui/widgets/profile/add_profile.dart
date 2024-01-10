@@ -1,4 +1,4 @@
-import 'package:defacto/ui/screens/new_profile.dart';
+import 'package:defacto/ui/other_screens/new_profile.dart';
 import 'package:flutter/material.dart';
 
 class AddProfile extends StatelessWidget {
