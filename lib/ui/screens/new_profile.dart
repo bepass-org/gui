@@ -186,7 +186,7 @@ class _NewProfilePageState extends State<NewProfilePage> {
               InputEditable(
                 icon: Icons.web,
                 title: 'Worker Address',
-                defaultValue: '10,20',
+                defaultValue: 'https://id.username.workers.dev/dns-query',
                 dialogType: EditableDialogType.numberRange,
                 onChanged: (v) {},
               ),
