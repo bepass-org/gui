@@ -1,3 +1,4 @@
+import 'package:defacto/ui/screens/add_route_screen.dart';
 import 'package:defacto/ui/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
 
@@ -44,12 +45,14 @@ class _RoutingScreenState extends State<RoutingScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.white),
+          iconTheme: const IconThemeData(color: Colors.white),
           backgroundColor: Theme.of(context).colorScheme.primary,
           title: const Text("Routing And Rules", style: TextStyle(color: Colors.white)),
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AddRouteScreen()));
+              },
               icon: const Icon(Icons.add_road),
             ),
             IconButton(
@@ -93,8 +96,7 @@ class _RoutingScreenState extends State<RoutingScreen> {
                           children: [
                             Text(
                               rule,
-                              style: const TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                             ),
                             IconButton(
                               icon: const Icon(Icons.edit),

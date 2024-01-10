@@ -7,14 +7,20 @@ class GlobalStateNotifier extends StateNotifier<GlobalState> {
       : super(const GlobalState(
           isConnectionActive: false,
           activePage: AppPage.configuration,
+          availableProfiles: [],
+          activeProfileId: '',
         ));
 
   void isConnectionAlive(bool isAlive) {
-    state = GlobalState(isConnectionActive: isAlive, activePage: state.activePage);
+    state = state.copyWith(isConnectionActive: true);
   }
 
-  void changeActivePage(AppPage activePage) {
-    state = GlobalState(isConnectionActive: state.isConnectionActive, activePage: activePage);
+  void setActivePage(AppPage activePage) {
+    state = state.copyWith(activePage: activePage);
+  }
+
+  void setActiveProfileId(String activeProfileId) {
+    state = state.copyWith(activeProfileId: activeProfileId);
   }
 }
 
