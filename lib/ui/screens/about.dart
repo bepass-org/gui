@@ -1,21 +1,23 @@
-import 'dart:io';
-
+import 'package:defacto/states/widgets/item/default_card_misc_data.dart';
+import 'package:defacto/states/widgets/item/default_list_item.dart';
 import 'package:defacto/ui/screens/configuration.dart';
 import 'package:defacto/ui/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
-import 'package:url_launcher/url_launcher_string.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class AboutScreen extends StatelessWidget {
+import 'package:defacto/states/widgets/item/default_card.dart';
+
+class AboutScreen extends StatefulWidget {
   const AboutScreen({super.key});
 
   @override
+  State<AboutScreen> createState() => _AboutScreenState();
+}
+
+class _AboutScreenState extends State<AboutScreen> {
+  @override
   Widget build(BuildContext context) {
-    const gapBetweenCards = Gap(8); //this is the gap between cards
-    const gapBetweenHeaderAndElements = Gap(
-        8); //this is the gap between header and elements in the card for example between title and description
-    const gapBetweenElementsInTheCard =
-        Gap(0); //this is the gap between elements in the card
     return PopScope(
       canPop: false,
       onPopInvoked: (didPop) {
@@ -29,207 +31,165 @@ class AboutScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           iconTheme: const IconThemeData(color: Colors.white),
-          backgroundColor: Theme.of(context).colorScheme.primary,
+          backgroundColor: Theme
+              .of(context)
+              .colorScheme
+              .primary,
           title: const Text("About", style: TextStyle(color: Colors.white)),
         ),
         drawer: const MainDrawer(),
-        backgroundColor: Theme.of(context).colorScheme.background,
-        //using listview to avoid overflow in small screen
-        body: ListView(
-          padding: const EdgeInsets.all(8.0),
-          //padding for all sides in the listview
-          children: [
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Defacto Proxy App",
-                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                            color: Colors.black87,
-                            fontWeight: FontWeight.bold,
-                          ),
-                    ),
-                    gapBetweenHeaderAndElements,
-                    Text(
-                      "Bypassing the Great Firewall (GFW)",
-                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                            color: Theme.of(context).colorScheme.onBackground,
-                          ),
-                    ),
-                  ],
+        // backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Colors.white,
+        body: Material(
+          // color: Theme.of(context).colorScheme.background,
+          color: Colors.white,
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                DefaultCard(
+                  child: _bepassWidget(context),
                 ),
-              ),
+                DefaultCard(child: _appInfoWidget(context)),
+                DefaultCard(child: _projectWidget(context)),
+                DefaultCard(child: HtmlWidget(_htmlContent(), onTapUrl: _launchUrl)),
+              ],
             ),
-            gapBetweenCards,
-            // Versions Card
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const MetaWithIcon(
-                      icon: Icons.update,
-                      title: "Version",
-                      description: "1.0.0",
-                    ),
-                    gapBetweenElementsInTheCard,
-                    const MetaWithIcon(
-                      icon: Icons.layers,
-                      title: "Version (bepass)",
-                      description:
-                          "bepass-proxy-1.0.0\nbepass-dns-1.0.1\nbepass-scanner-2.0.0",
-                    ),
-                    gapBetweenElementsInTheCard,
-                    InkWell(
-                      onTap: () {
-                        //todo: redirect to the donate page
-                        debugPrint("I am tapped :)");
-                      },
-                      child: const MetaWithIcon(
-                        icon: Icons.wallet_giftcard_outlined,
-                        title: "Donate",
-                        description: "Well, Every penny counts!",
-                      ),
-                    ),
-                    gapBetweenElementsInTheCard,
-                    if (Platform.isAndroid)
-                      //add button to ignore battery optimization
-                      InkWell(
-                        onTap: () {
-                          //todo: ignore this feature requires install new package
-                          debugPrint("I am tapped :)");
-                        },
-                        child: const MetaWithIcon(
-                          icon: Icons.battery_1_bar_sharp,
-                          title: "Ignore Battery Optimization",
-                          description:
-                              "This will help to keep the app running in background",
-                        ),
-                      ),
-                  ],
-                ),
-              ),
-            ),
-            gapBetweenCards,
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Project",
-                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        color: Colors.black87,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    gapBetweenHeaderAndElements,
-                    InkWell(
-                      onTap: () {
-                        //open github project page
-                        launchUrlString("https://github.com/bepass-org");
-                      },
-                      child: const MetaWithIcon(
-                          icon: Icons.code, title: "Source code"),
-                    ),
-                    gapBetweenElementsInTheCard,
-                    InkWell(
-                      onTap: () {
-                        //todo: add telegram group link
-                        debugPrint("I am tapped :)");
-                      },
-                      child: const MetaWithIcon(
-                          icon: Icons.telegram,
-                          title: "Telegram update channel"),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            // Links Card
-            gapBetweenCards,
-            // Licenses Card
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "License",
-                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                            color: Colors.black87,
-                            fontWeight: FontWeight.bold,
-                          )
-                    ),
-                    gapBetweenHeaderAndElements,
-                    InkWell(
-                      onTap: () {
-                        //open github project page
-                        launchUrlString("https://github.com/bepass-org");
-                      },
-                      child: const MetaWithIcon(
-                          icon: Icons.copyright, title: "License details"),
-                    ),
-                    gapBetweenHeaderAndElements,
-                  ],
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
   }
-}
 
-class MetaWithIcon extends StatelessWidget {
-  const MetaWithIcon(
-      {super.key, required this.icon, required this.title, this.description});
-
-  final IconData icon;
-  final String title;
-  final String? description;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      //this padding help clickable item easier to touch
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(
-            icon,
-            size: 28,
-          ),
-          const Gap(16),
-          Expanded(
-            //expanded to fill the remaining space
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(title,
-                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                          color: Colors.black87,
-                        )),
-                if (description != null)
-                  Text(
-                    description!,
-                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                          color: Theme.of(context).colorScheme.onBackground,
-                        ),
-                  ),
-              ],
-            ),
-          )
-        ],
-      ),
+  Widget _bepassWidget(BuildContext context) {
+    final data = DefaultCardMiscData(
+      title: "Bepass Mobile",
+      body: "The universal proxy toolchain for Android. written in Kotlin",
     );
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          data.title,
+          style: Theme
+              .of(context)
+              .textTheme
+              .titleSmall!
+              .copyWith(
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+        ),
+        const SizedBox(
+          height: 14,
+        ),
+        Text(
+            data.body,
+            style: Theme
+                .of(context)
+                .textTheme
+                .labelLarge
+        ),
+      ],
+    );
+  }
+
+  Widget _appInfoWidget(BuildContext context) {
+    return const Column(
+      children: [
+        DefaultListItem(
+          title: "Version",
+          body: "1.2.3",
+          prefixWidget: Icon(Icons.history),
+        ),
+        SizedBox(
+          height: 14,
+        ),
+        DefaultListItem(
+          title: "Version (bepass-core)",
+          body: "bepass-extra: 1.4.0-rc3\ngo1.21.0@android/arm64\nwith_contract...",
+          prefixWidget: Icon(Icons.add_chart),
+        ),
+        SizedBox(
+          height: 14,
+        ),
+        DefaultListItem(
+          title: "Donate",
+          body: "I love money",
+          prefixWidget: Icon(Icons.card_giftcard),
+        ),
+        SizedBox(
+          height: 14,
+        ),
+        DefaultListItem(
+          title: "Ignore battery optimizations",
+          body: "Remove some restrictions",
+          prefixWidget: Icon(Icons.av_timer_outlined),
+        ),
+      ],
+    );
+  }
+
+  Widget _projectWidget(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Project',
+          style: Theme
+              .of(context)
+              .textTheme
+              .titleSmall!
+              .copyWith(
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        const DefaultListItem(
+          title: "Source code",
+          prefixWidget: Icon(Icons.bloodtype_outlined),
+        ),
+        const SizedBox(
+          height: 14,
+        ),
+        const DefaultListItem(
+          title: "Telegram update channel",
+          prefixWidget: Icon(Icons.telegram_sharp),
+        ),
+      ],
+    );
+  }
+
+  Future<bool> _launchUrl(url) async =>
+      await canLaunchUrl(Uri.parse(url)) ? await launchUrl(Uri.parse(url)) : throw Exception('Could not launch $url');
+
+  String _htmlContent() {
+    return '''
+    <h4>License</h4>
+    <p style="font-size: 12px;color: #605b5b;">
+    Copyright (C) 2023 by bepass-org &lt;<a href="mailto:contact-sagernet@sekai.icu">contact-bepass@bepass.org</a>&gt;<br><br>
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.<br><br>
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.<br><br>
+
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.<br><br>
+
+    In addition, no derivative work may use the name or imply association
+    with this application without prior consent.<br><br>
+</p>
+
+  ''';
   }
 }

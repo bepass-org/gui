@@ -21,6 +21,7 @@ dependencies:
   url_launcher: ^6.2.1
   ionicons: ^0.2.2
   gap: ^3.0.1 # Gap is a library for putting space in Column and Row automaticity read more:https://pub.dev/packages/gap
+  flutter_widget_from_html_core: ^0.14.11
 
 dev_dependencies:
   flutter_test:
