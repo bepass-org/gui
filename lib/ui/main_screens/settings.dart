@@ -32,10 +32,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return PopScope(
       canPop: false,
       onPopInvoked: (didPop) {
-        if(_scaffoldKey.currentState!.isDrawerOpen){
+        if (_scaffoldKey.currentState!.isDrawerOpen) {
           _scaffoldKey.currentState!.closeDrawer();
-        }
-        else{
+        } else {
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -62,13 +61,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   icon: Icons.settings,
                   title: 'Apps VPN mode',
                   value: switchStates['Enable Sniffing']!,
-                  onChanged: (value) => setState(() => switchStates['Enable Sniffing'] = value),
+                  onChanged: (value) =>
+                      setState(() => switchStates['Enable Sniffing'] = value),
                 ),
                 SwitchEditable(
                   icon: Icons.settings,
                   title: 'Bypass LAN',
                   value: switchStates['Bypass LAN']!,
-                  onChanged: (value) => setState(() => switchStates['Bypass LAN'] = value),
+                  onChanged: (value) =>
+                      setState(() => switchStates['Bypass LAN'] = value),
                 ),
                 InputEditable(
                   icon: Icons.edit,
@@ -94,7 +95,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   icon: Icons.settings,
                   title: 'Enable Multiplexer',
                   value: switchStates['Enable Multiplexer']!,
-                  onChanged: (value) => setState(() => switchStates['Enable Multiplexer'] = value),
+                  onChanged: (value) => setState(
+                      () => switchStates['Enable Multiplexer'] = value),
                 ),
                 InputEditable(
                   icon: Icons.edit,
@@ -108,7 +110,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   icon: Icons.settings,
                   title: 'Enable Traffic Sniffing',
                   value: switchStates['Enable Traffic Sniffing']!,
-                  onChanged: (value) => setState(() => switchStates['Enable Traffic Sniffing'] = value),
+                  onChanged: (value) => setState(
+                      () => switchStates['Enable Traffic Sniffing'] = value),
                 ),
                 InputEditable(
                   icon: Icons.edit,
