@@ -21,9 +21,9 @@ class MoreOptions extends StatelessWidget {
             onSelected: (value) {
               if (value == "profile.dart") {
                 // add desired output
-              }else if(value == "settings"){
+              } else if (value == "settings") {
                 // add desired output
-              }else if(value == "logout"){
+              } else if (value == "logout") {
                 // add desired output
               }
             },
@@ -34,8 +34,7 @@ class MoreOptions extends StatelessWidget {
                   children: [
                     Padding(
                         padding: EdgeInsets.only(right: 8.0),
-                        child: Icon(Icons.clear_all, color: Colors.black45)
-                    ),
+                        child: Icon(Icons.clear_all, color: Colors.black45)),
                     Text(
                       'Clear traffic statistics',
                       style: TextStyle(fontSize: 15),
@@ -49,8 +48,8 @@ class MoreOptions extends StatelessWidget {
                   children: [
                     Padding(
                         padding: EdgeInsets.only(right: 8.0),
-                        child: Icon(Icons.control_point_duplicate, color: Colors.black45)
-                    ),
+                        child: Icon(Icons.control_point_duplicate,
+                            color: Colors.black45)),
                     Text(
                       'Remove duplicates',
                       style: TextStyle(fontSize: 15),
@@ -74,13 +73,30 @@ class MoreOptions extends StatelessWidget {
                 ),
               ),
               PopupMenuItem(
-                value: "order",
+                value: "fragmentation",
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => NewProfilePage()),
                   );
                 },
+                child: const Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(right: 8.0),
+                      child: Icon(Icons.turn_sharp_left_outlined,
+                          color: Colors.black45),
+                    ),
+                    Text(
+                      'Fragmentation',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                  ],
+                ),
+              ),
+              PopupMenuItem(
+                value: "order",
+                onTap: () {},
                 child: const Row(
                   children: [
                     Padding(
