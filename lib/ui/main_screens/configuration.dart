@@ -1,16 +1,15 @@
 import 'package:defacto/states/global/global_state.dart';
 import 'package:defacto/ui/widgets/bottom_nav_bar.dart';
+import 'package:defacto/ui/widgets/main_drawer.dart';
 import 'package:defacto/ui/widgets/profile/add_profile.dart';
 import 'package:defacto/ui/widgets/profile/more_options.dart';
 import 'package:defacto/ui/widgets/profile.dart';
-import 'package:defacto/ui/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ionicons/ionicons.dart';
 
 class ConfigurationScreen extends ConsumerStatefulWidget {
-  const ConfigurationScreen({super.key});
+  const ConfigurationScreen({Key? key}) : super(key: key);
 
   @override
   ConsumerState<ConfigurationScreen> createState() {
@@ -21,6 +20,8 @@ class ConfigurationScreen extends ConsumerStatefulWidget {
 class _ConfigurationScreen extends ConsumerState<ConfigurationScreen>
     with SingleTickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final TextEditingController _searchController = TextEditingController();
+  bool _isSearching = false;
 
   late AnimationController _controller;
   late Animation<double> _animation;
@@ -38,6 +39,7 @@ class _ConfigurationScreen extends ConsumerState<ConfigurationScreen>
   @override
   void dispose() {
     _controller.dispose();
+    _searchController.dispose();
     super.dispose();
   }
 
@@ -50,26 +52,44 @@ class _ConfigurationScreen extends ConsumerState<ConfigurationScreen>
         ? _controller.forward()
         : _controller.reverse();
 
-    return PopScope(
-      canPop: false,
-      onPopInvoked: (didPop) {
-        if(_scaffoldKey.currentState!.isDrawerOpen){
-          _scaffoldKey.currentState!.closeDrawer();
+    return WillPopScope(
+      onWillPop: () async {
+        if (_isSearching) {
+          _cancelSearch();
+          return false;
         }
-        else{
-          SystemNavigator.pop();
-        }
+        return true;
       },
       child: Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
           iconTheme: const IconThemeData(color: Colors.white),
           backgroundColor: Theme.of(context).colorScheme.primary,
-          title: const Text("Bepass", style: TextStyle(color: Colors.white)),
+          title: _isSearching
+              ? TextField(
+                  controller: _searchController,
+                  decoration: const InputDecoration(
+                    hintText: 'Search...',
+                    hintStyle: TextStyle(color: Colors.white70),
+                    border: InputBorder.none,
+                  ),
+                  style: const TextStyle(color: Colors.white),
+                  onChanged: (value) {
+                    // Implement your search logic here
+                  },
+                )
+              : const Text("Bepass", style: TextStyle(color: Colors.white)),
           actions: [
             IconButton(
-              onPressed: () {},
-              icon: const Icon(Ionicons.search, color: Colors.white),
+              onPressed: () {
+                setState(() {
+                  _isSearching = !_isSearching;
+                });
+              },
+              icon: Icon(
+                _isSearching ? Icons.close : Ionicons.search,
+                color: Colors.white,
+              ),
             ),
             const AddProfile(),
             const MoreOptions(),
@@ -115,7 +135,9 @@ class _ConfigurationScreen extends ConsumerState<ConfigurationScreen>
                 totalDownloadTraffic: profile.totalDownloadTraffic,
                 downloadMeasureUnit: profile.downloadMeasureUnit,
                 onTap: (String activeProfileId) {
-                  ref.read(globalStateProvider.notifier).setActiveProfileId(activeProfileId);
+                  ref
+                      .read(globalStateProvider.notifier)
+                      .setActiveProfileId(activeProfileId);
                 },
               );
             },
@@ -123,5 +145,12 @@ class _ConfigurationScreen extends ConsumerState<ConfigurationScreen>
         ),
       ),
     );
+  }
+
+  void _cancelSearch() {
+    setState(() {
+      _isSearching = false;
+      _searchController.clear();
+    });
   }
 }
