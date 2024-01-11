@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:defacto/ui/main_screens/LoadingScreen.dart';
 import 'package:defacto/ui/main_screens/about.dart';
 import 'package:defacto/ui/main_screens/configuration.dart';
 import 'package:defacto/ui/main_screens/logs.dart';
@@ -53,7 +54,7 @@ class MyApp extends ConsumerWidget {
     final ThemeModeState currentTheme = ref.watch(themeProvider);
 
     return MaterialApp(
-      title: 'Flutter Production Boilerplate',
+      title: 'Bepass',
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: currentTheme.themeMode,
@@ -61,8 +62,9 @@ class MyApp extends ConsumerWidget {
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
+      initialRoute: '/loading',
       routes: {
+        '/loading': (context) => const LoadingScreen(),
         '/': (context) => const SkeletonScreen(),
         '/configuration': (context) => const ConfigurationScreen(),
         '/routingAndRules': (context) => const RoutingScreen(),
@@ -72,7 +74,7 @@ class MyApp extends ConsumerWidget {
       },
       onGenerateRoute: (settings) {
         // If the route is not found, just get moved to the skeleton screen
-        return MaterialPageRoute(builder: (context) => const SkeletonScreen());
+        return MaterialPageRoute(builder: (context) => const LoadingScreen());
       },
     );
   }

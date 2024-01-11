@@ -1,0 +1,28 @@
+[
+  {
+    "id": "profile1",
+    "name": "profile1",
+    "type": "bepass-v1",
+    "fields": {
+      "server": "192.168.1.1",
+      "port": 8080
+    },
+    "uploadTraffic": 0.0,
+    "uploadMeasureUnit": "KB",
+    "downloadTraffic": 0.0,
+    "downloadMeasureUnit": "KB"
+  },
+  {
+    "id": "profile2",
+    "type": "bepass-v1",
+    "name": "profile2",
+    "fields": {
+      "server": "10.0.0.1",
+      "port": 8080
+    },
+    "uploadTraffic": 0.0,
+    "uploadMeasureUnit": "KB",
+    "downloadTraffic": 0.0,
+    "downloadMeasureUnit": "KB"
+  }
+]

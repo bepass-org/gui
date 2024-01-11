@@ -34,6 +34,7 @@ flutter:
 
   assets:
     - assets/translations/
+    - assets/fake_data/
 
   fonts:
     - family: Nunito

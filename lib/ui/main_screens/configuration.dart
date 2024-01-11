@@ -2,7 +2,7 @@ import 'package:defacto/states/global/global_state.dart';
 import 'package:defacto/ui/widgets/bottom_nav_bar.dart';
 import 'package:defacto/ui/widgets/profile/add_profile.dart';
 import 'package:defacto/ui/widgets/profile/more_options.dart';
-import 'package:defacto/ui/widgets/configuration_tile.dart';
+import 'package:defacto/ui/widgets/profile.dart';
 import 'package:defacto/ui/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -63,7 +63,7 @@ class _ConfigurationScreen extends ConsumerState<ConfigurationScreen>
       child: Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.white),
+          iconTheme: const IconThemeData(color: Colors.white),
           backgroundColor: Theme.of(context).colorScheme.primary,
           title: const Text("Bepass", style: TextStyle(color: Colors.white)),
           actions: [
@@ -100,21 +100,25 @@ class _ConfigurationScreen extends ConsumerState<ConfigurationScreen>
         ),
         body: Material(
           color: Theme.of(context).colorScheme.background,
-          child: ListView(
+          child: ListView.builder(
             padding: const EdgeInsets.all(4),
             physics: const BouncingScrollPhysics(),
-            children: const [
-              ConfigurationTile(
-                title: "MCI",
-                subTitle: "Cloudflare worker",
-                isSelected: true,
-              ),
-              ConfigurationTile(
-                title: "Irancell",
-                subTitle: "Standalone server",
-                isSelected: false,
-              ),
-            ],
+            itemCount: globalState.availableProfiles.length,
+            itemBuilder: (context, index) {
+              final profile = globalState.availableProfiles[index];
+              return Profile(
+                title: profile.name,
+                type: profile.type,
+                isSelected: profile.id == globalState.activeProfileId,
+                totalUploadTraffic: profile.totalUploadTraffic,
+                uploadMeasureUnit: profile.uploadMeasureUnit,
+                totalDownloadTraffic: profile.totalDownloadTraffic,
+                downloadMeasureUnit: profile.downloadMeasureUnit,
+                onTap: (String activeProfileId) {
+                  ref.read(globalStateProvider.notifier).setActiveProfileId(activeProfileId);
+                },
+              );
+            },
           ),
         ),
       ),

@@ -1,17 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
-class ConfigurationTile extends StatelessWidget {
-  const ConfigurationTile({
+class Profile extends StatelessWidget {
+  const Profile({
     super.key,
     required this.isSelected,
     required this.title,
-    required this.subTitle,
+    required this.type,
+    required this.totalUploadTraffic,
+    required this.uploadMeasureUnit,
+    required this.totalDownloadTraffic,
+    required this.downloadMeasureUnit,
+    required this.onTap,
   });
 
   final bool isSelected;
   final String title;
-  final String subTitle;
+  final String type;
+  final double totalUploadTraffic;
+  final String uploadMeasureUnit;
+  final double totalDownloadTraffic;
+  final String downloadMeasureUnit;
+  final Function(String) onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +51,7 @@ class ConfigurationTile extends StatelessWidget {
           ),
         ),
         child: ListTile(
+          onTap: () => onTap(title),
           title: Row(
             children: <Widget>[
               Icon(Ionicons.apps, color: Theme.of(context).colorScheme.primary),
@@ -56,7 +67,7 @@ class ConfigurationTile extends StatelessWidget {
                         .apply(fontWeightDelta: 2),
                   ),
                   Text(
-                    subTitle,
+                    type,
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
                 ],
