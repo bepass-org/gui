@@ -22,12 +22,19 @@ dependencies:
   ionicons: ^0.2.2
   gap: ^3.0.1 # Gap is a library for putting space in Column and Row automaticity read more:https://pub.dev/packages/gap
   flutter_widget_from_html_core: ^0.14.11
+  freezed_annotation : any
+  json_annotation: any
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^3.0.1
+  build_runner: ^2.4.7
+  freezed: any
+  json_serializable: any
+
 
 flutter:
   uses-material-design: true

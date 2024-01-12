@@ -1,11 +1,14 @@
 import 'dart:collection';
 
 import 'package:defacto/models/add_route_model.dart';
+import 'package:defacto/models/route/route_model.dart';
 import 'package:defacto/ui/widgets/card/default_list_item.dart';
 import 'package:flutter/material.dart';
 
 class AddRouteScreen extends StatefulWidget {
-  const AddRouteScreen({super.key});
+RouteModel? routeModel;
+
+AddRouteScreen({this.routeModel});
 
   @override
   State<AddRouteScreen> createState() => _AddRouteScreenState();
@@ -59,17 +62,17 @@ class _AddRouteScreenState extends State<AddRouteScreen> {
         padding: const EdgeInsets.only(left: 16.0, right: 16, top: 6),
         prefixWidget: const Icon(Icons.my_library_music_outlined, color: Color(0xff605b5b)),
         title: "Route Name",
-        body: data[AddRouteEnum.routeName]?.value ?? 'Not Set',
+        body: widget.routeModel?.routeName ?? 'Not Set',
       ),
       const SizedBox(
         height: 30,
       ),
-      DefaultListItem(
-        padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 6),
-        prefixWidget: const Icon(Icons.waves, color: Color(0xff605b5b)),
-        title: "Applications",
-        body: data[AddRouteEnum.application]?.value ?? 'Not Set',
-      )
+      // DefaultListItem(
+      //   padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 6),
+      //   prefixWidget: const Icon(Icons.waves, color: Color(0xff605b5b)),
+      //   title: "Applications",
+      //   body: data[AddRouteEnum.application]?.value ?? 'Not Set',
+      // )
     ];
   }
 
@@ -88,7 +91,7 @@ class _AddRouteScreenState extends State<AddRouteScreen> {
         padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 6),
         prefixWidget: const Icon(Icons.apartment, color: Color(0xff605b5b)),
         title: "domain",
-        body: data[AddRouteEnum.domain]?.value ?? 'Not Set',
+        body: widget.routeModel?.routeName ?? 'Not Set',
         onClick: () {
           // TODO : logic goes here
           debugPrint('OPEN DIALOG TO GET INFO');
@@ -101,7 +104,7 @@ class _AddRouteScreenState extends State<AddRouteScreen> {
         padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 6),
         prefixWidget: const Icon(Icons.add_road, color: Color(0xff605b5b)),
         title: "ip",
-        body: data[AddRouteEnum.ip]?.value ?? 'Not Set',
+        body: widget.routeModel?.ip ?? 'Not Set',
       ),
       const SizedBox(
         height: 24,
@@ -110,7 +113,7 @@ class _AddRouteScreenState extends State<AddRouteScreen> {
         padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 6),
         prefixWidget: const Icon(Icons.local_shipping, color: Color(0xff605b5b)),
         title: "port",
-        body: data[AddRouteEnum.port]?.value ?? 'Not Set',
+        body: widget.routeModel?.port ?? 'Not Set',
       ),
       const SizedBox(
         height: 24,
@@ -119,7 +122,7 @@ class _AddRouteScreenState extends State<AddRouteScreen> {
         padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 6),
         prefixWidget: const Icon(Icons.home, color: Color(0xff605b5b)),
         title: "sourcePort",
-        body: data[AddRouteEnum.sourcePort]?.value ?? 'Not Set',
+        body: widget.routeModel?.sourcePort ?? 'Not Set',
       ),
       const SizedBox(
         height: 24,
@@ -128,7 +131,7 @@ class _AddRouteScreenState extends State<AddRouteScreen> {
         padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 6),
         prefixWidget: const Icon(Icons.network_ping_sharp, color: Color(0xff605b5b)),
         title: "network",
-        body: data[AddRouteEnum.network]?.value ?? 'Not Set',
+        body: widget.routeModel?.network ?? 'Not Set',
       ),
       const SizedBox(
         height: 24,
@@ -137,7 +140,7 @@ class _AddRouteScreenState extends State<AddRouteScreen> {
         padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 6),
         prefixWidget: const Icon(Icons.wine_bar, color: Color(0xff605b5b)),
         title: "source",
-        body: data[AddRouteEnum.source]?.value ?? 'Not Set',
+        body: widget.routeModel?.source ?? 'Not Set',
       ),
       const SizedBox(
         height: 24,
@@ -146,7 +149,7 @@ class _AddRouteScreenState extends State<AddRouteScreen> {
         padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 6),
         prefixWidget: const Icon(Icons.propane_tank_outlined, color: Color(0xff605b5b)),
         title: "protocol",
-        body: data[AddRouteEnum.protocol]?.value ?? 'Not Set',
+        body: widget.routeModel?.protocol ?? 'Not Set',
       ),
       const SizedBox(
         height: 24,
@@ -155,7 +158,7 @@ class _AddRouteScreenState extends State<AddRouteScreen> {
         padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 6),
         prefixWidget: const Icon(Icons.radio_outlined, color: Color(0xff605b5b)),
         title: "outbound",
-        body: data[AddRouteEnum.outbound]?.value ?? 'Not Set',
+        body: widget.routeModel?.outbound ?? 'Not Set',
       ),
     ];
   }
@@ -171,5 +174,8 @@ class _AddRouteScreenState extends State<AddRouteScreen> {
     data[AddRouteEnum.source] = (AddRouteModel(id: AddRouteEnum.source, value: "Not Set"));
     data[AddRouteEnum.protocol] = (AddRouteModel(id: AddRouteEnum.protocol, value: "Not Set"));
     data[AddRouteEnum.outbound] = (AddRouteModel(id: AddRouteEnum.outbound, value: "Not Set"));
+
+
+    print("--- name: ${data[AddRouteEnum.routeName]?.value}" );
   }
 }
