@@ -3,11 +3,10 @@ import 'package:defacto/ui/widgets/bottom_nav_bar.dart';
 import 'package:defacto/ui/widgets/main_drawer.dart';
 import 'package:defacto/ui/widgets/profile/add_profile.dart';
 import 'package:defacto/ui/widgets/profile/more_options.dart';
-import 'package:defacto/ui/widgets/profile.dart';
+import 'package:defacto/ui/widgets/profile/profile_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:defacto/models/profile.dart' as m_profile;
 import 'package:ionicons/ionicons.dart';
 
 class ConfigurationScreen extends ConsumerStatefulWidget {
@@ -46,30 +45,6 @@ class _ConfigurationScreen extends ConsumerState<ConfigurationScreen>
     super.dispose();
   }
 
-  Widget _getProfileWidget(m_profile.Profile profile, String activeProfileId) {
-    return Profile(
-      id: profile.id,
-      title: profile.name,
-      type: profile.type,
-      isSelected: profile.id == activeProfileId,
-      totalUploadTraffic: profile.totalUploadTraffic,
-      uploadMeasureUnit: profile.uploadMeasureUnit,
-      totalDownloadTraffic: profile.totalDownloadTraffic,
-      downloadMeasureUnit: profile.downloadMeasureUnit,
-      onTap: () {
-        // if the profile is already active, do nothing
-        if(activeProfileId == profile.id){
-          return;
-        }
-        ref
-            .read(globalStateProvider.notifier)
-            .setActiveProfileId(profile.id);
-      },
-      onDelete: (String id) => _deleteProfile(id),
-      onEdit: (String profileId) {},
-    );
-  }
-
   void _deleteProfile(String id) {
     final globalState = ref.watch(globalStateProvider);
     final profiles = globalState.availableProfiles;
@@ -81,12 +56,20 @@ class _ConfigurationScreen extends ConsumerState<ConfigurationScreen>
           .deleteProfileWithId(removedItem.id);
       _listKey.currentState!.removeItem(
         index,
-            (context, animation) {
+        (context, animation) {
           return SizeTransition(
             sizeFactor: animation,
             child: Opacity(
               opacity: 0,
-              child: _getProfileWidget(removedItem, globalState.activeProfileId),
+              child: ProfileWidget(
+                profile: removedItem,
+                activeProfileId: globalState.activeProfileId,
+                onTap: () => ref
+                    .read(globalStateProvider.notifier)
+                    .setActiveProfileId(removedItem.id),
+                onEdit: (){},
+                onDelete: () => _deleteProfile(removedItem.id),
+              ),
             ),
           );
         },
@@ -107,11 +90,11 @@ class _ConfigurationScreen extends ConsumerState<ConfigurationScreen>
       // WARNING: DO NOT USE WILLPOPSCOPE ITS DEPRECATED
       canPop: false,
       onPopInvoked: (didPop) {
-        if(_scaffoldKey.currentState!.isDrawerOpen){
+        if (_scaffoldKey.currentState!.isDrawerOpen) {
           _scaffoldKey.currentState!.closeDrawer();
         } else if (_isSearching) {
           _cancelSearch();
-        } else{
+        } else {
           SystemNavigator.pop();
         }
       },
@@ -156,7 +139,8 @@ class _ConfigurationScreen extends ConsumerState<ConfigurationScreen>
         floatingActionButton: AnimatedContainer(
           duration: const Duration(milliseconds: 300),
           margin: EdgeInsets.only(
-              bottom: globalState.isConnectionActive ? 0.0 : 10.0),
+            bottom: globalState.isConnectionActive ? 0.0 : 10.0,
+          ),
           // Adjust the value based on the height of your BottomNavigationBar
           child: FloatingActionButton(
             shape: const CircleBorder(),
@@ -182,7 +166,15 @@ class _ConfigurationScreen extends ConsumerState<ConfigurationScreen>
             initialItemCount: globalState.availableProfiles.length,
             itemBuilder: (context, index, animation) {
               final profile = globalState.availableProfiles[index];
-              return _getProfileWidget(profile, globalState.activeProfileId);
+              return ProfileWidget(
+                profile: profile,
+                activeProfileId: globalState.activeProfileId,
+                onTap: () => ref
+                    .read(globalStateProvider.notifier)
+                    .setActiveProfileId(profile.id),
+                onEdit: (){},
+                onDelete: () => _deleteProfile(profile.id),
+              );
             },
           ),
         ),

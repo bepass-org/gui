@@ -18,15 +18,7 @@ class MoreOptions extends StatelessWidget {
               padding: EdgeInsets.all(8.0),
               child: Icon(Icons.more_vert),
             ),
-            onSelected: (value) {
-              if (value == "profile.dart") {
-                // add desired output
-              } else if (value == "settings") {
-                // add desired output
-              } else if (value == "logout") {
-                // add desired output
-              }
-            },
+            onSelected: (value) {},
             itemBuilder: (BuildContext context) => <PopupMenuEntry>[
               const PopupMenuItem(
                 value: "clearAllStats",

@@ -16,15 +16,7 @@ class AddProfile extends StatelessWidget {
             padding: EdgeInsets.all(8.0),
             child: Icon(Icons.note_add),
           ),
-          onSelected: (value) {
-            if (value == "profile.dart") {
-              // add desired output
-            }else if(value == "settings"){
-              // add desired output
-            }else if(value == "logout"){
-              // add desired output
-            }
-          },
+          onSelected: (value) {},
           itemBuilder: (BuildContext context) => <PopupMenuEntry>[
             const PopupMenuItem(
               value: "scan",

@@ -3,6 +3,11 @@ import 'package:defacto/models/global_state.dart';
 import 'package:defacto/models/profile.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+final globalStateProvider =
+StateNotifierProvider<GlobalStateNotifier, GlobalState>((ref) {
+  return GlobalStateNotifier();
+});
+
 class GlobalStateNotifier extends StateNotifier<GlobalState> {
   GlobalStateNotifier()
       : super(const GlobalState(
@@ -47,8 +52,3 @@ class GlobalStateNotifier extends StateNotifier<GlobalState> {
     // Implement logic to periodically update traffic for the active profile
   }
 }
-
-final globalStateProvider =
-    StateNotifierProvider<GlobalStateNotifier, GlobalState>((ref) {
-  return GlobalStateNotifier();
-});

@@ -1,4 +1,4 @@
-// profile.dart name widget
+// profile_name.dart name widget
 import 'package:defacto/enums/editable_dialog_types.dart';
 import 'package:defacto/ui/widgets/form/input_editable.dart';
 import 'package:flutter/material.dart';
