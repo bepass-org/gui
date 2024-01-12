@@ -7,10 +7,10 @@
       "server": "192.168.1.1",
       "port": 8080
     },
-    "uploadTraffic": 0.0,
-    "uploadMeasureUnit": "KB",
-    "downloadTraffic": 0.0,
-    "downloadMeasureUnit": "KB"
+    "uploadTraffic": 3.0,
+    "uploadMeasureUnit": "GB",
+    "downloadTraffic": 45.0,
+    "downloadMeasureUnit": "GB"
   },
   {
     "id": "profile2",
@@ -21,6 +21,45 @@
       "port": 8080
     },
     "uploadTraffic": 0.0,
+    "uploadMeasureUnit": "KB",
+    "downloadTraffic": 0.0,
+    "downloadMeasureUnit": "KB"
+  },
+  {
+    "id": "profile3",
+    "type": "bepass-v1",
+    "name": "profile3",
+    "fields": {
+      "server": "10.0.0.1",
+      "port": 8080
+    },
+    "uploadTraffic": 10.0,
+    "uploadMeasureUnit": "Bytes",
+    "downloadTraffic": 15.0,
+    "downloadMeasureUnit": "KB"
+  },
+  {
+    "id": "profile4",
+    "type": "bepass-v1",
+    "name": "profile4",
+    "fields": {
+      "server": "10.0.0.1",
+      "port": 8080
+    },
+    "uploadTraffic": 13.5,
+    "uploadMeasureUnit": "KB",
+    "downloadTraffic": 60.0,
+    "downloadMeasureUnit": "MB"
+  },
+  {
+    "id": "profile5",
+    "type": "bepass-v1",
+    "name": "profile5",
+    "fields": {
+      "server": "10.0.0.1",
+      "port": 8080
+    },
+    "uploadTraffic": 9.0,
     "uploadMeasureUnit": "KB",
     "downloadTraffic": 0.0,
     "downloadMeasureUnit": "KB"

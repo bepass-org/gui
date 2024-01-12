@@ -35,7 +35,7 @@ class _LogsScreenState extends State<LogsScreen> {
       child: Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.white),
+          iconTheme: const IconThemeData(color: Colors.white),
           backgroundColor: Theme.of(context).colorScheme.primary,
           title: const Text("Logs", style: TextStyle(color: Colors.white)),
           actions: [

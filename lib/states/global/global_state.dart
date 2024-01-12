@@ -24,6 +24,11 @@ class GlobalStateNotifier extends StateNotifier<GlobalState> {
     state = state.copyWith(activeProfileId: activeProfileId);
   }
 
+  void deleteProfileWithId(String profileId) {
+    state.availableProfiles.removeWhere((profile) => profile.id == profileId);
+    state = state.copyWith(availableProfiles: state.availableProfiles);
+  }
+
   void setAvailableProfiles(List<Profile> availableProfiles) {
     state = state.copyWith(availableProfiles: availableProfiles);
   }

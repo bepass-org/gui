@@ -5,11 +5,13 @@ import 'package:defacto/ui/widgets/profile/add_profile.dart';
 import 'package:defacto/ui/widgets/profile/more_options.dart';
 import 'package:defacto/ui/widgets/profile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:defacto/models/profile.dart' as m_profile;
 import 'package:ionicons/ionicons.dart';
 
 class ConfigurationScreen extends ConsumerStatefulWidget {
-  const ConfigurationScreen({Key? key}) : super(key: key);
+  const ConfigurationScreen({super.key});
 
   @override
   ConsumerState<ConfigurationScreen> createState() {
@@ -20,6 +22,7 @@ class ConfigurationScreen extends ConsumerStatefulWidget {
 class _ConfigurationScreen extends ConsumerState<ConfigurationScreen>
     with SingleTickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
   final TextEditingController _searchController = TextEditingController();
   bool _isSearching = false;
 
@@ -43,6 +46,54 @@ class _ConfigurationScreen extends ConsumerState<ConfigurationScreen>
     super.dispose();
   }
 
+  Widget _getProfileWidget(m_profile.Profile profile, String activeProfileId) {
+    return Profile(
+      id: profile.id,
+      title: profile.name,
+      type: profile.type,
+      isSelected: profile.id == activeProfileId,
+      totalUploadTraffic: profile.totalUploadTraffic,
+      uploadMeasureUnit: profile.uploadMeasureUnit,
+      totalDownloadTraffic: profile.totalDownloadTraffic,
+      downloadMeasureUnit: profile.downloadMeasureUnit,
+      onTap: () {
+        // if the profile is already active, do nothing
+        if(activeProfileId == profile.id){
+          return;
+        }
+        ref
+            .read(globalStateProvider.notifier)
+            .setActiveProfileId(profile.id);
+      },
+      onDelete: (String id) => _deleteProfile(id),
+      onEdit: (String profileId) {},
+    );
+  }
+
+  void _deleteProfile(String id) {
+    final globalState = ref.watch(globalStateProvider);
+    final profiles = globalState.availableProfiles;
+    final index = profiles.indexWhere((profile) => profile.id == id);
+    if (index >= 0) {
+      final removedItem = profiles.removeAt(index);
+      ref
+          .read(globalStateProvider.notifier)
+          .deleteProfileWithId(removedItem.id);
+      _listKey.currentState!.removeItem(
+        index,
+            (context, animation) {
+          return SizeTransition(
+            sizeFactor: animation,
+            child: Opacity(
+              opacity: 0,
+              child: _getProfileWidget(removedItem, globalState.activeProfileId),
+            ),
+          );
+        },
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final globalState = ref.watch(globalStateProvider);
@@ -52,13 +103,17 @@ class _ConfigurationScreen extends ConsumerState<ConfigurationScreen>
         ? _controller.forward()
         : _controller.reverse();
 
-    return WillPopScope(
-      onWillPop: () async {
-        if (_isSearching) {
+    return PopScope(
+      // WARNING: DO NOT USE WILLPOPSCOPE ITS DEPRECATED
+      canPop: false,
+      onPopInvoked: (didPop) {
+        if(_scaffoldKey.currentState!.isDrawerOpen){
+          _scaffoldKey.currentState!.closeDrawer();
+        } else if (_isSearching) {
           _cancelSearch();
-          return false;
+        } else{
+          SystemNavigator.pop();
         }
-        return true;
       },
       child: Scaffold(
         key: _scaffoldKey,
@@ -120,26 +175,14 @@ class _ConfigurationScreen extends ConsumerState<ConfigurationScreen>
         ),
         body: Material(
           color: Theme.of(context).colorScheme.background,
-          child: ListView.builder(
+          child: AnimatedList(
+            key: _listKey,
             padding: const EdgeInsets.all(4),
             physics: const BouncingScrollPhysics(),
-            itemCount: globalState.availableProfiles.length,
-            itemBuilder: (context, index) {
+            initialItemCount: globalState.availableProfiles.length,
+            itemBuilder: (context, index, animation) {
               final profile = globalState.availableProfiles[index];
-              return Profile(
-                title: profile.name,
-                type: profile.type,
-                isSelected: profile.id == globalState.activeProfileId,
-                totalUploadTraffic: profile.totalUploadTraffic,
-                uploadMeasureUnit: profile.uploadMeasureUnit,
-                totalDownloadTraffic: profile.totalDownloadTraffic,
-                downloadMeasureUnit: profile.downloadMeasureUnit,
-                onTap: (String activeProfileId) {
-                  ref
-                      .read(globalStateProvider.notifier)
-                      .setActiveProfileId(activeProfileId);
-                },
-              );
+              return _getProfileWidget(profile, globalState.activeProfileId);
             },
           ),
         ),

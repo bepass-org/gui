@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:defacto/ui/main_screens/LoadingScreen.dart';
+import 'package:defacto/ui/main_screens/Loading_screen.dart';
 import 'package:defacto/ui/main_screens/about.dart';
 import 'package:defacto/ui/main_screens/configuration.dart';
 import 'package:defacto/ui/main_screens/logs.dart';
