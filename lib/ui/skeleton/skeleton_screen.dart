@@ -22,6 +22,7 @@ class SkeletonScreen extends ConsumerWidget {
           return const ConfigurationScreen();
         case AppPage.routingAndRules:
           return const RoutingScreen();
+          //return const Loading2();
         case AppPage.settings:
           return const SettingsScreen();
         case AppPage.logs:
