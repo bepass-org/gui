@@ -73,7 +73,7 @@ class _AboutScreenState extends State<AboutScreen> {
   Widget _bepassWidget(BuildContext context) {
     final data = DefaultCardMiscData(
       title: "Bepass Mobile",
-      body: "The universal proxy toolchain for Android. written in Kotlin",
+      body: "Bepass is a simple tool to overcome State provisioned internet censorship. like iran, china, etc.",
     );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
