@@ -11,5 +11,18 @@
     "source": "source test",
     "protocol": "protocol test",
     "outbound": "outbound test"
+  },
+  {
+    "id": "2",
+    "routeName": "route #2",
+    "active": false,
+    "application": "bepass-v1",
+    "ip": "222.22.22.22",
+    "port": "443",
+    "sourcePort": "sourcePort test",
+    "network": "network test",
+    "source": "source test",
+    "protocol": "protocol test",
+    "outbound": "outbound test"
   }
 ]

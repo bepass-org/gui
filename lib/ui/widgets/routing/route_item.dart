@@ -6,10 +6,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
 class RouteItem extends ConsumerWidget {
-
-  final RouteModel? routeModel;
-
-  const RouteItem({super.key, this.routeModel});
+  const RouteItem({super.key, required this.routeModel,  required this.index});
+  
+  final RouteModel routeModel;
+  final int index;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -48,7 +48,7 @@ class RouteItem extends ConsumerWidget {
                     onPressed: () {
                       // TODO: Implement edit action
                       /// navigate to [AddRouteScreen] page
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  AddRouteScreen(routeModel: routeModel,)));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  AddRouteScreen(routeModel: routeModel,index: index,)));
 
                     },
                   ),
@@ -82,7 +82,7 @@ class RouteItem extends ConsumerWidget {
                         print("Toggle in build $newValue");
                         // setState(() {
                         routeModel!.active = newValue;
-                        ref.watch(routeStateProvider.notifier).UpdateItem(routeModel!);
+                        ref.watch(routeStateProvider.notifier).UpdateItem(routeModel!,index!);
 
                         //   toggleSwitch(rule );
                         // });
