@@ -42,7 +42,14 @@ class RouteStateNotifier extends StateNotifier<List<RouteModel>>{
     var temp = RouteModel(id: '22',routeName: 'my route2',application: 'beepas app',active: true);
     state = [ ...state,temp];
   }
-
+/*
+delete selected item
+ */
+  void DeleteRoute(int _index){
+    List<RouteModel> newState = [...state];
+    newState.removeAt(_index);
+    state = newState;
+  }
   /*
   update item
    */

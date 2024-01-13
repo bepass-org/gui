@@ -8,8 +8,9 @@ import '../../other_screens/add_route_screen.dart';
 class RouteItem extends ConsumerWidget {
 
   RouteModel? routeModel;
+  int? index;
 
-  RouteItem({this.routeModel});
+  RouteItem({required this.routeModel,required this.index});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -48,7 +49,7 @@ class RouteItem extends ConsumerWidget {
                     onPressed: () {
                       // TODO: Implement edit action
                       /// navigate to [AddRouteScreen] page
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  AddRouteScreen(routeModel: routeModel,)));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  AddRouteScreen(routeModel: routeModel,index: index,)));
 
                     },
                   ),

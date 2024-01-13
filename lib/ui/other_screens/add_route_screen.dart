@@ -2,19 +2,22 @@ import 'dart:collection';
 
 import 'package:defacto/models/add_route_model.dart';
 import 'package:defacto/models/route/route_model.dart';
+import 'package:defacto/states/route/route_state.dart';
 import 'package:defacto/ui/widgets/card/default_list_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AddRouteScreen extends StatefulWidget {
+class AddRouteScreen extends ConsumerStatefulWidget {
 RouteModel? routeModel;
+int? index; // get index for better search and find on the list in delete and edit
 
-AddRouteScreen({this.routeModel});
+AddRouteScreen({this.routeModel,this.index});
 
   @override
-  State<AddRouteScreen> createState() => _AddRouteScreenState();
+  ConsumerState<AddRouteScreen> createState() => _AddRouteScreenState();
 }
 
-class _AddRouteScreenState extends State<AddRouteScreen> {
+class _AddRouteScreenState extends ConsumerState<AddRouteScreen> {
   final Map<AddRouteEnum, AddRouteModel> data = HashMap();
 
   @override
@@ -33,6 +36,12 @@ class _AddRouteScreenState extends State<AddRouteScreen> {
         actions: [
           IconButton(
             onPressed: () {
+              /// delete the [widget.routeModel]
+              /// send request of delete to the state
+              /// before delete check [widget.routeModel] is not null
+              ///
+              if(widget.routeModel!=null)
+                 ref.watch(routeStateProvider.notifier).DeleteRoute(widget.index!);
               Navigator.pop(context);
             },
             icon: const Icon(Icons.delete),

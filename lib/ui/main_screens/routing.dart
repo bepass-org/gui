@@ -86,7 +86,7 @@ class _RoutingScreenState extends ConsumerState<RoutingScreen> {
             padding: const EdgeInsets.all(4),
             physics: const BouncingScrollPhysics(),
             itemCount: globalState.length,
-            itemBuilder: (context, index) => RouteItem(routeModel: globalState[index]),
+            itemBuilder: (context, index) => RouteItem(routeModel: globalState[index],index: index,),
             // children: rulesActive.keys.map((rule) {
             //   return RouteItem();
             // }).toList(),
