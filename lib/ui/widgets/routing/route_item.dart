@@ -1,16 +1,15 @@
+import 'package:defacto/models/route/route_model.dart';
+import 'package:defacto/states/route/route_state.dart';
+import 'package:defacto/ui/other_screens/add_route_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../models/route/route_model.dart';
-import '../../../states/route/route_state.dart';
-import '../../other_screens/add_route_screen.dart';
 
 class RouteItem extends ConsumerWidget {
-
-  RouteModel? routeModel;
-  int? index;
-
-  RouteItem({required this.routeModel,required this.index});
+  const RouteItem({super.key, required this.routeModel,  required this.index});
+  
+  final RouteModel routeModel;
+  final int index;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -62,7 +61,7 @@ class RouteItem extends ConsumerWidget {
                     child: Text(
                       // TODO: Replace with actual subtitle(s)
                       'Protocol: TCP\nSource:',
-                      style: TextStyle(fontSize: 14, color: Colors.red.shade400),
+                      style: TextStyle(fontSize: 14, color: Colors.blue.shade400),
                     ),
                   ),
                 ],
