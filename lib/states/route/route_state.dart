@@ -29,7 +29,7 @@ class RouteStateNotifier extends StateNotifier<List<RouteModel>>{
     state = route;
   }
   Future<List<RouteModel>> loadFakeProfiles() async {
-    final String response = await rootBundle.loadString('assets/fake_data/route.json');
+    final String response = await rootBundle.loadString('assets/fake_data/routes.json');
     final data = await json.decode(response) as List;
     return data.map((profileJson) => RouteModel.fromJson(profileJson)).toList();
   }
