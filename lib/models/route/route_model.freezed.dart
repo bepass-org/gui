@@ -26,6 +26,8 @@ mixin _$RouteModel {
   set routeName(String? value) => throw _privateConstructorUsedError;
   String? get application => throw _privateConstructorUsedError;
   set application(String? value) => throw _privateConstructorUsedError;
+  String? get domain => throw _privateConstructorUsedError;
+  set domain(String? value) => throw _privateConstructorUsedError;
   bool? get active => throw _privateConstructorUsedError;
   set active(bool? value) => throw _privateConstructorUsedError;
   String? get ip => throw _privateConstructorUsedError;
@@ -59,6 +61,7 @@ abstract class $RouteModelCopyWith<$Res> {
       {String? id,
       String? routeName,
       String? application,
+      String? domain,
       bool? active,
       String? ip,
       String? port,
@@ -85,6 +88,7 @@ class _$RouteModelCopyWithImpl<$Res, $Val extends RouteModel>
     Object? id = freezed,
     Object? routeName = freezed,
     Object? application = freezed,
+    Object? domain = freezed,
     Object? active = freezed,
     Object? ip = freezed,
     Object? port = freezed,
@@ -106,6 +110,10 @@ class _$RouteModelCopyWithImpl<$Res, $Val extends RouteModel>
       application: freezed == application
           ? _value.application
           : application // ignore: cast_nullable_to_non_nullable
+              as String?,
+      domain: freezed == domain
+          ? _value.domain
+          : domain // ignore: cast_nullable_to_non_nullable
               as String?,
       active: freezed == active
           ? _value.active
@@ -155,6 +163,7 @@ abstract class _$$RouteModelImplCopyWith<$Res>
       {String? id,
       String? routeName,
       String? application,
+      String? domain,
       bool? active,
       String? ip,
       String? port,
@@ -179,6 +188,7 @@ class __$$RouteModelImplCopyWithImpl<$Res>
     Object? id = freezed,
     Object? routeName = freezed,
     Object? application = freezed,
+    Object? domain = freezed,
     Object? active = freezed,
     Object? ip = freezed,
     Object? port = freezed,
@@ -200,6 +210,10 @@ class __$$RouteModelImplCopyWithImpl<$Res>
       application: freezed == application
           ? _value.application
           : application // ignore: cast_nullable_to_non_nullable
+              as String?,
+      domain: freezed == domain
+          ? _value.domain
+          : domain // ignore: cast_nullable_to_non_nullable
               as String?,
       active: freezed == active
           ? _value.active
@@ -244,6 +258,7 @@ class _$RouteModelImpl with DiagnosticableTreeMixin implements _RouteModel {
       {this.id,
       this.routeName,
       this.application,
+      this.domain,
       this.active,
       this.ip,
       this.port,
@@ -263,6 +278,8 @@ class _$RouteModelImpl with DiagnosticableTreeMixin implements _RouteModel {
   @override
   String? application;
   @override
+  String? domain;
+  @override
   bool? active;
   @override
   String? ip;
@@ -281,7 +298,7 @@ class _$RouteModelImpl with DiagnosticableTreeMixin implements _RouteModel {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'RouteModel(id: $id, routeName: $routeName, application: $application, active: $active, ip: $ip, port: $port, sourcePort: $sourcePort, network: $network, source: $source, protocol: $protocol, outbound: $outbound)';
+    return 'RouteModel(id: $id, routeName: $routeName, application: $application, domain: $domain, active: $active, ip: $ip, port: $port, sourcePort: $sourcePort, network: $network, source: $source, protocol: $protocol, outbound: $outbound)';
   }
 
   @override
@@ -292,6 +309,7 @@ class _$RouteModelImpl with DiagnosticableTreeMixin implements _RouteModel {
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('routeName', routeName))
       ..add(DiagnosticsProperty('application', application))
+      ..add(DiagnosticsProperty('domain', domain))
       ..add(DiagnosticsProperty('active', active))
       ..add(DiagnosticsProperty('ip', ip))
       ..add(DiagnosticsProperty('port', port))
@@ -321,6 +339,7 @@ abstract class _RouteModel implements RouteModel {
       {String? id,
       String? routeName,
       String? application,
+      String? domain,
       bool? active,
       String? ip,
       String? port,
@@ -342,6 +361,9 @@ abstract class _RouteModel implements RouteModel {
   @override
   String? get application;
   set application(String? value);
+  @override
+  String? get domain;
+  set domain(String? value);
   @override
   bool? get active;
   set active(bool? value);
