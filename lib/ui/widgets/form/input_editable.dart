@@ -1,4 +1,4 @@
-import 'package:defacto/enums/editable_dialog_types.dart';
+import 'package:defacto/enums/form_editable_types.dart';
 import 'package:flutter/material.dart';
 
 import 'editable_dialog.dart';
@@ -21,7 +21,7 @@ class InputEditable extends StatelessWidget {
   final String? value;
   final String defaultValue;
   final String? hint;
-  final EditableDialogType dialogType;
+  final FormEditableTypes dialogType;
   final Function(String) onChanged;
   final bool showTitleOnDialog;
 

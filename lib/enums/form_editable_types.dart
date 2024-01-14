@@ -1,5 +1,5 @@
 // editable dialog types indicating which type of input the user is editing in the dialog
-enum EditableDialogType {
+enum FormEditableTypes {
   string,
   number,
   multiline,

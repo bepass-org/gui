@@ -1,5 +1,5 @@
 import 'package:defacto/enums/app_pages.dart';
-import 'package:defacto/models/profile.dart';
+import 'package:defacto/models/profile/profile.dart';
 
 class GlobalState {
   const GlobalState({

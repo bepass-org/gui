@@ -1,6 +1,6 @@
 import 'package:defacto/ui/widgets/card/default_card_misc_data.dart';
 import 'package:defacto/ui/widgets/card/default_list_item.dart';
-import 'package:defacto/ui/main_screens/configuration.dart';
+import 'package:defacto/ui/screens/main/configuration.dart';
 import 'package:defacto/ui/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';

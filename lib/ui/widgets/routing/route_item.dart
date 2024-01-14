@@ -1,6 +1,6 @@
 import 'package:defacto/models/route/route_model.dart';
 import 'package:defacto/states/route/route_state.dart';
-import 'package:defacto/ui/other_screens/add_route_screen.dart';
+import 'package:defacto/ui/screens/other/add_route_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

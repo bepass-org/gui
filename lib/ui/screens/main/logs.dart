@@ -1,4 +1,4 @@
-import 'package:defacto/ui/main_screens/configuration.dart';
+import 'package:defacto/ui/screens/main/configuration.dart';
 import 'package:defacto/ui/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
 

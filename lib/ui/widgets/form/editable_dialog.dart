@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:defacto/enums/editable_dialog_types.dart';
+import 'package:defacto/enums/form_editable_types.dart';
 import 'package:flutter/services.dart';
 
 class EditableDialog extends StatefulWidget {
   final String? title;
-  final EditableDialogType type;
+  final FormEditableTypes type;
   final String? currentValue;
   final String placeholder;
   final Function(String) onSuccess;
@@ -69,12 +69,12 @@ class _EditableDialogState extends State<EditableDialog> {
 
   Widget _buildDialogForm() {
     switch (widget.type) {
-      case EditableDialogType.string:
+      case FormEditableTypes.string:
         return TextField(
           controller: _controller,
           decoration: InputDecoration(hintText: widget.placeholder),
         );
-      case EditableDialogType.number:
+      case FormEditableTypes.number:
         return TextField(
           controller: _controller,
           decoration: InputDecoration(hintText: widget.placeholder),
@@ -83,14 +83,14 @@ class _EditableDialogState extends State<EditableDialog> {
             FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))
           ],
         );
-      case EditableDialogType.multiline:
+      case FormEditableTypes.multiline:
         return TextField(
           controller: _controller,
           decoration: InputDecoration(hintText: widget.placeholder),
           keyboardType: TextInputType.multiline,
           maxLines: null,
         );
-      case EditableDialogType.numberRange:
+      case FormEditableTypes.numberRange:
         return TextField(
           controller: _controller,
           decoration: InputDecoration(hintText: widget.placeholder),
@@ -99,7 +99,7 @@ class _EditableDialogState extends State<EditableDialog> {
             FilteringTextInputFormatter.allow(RegExp(r'[0-9,-]'))
           ],
         );
-      case EditableDialogType.ip:
+      case FormEditableTypes.ip:
         return TextField(
           controller: _controller,
           decoration: InputDecoration(hintText: widget.placeholder),
@@ -108,20 +108,20 @@ class _EditableDialogState extends State<EditableDialog> {
             FilteringTextInputFormatter.allow(RegExp(r'([0-9a-fA-F:.])'))
           ],
         );
-      case EditableDialogType.port:
+      case FormEditableTypes.port:
         return TextField(
           controller: _controller,
           decoration: InputDecoration(hintText: widget.placeholder),
           keyboardType: TextInputType.number,
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
         );
-      case EditableDialogType.domain:
+      case FormEditableTypes.domain:
         return TextField(
           controller: _controller,
           decoration: InputDecoration(hintText: widget.placeholder),
           keyboardType: TextInputType.url,
         );
-      case EditableDialogType.url:
+      case FormEditableTypes.url:
         return TextField(
           controller: _controller,
           decoration: InputDecoration(hintText: widget.placeholder),

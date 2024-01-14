@@ -1,6 +1,6 @@
 import 'package:defacto/enums/app_pages.dart';
 import 'package:defacto/models/global_state.dart';
-import 'package:defacto/models/profile.dart';
+import 'package:defacto/models/profile/profile.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final globalStateProvider =

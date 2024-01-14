@@ -1,10 +1,8 @@
-import 'dart:convert';
-
-import 'package:defacto/models/profile.dart';
+import 'package:defacto/helpers/profile_helper.dart';
+import 'package:defacto/models/profile/profile.dart';
 import 'package:defacto/states/global/global_state.dart';
-import 'package:defacto/ui/skeleton/skeleton_screen.dart';
+import 'package:defacto/ui/screens/skeleton/skeleton_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LoadingScreen extends ConsumerStatefulWidget {
@@ -24,7 +22,7 @@ class _LoadingScreenState extends ConsumerState<LoadingScreen> {
   }
 
   void performStartupOperations() async {
-    List<Profile> profiles = await loadFakeProfiles();
+    List<Profile> profiles = await ProfileHelper.loadFakeProfiles();
     ref.read(globalStateProvider.notifier).setAvailableProfiles(profiles);
     // After completing the tasks, navigate to the SkeletonScreen
     if (mounted) {
@@ -32,12 +30,6 @@ class _LoadingScreenState extends ConsumerState<LoadingScreen> {
         MaterialPageRoute(builder: (context) => const SkeletonScreen()),
       );
     }
-  }
-
-  Future<List<Profile>> loadFakeProfiles() async {
-    final String response = await rootBundle.loadString('assets/fake_data/profiles.json');
-    final data = await json.decode(response) as List;
-    return data.map((profileJson) => Profile.fromJson(profileJson)).toList();
   }
 
   @override
