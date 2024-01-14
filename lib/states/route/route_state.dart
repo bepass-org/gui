@@ -55,9 +55,7 @@ delete selected item
    */
   void UpdateItem(RouteModel newroute,int _index){
     List<RouteModel> newState = [...state];
-    // find the index of item
-    // int index = newState.indexWhere((route) => route.id == newroute.id);
-    // update the item with new object
+
     newState[_index] = newroute;
     state = newState;
   }

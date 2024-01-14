@@ -80,13 +80,12 @@ class RouteItem extends ConsumerWidget {
                       value: routeModel!.active!,
                       //value: rulesActive[rule]!,
                       onChanged: (newValue) {
-                        print("Toggle in build $newValue");
+                        debugPrint("Toggle in build $newValue");
                         // setState(() {
                         routeModel!.active = newValue;
                         ref.watch(routeStateProvider.notifier).UpdateItem(routeModel!,index!);
 
-                        //   toggleSwitch(rule );
-                        // });
+
                       },
                     ),
                   ),
