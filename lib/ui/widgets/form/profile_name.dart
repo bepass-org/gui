@@ -1,5 +1,5 @@
 // profile_name.dart name widget
-import 'package:defacto/enums/editable_dialog_types.dart';
+import 'package:defacto/enums/form_editable_types.dart';
 import 'package:defacto/ui/widgets/form/input_editable.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +19,7 @@ class ProfileName extends StatelessWidget {
           value: value,
           defaultValue: '',
           hint: 'Enter Profile Name',
-          dialogType: EditableDialogType.string,
+          dialogType: FormEditableTypes.string,
           onChanged: (value) {},
         ),
         const Divider(

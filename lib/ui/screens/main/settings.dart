@@ -1,4 +1,4 @@
-import 'package:defacto/enums/editable_dialog_types.dart';
+import 'package:defacto/enums/form_editable_types.dart';
 import 'package:defacto/ui/widgets/main_drawer.dart';
 import 'package:defacto/ui/widgets/form/group.dart';
 import 'package:defacto/ui/widgets/form/input_editable.dart';
@@ -74,14 +74,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   icon: Icons.edit,
                   title: 'Resolve Destination',
                   defaultValue: 'If the destination address is a domain',
-                  dialogType: EditableDialogType.string,
+                  dialogType: FormEditableTypes.string,
                   onChanged: (value) => setState(() {}),
                 ),
                 InputEditable(
                   icon: Icons.edit,
                   title: 'IPv6 Route',
                   defaultValue: ipv6Route,
-                  dialogType: EditableDialogType.string,
+                  dialogType: FormEditableTypes.string,
                   onChanged: (value) => setState(() => ipv6Route = value),
                 ),
               ],
@@ -101,7 +101,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   title: 'Rule Assets Provider',
                   hint: 'Chocolate4U/Iran-sing-box-rules',
                   defaultValue: 'If the destination address is a domain',
-                  dialogType: EditableDialogType.string,
+                  dialogType: FormEditableTypes.string,
                   onChanged: (value) => setState(() {}),
                 ),
                 SwitchEditable(
@@ -114,7 +114,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   icon: Icons.edit,
                   title: 'Protocol Selection',
                   defaultValue: 'Automatic',
-                  dialogType: EditableDialogType.string,
+                  dialogType: FormEditableTypes.string,
                   onChanged: (value) => setState(() => ipv6Route = value),
                 ),
               ],

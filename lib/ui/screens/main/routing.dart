@@ -1,10 +1,10 @@
-import 'package:defacto/ui/other_screens/add_route_screen.dart';
+import 'package:defacto/states/route/route_state.dart';
+import 'package:defacto/ui/screens/other/add_route_screen.dart';
 import 'package:defacto/ui/widgets/main_drawer.dart';
+import 'package:defacto/ui/widgets/routing/route_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../states/route/route_state.dart';
-import '../widgets/routing/route_item.dart';
 import 'configuration.dart';
 
 class RoutingScreen extends ConsumerStatefulWidget {

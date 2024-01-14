@@ -1,4 +1,4 @@
-import 'package:defacto/ui/other_screens/new_profile.dart';
+import 'package:defacto/ui/screens/other/new_profile.dart';
 import 'package:flutter/material.dart';
 
 class MoreOptions extends StatelessWidget {
@@ -69,7 +69,7 @@ class MoreOptions extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => NewProfilePage()),
+                    MaterialPageRoute(builder: (context) => const NewProfilePage()),
                   );
                 },
                 child: const Row(

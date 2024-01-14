@@ -1,4 +1,4 @@
-import 'package:defacto/models/profile.dart';
+import 'package:defacto/models/profile/profile.dart';
 import 'package:defacto/ui/widgets/profile/profile_tile.dart';
 import 'package:flutter/material.dart';
 

@@ -1,196 +1,25 @@
 [
   {
-    "templateId": "bepass-v1",
-    "templateName": "Bepass v1",
-    "templateDescription": "Bepass v1",
-    "templateVersion": "1.0.0",
-    "templateFields": [
-      {
-        "id": "profileName",
-        "name": "Profile Name",
-        "type": "string",
-        "icon": "person",
-        "description": "Enter profile name",
-        "defaultValue": ""
-      },
-      {
-        "id": "tlsHeaderLength",
-        "name": "TLS Header Length",
-        "type": "number",
-        "icon": "security",
-        "description": "Length of the TLS Header",
-        "defaultValue": "5"
-      },
-      {
-        "id": "dohSdnsAddress",
-        "name": "DOH or SDNS Address",
-        "type": "url",
-        "icon": "http",
-        "description": "Address for DOH or SDNS",
-        "defaultValue": "https://1.1.1.1/dns-query"
-      },
-      {
-        "id": "dnsCacheTtl",
-        "name": "DNS Cache TTL",
-        "type": "number",
-        "icon": "timer",
-        "description": "Time-to-Live for DNS Cache",
-        "defaultValue": "1500"
-      },
-      {
-        "id": "dnsReqTimeout",
-        "name": "DNS Request Timeout",
-        "type": "number",
-        "icon": "timelapse",
-        "description": "Timeout for DNS Requests",
-        "defaultValue": "10"
-      },
-      {
-        "id": "enableDnsFragmentation",
-        "name": "Enable DNS Fragmentation",
-        "type": "boolean",
-        "icon": "dns",
-        "description": "Toggle DNS Fragmentation",
-        "defaultValue": true
-      },
-      {
-        "id": "sniChunksLenRange",
-        "name": "SNI Chunks Length Range",
-        "type": "numberRange",
-        "icon": "code",
-        "description": "Length Range for SNI Chunks",
-        "defaultValue": "1,2"
-      },
-      {
-        "id": "sniBFChunksLenRange",
-        "name": "Before and After SNI Chunks Length Range",
-        "type": "numberRange",
-        "icon": "code_off",
-        "description": "Length range for the chunks before and after SNI",
-        "defaultValue": "1,5"
-      },
-      {
-        "id": "delayBetweenEachPacket",
-        "name": "Delay Between Each Packet",
-        "type": "numberRange",
-        "icon": "hourglass_empty",
-        "description": "Range of delay in milliseconds between each packet",
-        "defaultValue": "10,20"
-      },
-      {
-        "id": "domainToIPMapping",
-        "name": "Domain to IP Mapping",
-        "type": "string",
-        "icon": "map",
-        "description": "Mappings from domain names to IP addresses",
-        "defaultValue": "example.com: 1.1.1.1"
-      },
-      {
-        "id": "workerAddress",
-        "name": "Worker Address",
-        "type": "url",
-        "icon": "web",
-        "description": "Address of the worker node",
-        "defaultValue": "https://worker.example.com"
-      },
-      {
-        "id": "workerCleanIpHost",
-        "name": "Worker Clean IP/Host",
-        "type": "string",
-        "icon": "portable_wifi_off",
-        "description": "Clean IP or Host for the worker",
-        "defaultValue": "192.168.1.1:443"
-      },
-      {
-        "id": "workerPort",
-        "name": "Worker Port",
-        "type": "port",
-        "icon": "indeterminate_check_box_outlined",
-        "description": "Clean IP or Host for the worker",
-        "defaultValue": "192.168.1.1:443"
-      },
-      {
-        "id": "enableWorker",
-        "name": "Enable Worker",
-        "type": "boolean",
-        "icon": "work",
-        "description": "Toggle to enable or disable the worker",
-        "defaultValue": false
-      },
-      {
-        "id": "dnsOnly",
-        "name": "DNS Only",
-        "type": "boolean",
-        "icon": "dns",
-        "description": "Toggle to enable DNS only mode",
-        "defaultValue": false
-      },
-      {
-        "id": "allowInsecure",
-        "name": "Allow Insecure",
-        "type": "boolean",
-        "icon": "dangerous",
-        "description": "Toggle to allow insecure connections",
-        "defaultValue": false
-      },
-      {
-        "id": "enableTLSPadding",
-        "name": "Enable TLS Padding",
-        "type": "boolean",
-        "icon": "lock_outline",
-        "description": "Toggle to enable TLS padding",
-        "defaultValue": false
-      },
-      {
-        "id": "tlsPaddingRange",
-        "name": "TLS Padding Range",
-        "type": "numberRange",
-        "icon": "format_line_spacing",
-        "description": "Range for TLS padding",
-        "defaultValue": "10,1000"
-      },
-      {
-        "id": "udpBindAddress",
-        "name": "UDP Bind Address",
-        "type": "string",
-        "icon": "radar",
-        "description": "Binding address for UDP",
-        "defaultValue": "127.0.0.1"
-      },
-      {
-        "id": "udpReadTimeout",
-        "name": "UDP Read Timeout",
-        "type": "number",
-        "icon": "timer_off",
-        "description": "Timeout for UDP read operations",
-        "defaultValue": "120"
-      },
-      {
-        "id": "udpWriteTimeout",
-        "name": "UDP Write Timeout",
-        "type": "number",
-        "icon": "edit_attributes",
-        "description": "Timeout for UDP write operations",
-        "defaultValue": "120"
-      },
-      {
-        "id": "udpLinkIdleTimeout",
-        "name": "UDP Link Idle Timeout",
-        "type": "number",
-        "icon": "link_off",
-        "description": "Idle timeout for UDP link",
-        "defaultValue": "120"
-      }
-    ],
-    "templateGroups": [
+    "id": "bepass-v1",
+    "name": "Bepass v1",
+    "description": "Bepass v1",
+    "version": "1.0.0",
+    "groups": [
       {
         "id": "profileName",
         "name": "Profile Name",
         "description": "Profile Name",
         "showTitle": false,
         "showBottomDivider": true,
-        "members": [
-          "profileName"
+        "fields": [
+          {
+            "id": "profileName",
+            "name": "Profile Name",
+            "type": "string",
+            "icon": "person",
+            "description": "Enter profile name",
+            "defaultValue": ""
+          }
         ]
       },
       {
@@ -199,9 +28,23 @@
         "description": "General Settings",
         "showTitle": true,
         "showBottomDivider": true,
-        "members": [
-          "tlsHeaderLength",
-          "dohSdnsAddress"
+        "fields": [
+          {
+            "id": "tlsHeaderLength",
+            "name": "TLS Header Length",
+            "type": "number",
+            "icon": "security",
+            "description": "Length of the TLS Header",
+            "defaultValue": "5"
+          },
+          {
+            "id": "dohSdnsAddress",
+            "name": "DOH or SDNS Address",
+            "type": "url",
+            "icon": "http",
+            "description": "Address for DOH or SDNS",
+            "defaultValue": "https://1.1.1.1/dns-query"
+          }
         ]
       },
       {
@@ -210,11 +53,39 @@
         "description": "DNS Settings",
         "showTitle": true,
         "showBottomDivider": true,
-        "members": [
-          "dnsCacheTtl",
-          "dnsReqTimeout",
-          "enableDnsFragmentation",
-          "domainToIPMapping"
+        "fields": [
+          {
+            "id": "dnsCacheTtl",
+            "name": "DNS Cache TTL",
+            "type": "number",
+            "icon": "timer",
+            "description": "Time-to-Live for DNS Cache",
+            "defaultValue": "1500"
+          },
+          {
+            "id": "dnsReqTimeout",
+            "name": "DNS Request Timeout",
+            "type": "number",
+            "icon": "timelapse",
+            "description": "Timeout for DNS Requests",
+            "defaultValue": "10"
+          },
+          {
+            "id": "enableDnsFragmentation",
+            "name": "Enable DNS Fragmentation",
+            "type": "boolean",
+            "icon": "dns",
+            "description": "Toggle DNS Fragmentation",
+            "defaultValue": true
+          },
+          {
+            "id": "domainToIPMapping",
+            "name": "Domain to IP Mapping",
+            "type": "string",
+            "icon": "map",
+            "description": "Mappings from domain names to IP addresses",
+            "defaultValue": "example.com: 1.1.1.1"
+          }
         ]
       },
       {
@@ -223,10 +94,31 @@
         "description": "SNI Settings",
         "showTitle": true,
         "showBottomDivider": true,
-        "members": [
-          "sniChunksLenRange",
-          "sniBFChunksLenRange",
-          "delayBetweenEachPacket"
+        "fields": [
+          {
+            "id": "sniChunksLenRange",
+            "name": "SNI Chunks Length Range",
+            "type": "numberRange",
+            "icon": "code",
+            "description": "Length Range for SNI Chunks",
+            "defaultValue": "1,2"
+          },
+          {
+            "id": "sniBFChunksLenRange",
+            "name": "Before and After SNI Chunks Length Range",
+            "type": "numberRange",
+            "icon": "code_off",
+            "description": "Length range for the chunks before and after SNI",
+            "defaultValue": "1,5"
+          },
+          {
+            "id": "delayBetweenEachPacket",
+            "name": "Delay Between Each Packet",
+            "type": "numberRange",
+            "icon": "hourglass_empty",
+            "description": "Range of delay in milliseconds between each packet",
+            "defaultValue": "10,20"
+          }
         ]
       },
       {
@@ -235,12 +127,47 @@
         "description": "Worker Settings",
         "showTitle": true,
         "showBottomDivider": true,
-        "members": [
-          "enableWorker",
-          "dnsOnly",
-          "workerAddress",
-          "workerCleanIpHost",
-          "workerPort"
+        "fields": [
+          {
+            "id": "enableWorker",
+            "name": "Enable Worker",
+            "type": "boolean",
+            "icon": "work",
+            "description": "Toggle to enable or disable the worker",
+            "defaultValue": false
+          },
+          {
+            "id": "dnsOnly",
+            "name": "DNS Only",
+            "type": "boolean",
+            "icon": "dns",
+            "description": "Toggle to enable DNS only mode",
+            "defaultValue": false
+          },
+          {
+            "id": "workerAddress",
+            "name": "Worker Address",
+            "type": "url",
+            "icon": "web",
+            "description": "Address of the worker node",
+            "defaultValue": "https://worker.example.com"
+          },
+          {
+            "id": "workerCleanIpHost",
+            "name": "Worker Clean IP/Host",
+            "type": "string",
+            "icon": "portable_wifi_off",
+            "description": "Clean IP or Host for the worker",
+            "defaultValue": "192.168.1.1:443"
+          },
+          {
+            "id": "workerPort",
+            "name": "Worker Port",
+            "type": "port",
+            "icon": "indeterminate_check_box_outlined",
+            "description": "Clean IP or Host for the worker",
+            "defaultValue": "192.168.1.1:443"
+          }
         ]
       },
       {
@@ -249,10 +176,31 @@
         "description": "TLS Settings",
         "showTitle": true,
         "showBottomDivider": true,
-        "members": [
-          "allowInsecure",
-          "enableTLSPadding",
-          "tlsPaddingRange"
+        "fields": [
+          {
+            "id": "allowInsecure",
+            "name": "Allow Insecure",
+            "type": "boolean",
+            "icon": "dangerous",
+            "description": "Toggle to allow insecure connections",
+            "defaultValue": false
+          },
+          {
+            "id": "enableTLSPadding",
+            "name": "Enable TLS Padding",
+            "type": "boolean",
+            "icon": "lock_outline",
+            "description": "Toggle to enable TLS padding",
+            "defaultValue": false
+          },
+          {
+            "id": "tlsPaddingRange",
+            "name": "TLS Padding Range",
+            "type": "numberRange",
+            "icon": "format_line_spacing",
+            "description": "Range for TLS padding",
+            "defaultValue": "10,1000"
+          }
         ]
       },
       {
@@ -261,11 +209,39 @@
         "description": "UDP Settings",
         "showTitle": true,
         "showBottomDivider": false,
-        "members": [
-          "udpBindAddress",
-          "udpReadTimeout",
-          "udpWriteTimeout",
-          "udpLinkIdleTimeout"
+        "fields": [
+          {
+            "id": "udpBindAddress",
+            "name": "UDP Bind Address",
+            "type": "string",
+            "icon": "radar",
+            "description": "Binding address for UDP",
+            "defaultValue": "127.0.0.1"
+          },
+          {
+            "id": "udpReadTimeout",
+            "name": "UDP Read Timeout",
+            "type": "number",
+            "icon": "timer_off",
+            "description": "Timeout for UDP read operations",
+            "defaultValue": "120"
+          },
+          {
+            "id": "udpWriteTimeout",
+            "name": "UDP Write Timeout",
+            "type": "number",
+            "icon": "edit_attributes",
+            "description": "Timeout for UDP write operations",
+            "defaultValue": "120"
+          },
+          {
+            "id": "udpLinkIdleTimeout",
+            "name": "UDP Link Idle Timeout",
+            "type": "number",
+            "icon": "link_off",
+            "description": "Idle timeout for UDP link",
+            "defaultValue": "120"
+          }
         ]
       }
     ]
