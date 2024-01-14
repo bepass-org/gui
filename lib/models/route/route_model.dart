@@ -26,22 +26,7 @@ class RouteModel with _$RouteModel {
   factory RouteModel.fromJson(Map<String, Object?> json)
   => _$RouteModelFromJson(json);
 
-  // RouteModel updateProperty(String propertyName, String newValue) {
-  //   return RouteModel(
-  //     id: id,
-  //     routeName: routeName,
-  //     application: application,
-  //     domain: propertyName == 'domain' ? newValue : domain,
-  //     active: active,
-  //     ip: propertyName == 'ip' ? newValue : ip,
-  //     port: propertyName == 'port' ? newValue : port,
-  //     sourcePort: sourcePort,
-  //     network: network,
-  //     source: source,
-  //     protocol: protocol,
-  //     outbound: outbound,
-  //   );
-  // }
+
 
 
 
