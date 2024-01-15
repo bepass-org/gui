@@ -315,31 +315,5 @@ class Styles {
         ),
       ),
     );
-    ;
   }
-
-  // static TextTheme textTheme(BuildContext context) {
-  //   return TextTheme(
-  //     headline1: _defaultTextStyle.copyWith(
-  //         fontSize: 100,
-  //         color: Theme.of(context).indicatorColor,
-  //         fontWeight: FontWeight.w200),
-  //     headline2: _defaultTextStyle.copyWith(
-  //         fontSize: 25, color: Theme.of(context).indicatorColor),
-  //     headline3: _defaultTextStyle.copyWith(
-  //         fontSize: 16, color: Theme.of(context).indicatorColor),
-  //     headline4: _defaultTextStyle.copyWith(
-  //         fontSize: 18, color: Theme.of(context).indicatorColor),
-  //     headline5: _defaultTextStyle.copyWith(
-  //         fontSize: 14, color: Theme.of(context).indicatorColor),
-  //     bodyText1: _defaultTextStyle.copyWith(
-  //         fontSize: 13, color: Theme.of(context).indicatorColor),
-  //     bodyText2: _defaultTextStyle.copyWith(
-  //         fontSize: 20, color: Theme.of(context).indicatorColor),
-  //     subtitle1: _defaultTextStyle.copyWith(
-  //         fontSize: 12, color: Theme.of(context).hintColor),
-  //     subtitle2: _defaultTextStyle.copyWith(
-  //         fontSize: 10, color: Theme.of(context).hintColor),
-  //   );
-  // }
 }
