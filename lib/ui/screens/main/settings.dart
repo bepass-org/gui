@@ -7,6 +7,10 @@ import 'package:flutter/material.dart';
 
 import 'configuration.dart';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:defacto/config/theme_provider.dart';
+import 'package:defacto/config/styles.dart';
+
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
 
@@ -27,15 +31,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
   };
   String ipv6Route = 'Disable';
 
+  List<Color> colorsList = [
+    Colors.white,
+    Colors.black,
+    Colors.redAccent,
+    Colors.green,
+    Colors.blue,
+    Colors.amber,
+    Colors.orange,
+  ];
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
       onPopInvoked: (didPop) {
-        if(_scaffoldKey.currentState!.isDrawerOpen){
+        if (_scaffoldKey.currentState!.isDrawerOpen) {
           _scaffoldKey.currentState!.closeDrawer();
-        }
-        else{
+        } else {
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -47,12 +60,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
       child: Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
-          iconTheme: IconThemeData(color: Colors.white),
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          title: const Text("Settings", style: TextStyle(color: Colors.white)),
-        ),
+            iconTheme: IconThemeData(color: Colors.white),
+            backgroundColor: Theme.of(context).colorScheme.background,
+            title: const Text(
+              "Settings",
+            )),
         drawer: const MainDrawer(),
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.background,
         body: ListView(
           children: <Widget>[
             GroupForm(
@@ -62,13 +76,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   icon: Icons.settings,
                   title: 'Apps VPN mode',
                   value: switchStates['Enable Sniffing']!,
-                  onChanged: (value) => setState(() => switchStates['Enable Sniffing'] = value),
+                  onChanged: (value) =>
+                      setState(() => switchStates['Enable Sniffing'] = value),
                 ),
                 SwitchEditable(
                   icon: Icons.settings,
                   title: 'Bypass LAN',
                   value: switchStates['Bypass LAN']!,
-                  onChanged: (value) => setState(() => switchStates['Bypass LAN'] = value),
+                  onChanged: (value) =>
+                      setState(() => switchStates['Bypass LAN'] = value),
                 ),
                 InputEditable(
                   icon: Icons.edit,
@@ -94,7 +110,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   icon: Icons.settings,
                   title: 'Enable Multiplexer',
                   value: switchStates['Enable Multiplexer']!,
-                  onChanged: (value) => setState(() => switchStates['Enable Multiplexer'] = value),
+                  onChanged: (value) => setState(
+                      () => switchStates['Enable Multiplexer'] = value),
                 ),
                 InputEditable(
                   icon: Icons.edit,
@@ -108,7 +125,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   icon: Icons.settings,
                   title: 'Enable Traffic Sniffing',
                   value: switchStates['Enable Traffic Sniffing']!,
-                  onChanged: (value) => setState(() => switchStates['Enable Traffic Sniffing'] = value),
+                  onChanged: (value) => setState(
+                      () => switchStates['Enable Traffic Sniffing'] = value),
                 ),
                 InputEditable(
                   icon: Icons.edit,
@@ -118,6 +136,37 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   onChanged: (value) => setState(() => ipv6Route = value),
                 ),
               ],
+            ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: 50,
+              child: ListView.builder(
+                physics: const PageScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                itemCount: colorsList.length,
+                shrinkWrap: true,
+                itemBuilder: ((context, index) {
+                  return Consumer(
+                    builder:
+                        (BuildContext context, WidgetRef ref, Widget? child) {
+                      final themeNotifer = ref.watch(themeProvider);
+                      return GestureDetector(
+                        child: Container(
+                          height: 100,
+                          width: 90,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black, width: 2),
+                              color: colorsList[index],
+                              shape: BoxShape.circle),
+                        ),
+                        onTap: () {
+                          themeNotifer.setTheme(index);
+                        },
+                      );
+                    },
+                  );
+                }),
+              ),
             ),
             // ... Add more GroupForm widgets for other settings groups ...
           ],
