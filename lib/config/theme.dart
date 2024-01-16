@@ -130,7 +130,6 @@ final ThemeData lightTheme = ThemeData(
 
 final ThemeData darkTheme = lightTheme.copyWith(
   colorScheme: darkColorScheme,
-  useMaterial3: true,
   textTheme: TextTheme(
     displayLarge: TextStyle(
       color: textSwatch.shade200,

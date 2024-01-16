@@ -9,7 +9,6 @@ import 'configuration.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:defacto/config/theme_provider.dart';
-import 'package:defacto/config/styles.dart';
 
 List<String> list = <String>[
   'Off',
@@ -31,6 +30,27 @@ List<String> dns = <String>[
   'ipv4_only',
   'ipv6_only'
 ];
+List<String> minTls = <String>[
+  '1.3',
+  '1.2',
+];
+List<String> serviceMode = <String>[
+  'VPN',
+  'Proxy',
+];
+List<String> tunImplementation = <String>['System', 'gVisor', 'Mixed'];
+List<String> mtu = <String>[
+  '1500',
+  '9000',
+];
+List<String> speedNotification = <String>[
+  '1s',
+  'Disable',
+  '500ms',
+  '3s',
+  '10s'
+];
+List<String> logLevel = <String>['warn', 'none', 'info', 'debug', 'trace'];
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -53,6 +73,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
     'allow insecure': false,
     'dns routing': true,
     'fakedns': false,
+    'httptovpn': false,
+    'fromlan': false,
+    'wakelock': false,
+    'clashapi': false,
+    'disablecertificate': false,
+    'autoconnet': false,
+    'Profile Traffic Statistics': true,
+    'Always Show Address': false,
+    'Metered Hint': false,
+    'Show Direct Speed': true,
   };
   String ipv6Route = 'Disable';
   String dropdownValue = list.first;
@@ -60,6 +90,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
   String assetsproviderValue = assetsprovider.first;
   String muxValue = mux.first;
   String dnsValue = dns.first;
+  String tlsValue = minTls.first;
+  String serviceModeValue = serviceMode.first;
+  String tunImplementationValue = tunImplementation.first;
+  String mtuValue = mtu.first;
+  String speedNotificationValue = speedNotification.first;
+  String logLevelValue = logLevel.first;
 
   List<Color> colorsList = [
     Colors.white,
@@ -90,7 +126,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       child: Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
-            iconTheme: IconThemeData(color: Colors.white),
+            iconTheme: const IconThemeData(color: Colors.white),
             backgroundColor: Theme.of(context).colorScheme.background,
             title: const Text(
               "Settings",
@@ -135,6 +171,128 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                 ),
               ),
+              ListTile(
+                  leading: const Icon(Icons.update),
+                  title: const Text('Service Mode'),
+                  trailing: DropdownButton(
+                    value: serviceModeValue,
+                    icon: const Icon(Icons.arrow_drop_down),
+                    onChanged: (String? value) {
+                      setState(() {
+                        dropdownValue = value!;
+                      });
+                    },
+                    items: serviceMode
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  )),
+              ListTile(
+                  leading: const Icon(Icons.restart_alt),
+                  title: const Text('TUN Implementation'),
+                  trailing: DropdownButton(
+                    value: tunImplementationValue,
+                    icon: const Icon(Icons.arrow_drop_down),
+                    onChanged: (String? value) {
+                      setState(() {
+                        dropdownValue = value!;
+                      });
+                    },
+                    items: tunImplementation
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  )),
+              ListTile(
+                  leading: const Icon(Icons.rounded_corner),
+                  title: const Text('MTU'),
+                  trailing: DropdownButton(
+                    value: mtuValue,
+                    icon: const Icon(Icons.arrow_drop_down),
+                    onChanged: (String? value) {
+                      setState(() {
+                        dropdownValue = value!;
+                      });
+                    },
+                    items: mtu.map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  )),
+              ListTile(
+                  leading: const Icon(Icons.timer),
+                  title: const Text('Speed Notification Update Interval'),
+                  trailing: DropdownButton(
+                    value: speedNotificationValue,
+                    icon: const Icon(Icons.arrow_drop_down),
+                    onChanged: (String? value) {
+                      setState(() {
+                        dropdownValue = value!;
+                      });
+                    },
+                    items: speedNotification
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  )),
+              SwitchEditable(
+                icon: Icons.person_off_outlined,
+                title: 'Profile Traffic Statistics',
+                value: switchStates['Profile Traffic Statistics']!,
+                onChanged: (value) => setState(
+                    () => switchStates['Profile Traffic Statistics'] = value),
+              ),
+              SwitchEditable(
+                icon: Icons.cameraswitch,
+                title: 'Always Show Address',
+                value: switchStates['Always Show Address']!,
+                onChanged: (value) =>
+                    setState(() => switchStates['Always Show Address'] = value),
+              ),
+              SwitchEditable(
+                icon: Icons.data_saver_on,
+                title: 'Metered Hint',
+                value: switchStates['Metered Hint']!,
+                onChanged: (value) =>
+                    setState(() => switchStates['Metered Hint'] = value),
+              ),
+              SwitchEditable(
+                icon: Icons.speed,
+                title: 'Show Direct Speed',
+                value: switchStates['Show Direct Speed']!,
+                onChanged: (value) =>
+                    setState(() => switchStates['Show Direct Speed'] = value),
+              ),
+              ListTile(
+                  leading: const Icon(Icons.bug_report),
+                  title: const Text('Log Level'),
+                  trailing: DropdownButton(
+                    value: logLevelValue,
+                    icon: const Icon(Icons.arrow_drop_down),
+                    onChanged: (String? value) {
+                      setState(() {
+                        dropdownValue = value!;
+                      });
+                    },
+                    items:
+                        logLevel.map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  )),
             ]),
             GroupForm(
               title: 'Route Settings',
@@ -161,11 +319,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       () => switchStates['Bypass LAN in core'] = value),
                 ),
                 ListTile(
-                    leading: Icon(Icons.manage_search_rounded),
-                    title: Text('Enable Traffic Sniffing'),
+                    leading: const Icon(Icons.manage_search_rounded),
+                    title: const Text('Enable Traffic Sniffing'),
                     trailing: DropdownButton(
                       value: dropdownValue,
-                      icon: Icon(Icons.arrow_drop_down),
+                      icon: const Icon(Icons.arrow_drop_down),
                       onChanged: (String? value) {
                         setState(() {
                           dropdownValue = value!;
@@ -186,11 +344,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       () => switchStates['Resolve Destination'] = value),
                 ),
                 ListTile(
-                    leading: Icon(Icons.six_mp),
-                    title: Text('IPv6 Route'),
+                    leading: const Icon(Icons.six_mp),
+                    title: const Text('IPv6 Route'),
                     trailing: DropdownButton(
                       value: ipv6Value,
-                      icon: Icon(Icons.arrow_drop_down),
+                      icon: const Icon(Icons.arrow_drop_down),
                       onChanged: (String? value) {
                         setState(() {
                           dropdownValue = value!;
@@ -204,11 +362,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       }).toList(),
                     )),
                 ListTile(
-                    leading: Icon(Icons.folder_special),
-                    title: Text('Rule Assets Provider'),
+                    leading: const Icon(Icons.folder_special),
+                    title: const Text('Rule Assets Provider'),
                     trailing: DropdownButton(
                       value: assetsproviderValue,
-                      icon: Icon(Icons.arrow_drop_down),
+                      icon: const Icon(Icons.arrow_drop_down),
                       onChanged: (String? value) {
                         setState(() {
                           dropdownValue = value!;
@@ -235,11 +393,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       () => switchStates['Enable Multiplexer'] = value),
                 ),
                 ListTile(
-                    leading: Icon(Icons.network_check),
-                    title: Text('Mux protocol'),
+                    leading: const Icon(Icons.network_check),
+                    title: const Text('Mux protocol'),
                     trailing: DropdownButton(
                       value: muxValue,
-                      icon: Icon(Icons.arrow_drop_down),
+                      icon: const Icon(Icons.arrow_drop_down),
                       onChanged: (String? value) {
                         setState(() {
                           dropdownValue = value!;
@@ -277,11 +435,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 onChanged: (value) => setState(() => ipv6Route = value),
               ),
               ListTile(
-                  leading: Icon(Icons.select_all),
-                  title: Text('Domain strategy for Remote'),
+                  leading: const Icon(Icons.select_all),
+                  title: const Text('Domain strategy for Remote'),
                   trailing: DropdownButton(
                     value: dnsValue,
-                    icon: Icon(Icons.arrow_drop_down),
+                    icon: const Icon(Icons.arrow_drop_down),
                     onChanged: (String? value) {
                       setState(() {
                         dropdownValue = value!;
@@ -302,11 +460,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 onChanged: (value) => setState(() => ipv6Route = value),
               ),
               ListTile(
-                  leading: Icon(Icons.select_all),
-                  title: Text('Domain strategy for Direct'),
+                  leading: const Icon(Icons.select_all),
+                  title: const Text('Domain strategy for Direct'),
                   trailing: DropdownButton(
                     value: dnsValue,
-                    icon: Icon(Icons.arrow_drop_down),
+                    icon: const Icon(Icons.arrow_drop_down),
                     onChanged: (String? value) {
                       setState(() {
                         dropdownValue = value!;
@@ -320,11 +478,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     }).toList(),
                   )),
               ListTile(
-                  leading: Icon(Icons.select_all),
-                  title: Text('Domain strategy for Server Address'),
+                  leading: const Icon(Icons.select_all),
+                  title: const Text('Domain strategy for Server Address'),
                   trailing: DropdownButton(
                     value: dnsValue,
-                    icon: Icon(Icons.arrow_drop_down),
+                    icon: const Icon(Icons.arrow_drop_down),
                     onChanged: (String? value) {
                       setState(() {
                         dropdownValue = value!;
@@ -350,6 +508,85 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 value: switchStates['fakedns']!,
                 onChanged: (value) =>
                     setState(() => switchStates['fakedns'] = value),
+              ),
+            ]),
+            GroupForm(title: 'Inbound Settings', children: [
+              InputEditable(
+                icon: Icons.sailing,
+                title: 'Proxy Port',
+                defaultValue: '2080',
+                dialogType: FormEditableTypes.string,
+                onChanged: (value) => setState(() => ipv6Route = value),
+              ),
+              InputEditable(
+                icon: Icons.sailing,
+                title: 'Local DNS Port',
+                defaultValue: '6450',
+                dialogType: FormEditableTypes.string,
+                onChanged: (value) => setState(() => ipv6Route = value),
+              ),
+              SwitchEditable(
+                icon: Icons.http,
+                title: 'Append HTTP Proxy to VPN',
+                value: switchStates['httptovpn']!,
+                onChanged: (value) =>
+                    setState(() => switchStates['httptovpn'] = value),
+              ),
+              SwitchEditable(
+                icon: Icons.arrow_circle_right,
+                title: 'Allow Connections from the LAN',
+                value: switchStates['fromlan']!,
+                onChanged: (value) =>
+                    setState(() => switchStates['fromlan'] = value),
+              ),
+            ]),
+            GroupForm(title: 'Misc Settings', children: [
+              InputEditable(
+                icon: Icons.cast,
+                title: 'Connection Test URL',
+                defaultValue: 'http://cp.cloudflare.com',
+                dialogType: FormEditableTypes.string,
+                onChanged: (value) => setState(() => ipv6Route = value),
+              ),
+              SwitchEditable(
+                icon: Icons.computer,
+                title: 'Acquire Wakelock',
+                value: switchStates['wakelock']!,
+                onChanged: (value) =>
+                    setState(() => switchStates['wakelock'] = value),
+              ),
+              SwitchEditable(
+                icon: Icons.arrow_circle_right,
+                title: 'Enable Clash API',
+                value: switchStates['clashapi']!,
+                onChanged: (value) =>
+                    setState(() => switchStates['clashapi'] = value),
+              ),
+              ListTile(
+                  leading: const Icon(Icons.https),
+                  title: const Text('Subscription Min TLS Version'),
+                  trailing: DropdownButton(
+                    value: tlsValue,
+                    icon: const Icon(Icons.arrow_drop_down),
+                    onChanged: (String? value) {
+                      setState(() {
+                        dropdownValue = value!;
+                      });
+                    },
+                    items: minTls.map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  )),
+              SwitchEditable(
+                icon: Icons.arrow_circle_right,
+                title:
+                    'Disable certificate checking when updating subscriptions',
+                value: switchStates['disablecertificate']!,
+                onChanged: (value) =>
+                    setState(() => switchStates['disablecertificate'] = value),
               ),
             ])
           ],

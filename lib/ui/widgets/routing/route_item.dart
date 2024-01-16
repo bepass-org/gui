@@ -40,7 +40,7 @@ class RouteItem extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    routeModel!.routeName!,
+                    routeModel.routeName!,
                     style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   IconButton(
@@ -76,13 +76,13 @@ class RouteItem extends ConsumerWidget {
                   Transform.scale(
                     scale: 0.8,
                     child: Switch(
-                      value: routeModel!.active!,
+                      value: routeModel.active!,
                       //value: rulesActive[rule]!,
                       onChanged: (newValue) {
                         print("Toggle in build $newValue");
                         // setState(() {
-                        routeModel!.active = newValue;
-                        ref.watch(routeStateProvider.notifier).UpdateItem(routeModel!,index!);
+                        routeModel.active = newValue;
+                        ref.watch(routeStateProvider.notifier).UpdateItem(routeModel,index);
 
                         //   toggleSwitch(rule );
                         // });

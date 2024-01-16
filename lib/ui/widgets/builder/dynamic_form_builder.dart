@@ -7,7 +7,7 @@ class DynamicFormBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       /*children: template.templateFields.map((field) {
         switch (field.type) {
           case 'string':

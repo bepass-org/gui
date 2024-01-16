@@ -70,8 +70,7 @@ class Styles {
             context: context, mColor: Colors.red, color: Colors.red);
       case 3:
         return setOtherTheme(
-            context: context, mColor: Colors.green, color: Colors.greenAccent);
-        ;
+            context: context, mColor: Colors.green, color: Colors.greenAccent); {}
       case 4:
         return setOtherTheme(
             context: context, mColor: Colors.blue, color: Colors.blueAccent);

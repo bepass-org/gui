@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:defacto/models/route/route_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -29,7 +28,7 @@ class RouteStateNotifier extends StateNotifier<List<RouteModel>>{
     state = route;
   }
   Future<List<RouteModel>> loadFakeProfiles() async {
-    final String response = await rootBundle.loadString('assets/fake_data/routes.json');
+    final String response = await rootBundle.loadString('assets/fake_data/route.json');
     final data = await json.decode(response) as List;
     return data.map((profileJson) => RouteModel.fromJson(profileJson)).toList();
   }
@@ -45,20 +44,18 @@ class RouteStateNotifier extends StateNotifier<List<RouteModel>>{
 /*
 delete selected item
  */
-  void DeleteRoute(int _index){
+  void DeleteRoute(int index){
     List<RouteModel> newState = [...state];
-    newState.removeAt(_index);
+    newState.removeAt(index);
     state = newState;
   }
   /*
   update item
    */
-  void UpdateItem(RouteModel newroute,int _index){
+  void UpdateItem(RouteModel newroute,int index){
     List<RouteModel> newState = [...state];
-    // find the index of item
-    // int index = newState.indexWhere((route) => route.id == newroute.id);
-    // update the item with new object
-    newState[_index] = newroute;
+
+    newState[index] = newroute;
     state = newState;
   }
 

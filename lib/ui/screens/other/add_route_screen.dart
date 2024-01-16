@@ -7,27 +7,96 @@ import 'package:defacto/ui/widgets/card/default_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../states/route/single_route_state.dart';
+
 class AddRouteScreen extends ConsumerStatefulWidget {
 RouteModel? routeModel;
 int? index; // get index for better search and find on the list in delete and edit
 
-AddRouteScreen({this.routeModel,this.index});
+AddRouteScreen({super.key, this.routeModel,this.index});
 
   @override
-  ConsumerState<AddRouteScreen> createState() => _AddRouteScreenState();
+  ConsumerState<AddRouteScreen> createState() => _AddRouteScreenState(routeModel: routeModel);
 }
 
 class _AddRouteScreenState extends ConsumerState<AddRouteScreen> {
   final Map<AddRouteEnum, AddRouteModel> data = HashMap();
+  final TextEditingController _dialog_input_controller = TextEditingController();
 
+  late StateNotifierProvider<SingleRouteStateNotifier, RouteModel?> SinglerouteStateProvider;
+  RouteModel? routeModel;
+  bool needUpdate = false;
+
+  _AddRouteScreenState({this.routeModel}){
+    SinglerouteStateProvider =
+        StateNotifierProvider<SingleRouteStateNotifier, RouteModel?>((ref) {
+          return SingleRouteStateNotifier(routeModel: routeModel??RouteModel());
+        });
+
+  }
   @override
   void initState() {
     super.initState();
     _fillDataList();
   }
 
+  /*
+  this method create an alertdialog with textfield to get new data for
+  updating the specific property of route model
+   */
+
+  void _showAlertDialog(BuildContext context,{required String propertyName,String? value}) {
+    _dialog_input_controller.text = value??"";
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          title:  Text(propertyName),
+          content:  TextField(
+            controller: _dialog_input_controller,
+            decoration: const InputDecoration(
+                hintText: 'Enter value'
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('Confirm'),
+              onPressed: () {
+                // Handle the confirm action
+                // check input is empty or not
+                if(_dialog_input_controller.text.isNotEmpty){
+
+                  debugPrint("Input: ${_dialog_input_controller.text}");
+                  // update item
+                  ref.watch(SinglerouteStateProvider.notifier).UpdateRoute(propertyName: propertyName,newValue: _dialog_input_controller.text);
+
+                  // set need update true
+                  needUpdate = true;
+                  // close dialog
+                  Navigator.of(context).pop();
+                }else{
+                  // show message input is empty
+                  debugPrint("Input is empty");
+                }
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
+    routeModel = ref.watch(SinglerouteStateProvider);
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
@@ -36,18 +105,25 @@ class _AddRouteScreenState extends ConsumerState<AddRouteScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              /// delete the [widget.routeModel]
+              /// delete the [routeModel]
               /// send request of delete to the state
-              /// before delete check [widget.routeModel] is not null
-              ///
-              if(widget.routeModel!=null)
-                 ref.watch(routeStateProvider.notifier).DeleteRoute(widget.index!);
+              /// before delete check [routeModel] is not null
+              /// do this by checking [index] is null or not
+
+              if(widget.index!=null) {
+                ref.watch(routeStateProvider.notifier).DeleteRoute(widget.index!);
+              }
               Navigator.pop(context);
             },
             icon: const Icon(Icons.delete),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              if(needUpdate && widget.index!=null){
+                ref.watch(routeStateProvider.notifier).UpdateItem(routeModel!,widget.index!);
+              }
+              Navigator.pop(context);
+            },
             icon: const Icon(Icons.check),
           ),
         ],
@@ -71,7 +147,12 @@ class _AddRouteScreenState extends ConsumerState<AddRouteScreen> {
         padding: const EdgeInsets.only(left: 16.0, right: 16, top: 6),
         prefixWidget: const Icon(Icons.my_library_music_outlined, color: Color(0xff605b5b)),
         title: "Route Name",
-        body: widget.routeModel?.routeName ?? 'Not Set',
+        body: routeModel?.routeName ?? 'Not Set',
+          onClick: () {
+            // open dialog
+            _showAlertDialog(context,value: routeModel?.routeName,propertyName: 'routeName');
+
+          }
       ),
       const SizedBox(
         height: 30,
@@ -84,6 +165,8 @@ class _AddRouteScreenState extends ConsumerState<AddRouteScreen> {
       // )
     ];
   }
+
+
 
   List<Widget> _routeSettingWidget() {
     return [
@@ -100,10 +183,11 @@ class _AddRouteScreenState extends ConsumerState<AddRouteScreen> {
         padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 6),
         prefixWidget: const Icon(Icons.apartment, color: Color(0xff605b5b)),
         title: "domain",
-        body: widget.routeModel?.routeName ?? 'Not Set',
+        body: routeModel?.domain ?? 'Not Set',
         onClick: () {
-          // TODO : logic goes here
-          debugPrint('OPEN DIALOG TO GET INFO');
+
+          // open dialog
+          _showAlertDialog(context,value: routeModel?.domain,propertyName: 'domain');
         },
       ),
       const SizedBox(
@@ -113,7 +197,11 @@ class _AddRouteScreenState extends ConsumerState<AddRouteScreen> {
         padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 6),
         prefixWidget: const Icon(Icons.add_road, color: Color(0xff605b5b)),
         title: "ip",
-        body: widget.routeModel?.ip ?? 'Not Set',
+        body: routeModel?.ip ?? 'Not Set',
+        onClick: () {
+          _showAlertDialog(context,value: routeModel?.ip,propertyName: 'ip');
+
+        },
       ),
       const SizedBox(
         height: 24,
@@ -122,7 +210,12 @@ class _AddRouteScreenState extends ConsumerState<AddRouteScreen> {
         padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 6),
         prefixWidget: const Icon(Icons.local_shipping, color: Color(0xff605b5b)),
         title: "port",
-        body: widget.routeModel?.port ?? 'Not Set',
+        body: routeModel?.port ?? 'Not Set',
+        onClick: () {
+          // open dialog
+          _showAlertDialog(context,value: routeModel?.port,propertyName: 'port');
+
+        },
       ),
       const SizedBox(
         height: 24,
@@ -131,7 +224,12 @@ class _AddRouteScreenState extends ConsumerState<AddRouteScreen> {
         padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 6),
         prefixWidget: const Icon(Icons.home, color: Color(0xff605b5b)),
         title: "sourcePort",
-        body: widget.routeModel?.sourcePort ?? 'Not Set',
+        body: routeModel?.sourcePort ?? 'Not Set',
+        onClick: () {
+          // open dialog
+          _showAlertDialog(context,value: routeModel?.sourcePort,propertyName: 'sourcePort');
+
+        },
       ),
       const SizedBox(
         height: 24,
@@ -140,7 +238,12 @@ class _AddRouteScreenState extends ConsumerState<AddRouteScreen> {
         padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 6),
         prefixWidget: const Icon(Icons.network_ping_sharp, color: Color(0xff605b5b)),
         title: "network",
-        body: widget.routeModel?.network ?? 'Not Set',
+        body: routeModel?.network ?? 'Not Set',
+        onClick: () {
+          // open dialog
+          _showAlertDialog(context,value: routeModel?.network,propertyName: 'network');
+
+        },
       ),
       const SizedBox(
         height: 24,
@@ -149,7 +252,12 @@ class _AddRouteScreenState extends ConsumerState<AddRouteScreen> {
         padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 6),
         prefixWidget: const Icon(Icons.wine_bar, color: Color(0xff605b5b)),
         title: "source",
-        body: widget.routeModel?.source ?? 'Not Set',
+        body: routeModel?.source ?? 'Not Set',
+        onClick: () {
+          // open dialog
+          _showAlertDialog(context,value: routeModel?.source,propertyName: 'source');
+
+        },
       ),
       const SizedBox(
         height: 24,
@@ -158,7 +266,12 @@ class _AddRouteScreenState extends ConsumerState<AddRouteScreen> {
         padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 6),
         prefixWidget: const Icon(Icons.propane_tank_outlined, color: Color(0xff605b5b)),
         title: "protocol",
-        body: widget.routeModel?.protocol ?? 'Not Set',
+        body: routeModel?.protocol ?? 'Not Set',
+        onClick: () {
+          // open dialog
+          _showAlertDialog(context,value: routeModel?.protocol,propertyName: 'protocol');
+
+        },
       ),
       const SizedBox(
         height: 24,
@@ -167,7 +280,12 @@ class _AddRouteScreenState extends ConsumerState<AddRouteScreen> {
         padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 6),
         prefixWidget: const Icon(Icons.radio_outlined, color: Color(0xff605b5b)),
         title: "outbound",
-        body: widget.routeModel?.outbound ?? 'Not Set',
+        body: routeModel?.outbound ?? 'Not Set',
+        onClick: () {
+          // open dialog
+          _showAlertDialog(context,value: routeModel?.outbound,propertyName: 'outbound');
+
+        },
       ),
     ];
   }

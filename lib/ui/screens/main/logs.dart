@@ -98,8 +98,7 @@ class LogEntry extends StatelessWidget {
   final String logType;
   final String message;
 
-  const LogEntry(this.timestamp, this.logType, this.message, {Key? key})
-      : super(key: key);
+  const LogEntry(this.timestamp, this.logType, this.message, {super.key});
 
   @override
   Widget build(BuildContext context) {
