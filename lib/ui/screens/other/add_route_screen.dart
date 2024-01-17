@@ -13,7 +13,7 @@ class AddRouteScreen extends ConsumerStatefulWidget {
 RouteModel? routeModel;
 int? index; // get index for better search and find on the list in delete and edit
 
-AddRouteScreen({this.routeModel,this.index});
+AddRouteScreen({super.key, this.routeModel,this.index});
 
   @override
   ConsumerState<AddRouteScreen> createState() => _AddRouteScreenState(routeModel: routeModel);
@@ -21,7 +21,7 @@ AddRouteScreen({this.routeModel,this.index});
 
 class _AddRouteScreenState extends ConsumerState<AddRouteScreen> {
   final Map<AddRouteEnum, AddRouteModel> data = HashMap();
-  TextEditingController _dialog_input_controller = TextEditingController();
+  final TextEditingController _dialog_input_controller = TextEditingController();
 
   late StateNotifierProvider<SingleRouteStateNotifier, RouteModel?> SinglerouteStateProvider;
   RouteModel? routeModel;
@@ -55,7 +55,7 @@ class _AddRouteScreenState extends ConsumerState<AddRouteScreen> {
           title:  Text(propertyName),
           content:  TextField(
             controller: _dialog_input_controller,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
                 hintText: 'Enter value'
             ),
           ),
@@ -75,7 +75,7 @@ class _AddRouteScreenState extends ConsumerState<AddRouteScreen> {
 
                   debugPrint("Input: ${_dialog_input_controller.text}");
                   // update item
-                  ref.watch(SinglerouteStateProvider.notifier)?.UpdateRoute(propertyName: propertyName,newValue: _dialog_input_controller.text);
+                  ref.watch(SinglerouteStateProvider.notifier).UpdateRoute(propertyName: propertyName,newValue: _dialog_input_controller.text);
 
                   // set need update true
                   needUpdate = true;
@@ -110,8 +110,9 @@ class _AddRouteScreenState extends ConsumerState<AddRouteScreen> {
               /// before delete check [routeModel] is not null
               /// do this by checking [index] is null or not
 
-              if(widget.index!=null)
+              if(widget.index!=null) {
                 ref.watch(routeStateProvider.notifier).DeleteRoute(widget.index!);
+              }
               Navigator.pop(context);
             },
             icon: const Icon(Icons.delete),
