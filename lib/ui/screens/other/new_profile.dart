@@ -41,11 +41,11 @@ class _NewProfilePageState extends State<NewProfilePage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Success'),
-          content: Text('Configuration saved successfully'),
+          title: const Text('Success'),
+          content: const Text('Configuration saved successfully'),
           actions: <Widget>[
             TextButton(
-              child: Text('OK'),
+              child: const Text('OK'),
               onPressed: () {
                 _saveConfiguration();
                 Navigator.of(context).pop();
@@ -60,7 +60,7 @@ class _NewProfilePageState extends State<NewProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Theme.of(context).colorScheme.primary,

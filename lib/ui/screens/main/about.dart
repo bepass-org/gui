@@ -23,10 +23,9 @@ class _AboutScreenState extends State<AboutScreen> {
     return PopScope(
       canPop: false,
       onPopInvoked: (didPop) {
-        if(_scaffoldKey.currentState!.isDrawerOpen){
+        if (_scaffoldKey.currentState!.isDrawerOpen) {
           _scaffoldKey.currentState!.closeDrawer();
-        }
-        else{
+        } else {
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -39,18 +38,15 @@ class _AboutScreenState extends State<AboutScreen> {
         key: _scaffoldKey,
         appBar: AppBar(
           iconTheme: const IconThemeData(color: Colors.white),
-          backgroundColor: Theme
-              .of(context)
-              .colorScheme
-              .primary,
+          backgroundColor: Theme.of(context).colorScheme.background,
           title: const Text("About", style: TextStyle(color: Colors.white)),
         ),
         drawer: const MainDrawer(),
         // backgroundColor: Theme.of(context).colorScheme.background,
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.background,
         body: Material(
           // color: Theme.of(context).colorScheme.background,
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.background,
           child: SingleChildScrollView(
             padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
             child: Column(
@@ -61,7 +57,8 @@ class _AboutScreenState extends State<AboutScreen> {
                 ),
                 DefaultCard(child: _appInfoWidget(context)),
                 DefaultCard(child: _projectWidget(context)),
-                DefaultCard(child: HtmlWidget(_htmlContent(), onTapUrl: _launchUrl)),
+                DefaultCard(
+                    child: HtmlWidget(_htmlContent(), onTapUrl: _launchUrl)),
               ],
             ),
           ),
@@ -73,32 +70,23 @@ class _AboutScreenState extends State<AboutScreen> {
   Widget _bepassWidget(BuildContext context) {
     final data = DefaultCardMiscData(
       title: "Bepass Mobile",
-      body: "Bepass is a simple tool to overcome State provisioned internet censorship. like iran, china, etc.",
+      body:
+          "Bepass is a simple tool to overcome State provisioned internet censorship. like iran, china, etc.",
     );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           data.title,
-          style: Theme
-              .of(context)
-              .textTheme
-              .titleSmall!
-              .copyWith(
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-          ),
+          style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
         ),
         const SizedBox(
           height: 14,
         ),
-        Text(
-            data.body,
-            style: Theme
-                .of(context)
-                .textTheme
-                .labelLarge
-        ),
+        Text(data.body, style: Theme.of(context).textTheme.labelLarge),
       ],
     );
   }
@@ -116,7 +104,8 @@ class _AboutScreenState extends State<AboutScreen> {
         ),
         DefaultListItem(
           title: "Version (bepass-core)",
-          body: "bepass-extra: 1.4.0-rc3\ngo1.21.0@android/arm64\nwith_contract...",
+          body:
+              "bepass-extra: 1.4.0-rc3\ngo1.21.0@android/arm64\nwith_contract...",
           prefixWidget: Icon(Icons.add_chart),
         ),
         SizedBox(
@@ -145,14 +134,10 @@ class _AboutScreenState extends State<AboutScreen> {
       children: [
         Text(
           'Project',
-          style: Theme
-              .of(context)
-              .textTheme
-              .titleSmall!
-              .copyWith(
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-          ),
+          style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
         ),
         const SizedBox(
           height: 20,
@@ -172,8 +157,9 @@ class _AboutScreenState extends State<AboutScreen> {
     );
   }
 
-  Future<bool> _launchUrl(url) async =>
-      await canLaunchUrl(Uri.parse(url)) ? await launchUrl(Uri.parse(url)) : throw Exception('Could not launch $url');
+  Future<bool> _launchUrl(url) async => await canLaunchUrl(Uri.parse(url))
+      ? await launchUrl(Uri.parse(url))
+      : throw Exception('Could not launch $url');
 
   String _htmlContent() {
     return '''

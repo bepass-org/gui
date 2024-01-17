@@ -81,6 +81,12 @@ class RouteItem extends ConsumerWidget {
                       onChanged: (newValue) {
                         debugPrint("Toggle in build $newValue");
                         // setState(() {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('${ routeModel!.active! ? "Disabled" : "Enabled"} ${routeModel.routeName}'),
+                            duration: const Duration(seconds: 1),
+                          ),
+                        );
                         routeModel!.active = newValue;
                         ref.watch(routeStateProvider.notifier).UpdateItem(routeModel!,index!);
 

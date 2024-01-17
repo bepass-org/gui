@@ -24,19 +24,19 @@ class _RoutingScreenState extends ConsumerState<RoutingScreen> {
     // Add more rules as necessary
   };
 
-  void toggleSwitch(String key) {
-    print("Toggle clicked");
-    setState(() {
-
-      rulesActive[key] = !rulesActive[key]!;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('${rulesActive[key]! ? "Enabled" : "Disabled"} $key'),
-          duration: const Duration(seconds: 1),
-        ),
-      );
-    });
-  }
+  // void toggleSwitch(String key) {
+  //   print("Toggle clicked");
+  //   setState(() {
+  //
+  //     rulesActive[key] = !rulesActive[key]!;
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(
+  //         content: Text('${rulesActive[key]! ? "Enabled" : "Disabled"} $key'),
+  //         duration: const Duration(seconds: 1),
+  //       ),
+  //     );
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {

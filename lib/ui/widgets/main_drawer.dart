@@ -22,7 +22,7 @@ class MainDrawer extends ConsumerWidget {
                 child: Text(
                   "Bepass",
                   style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-                        color: Theme.of(context).colorScheme.background,
+                        color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                 )),

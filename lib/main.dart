@@ -14,8 +14,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:path_provider/path_provider.dart';
 
-import 'config/theme.dart';
-import 'states/global/theme_mode_state.dart';
+import 'config/theme_provider.dart';
+import 'config/styles.dart';
 
 /// Try using const constructors as much as possible!
 
@@ -40,29 +40,27 @@ void main() async {
         ],
         fallbackLocale: const Locale('en'),
         useFallbackTranslations: true,
-        child: const MyApp(),
+        child: MyApp(),
       ),
     ),
   );
 }
 
 class MyApp extends ConsumerWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+  Styles styles = Styles();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final ThemeModeState currentTheme = ref.watch(themeProvider);
-
+    final themeNotifer = ref.watch(themeProvider);
     return MaterialApp(
       title: 'Bepass',
-      theme: lightTheme,
-      darkTheme: darkTheme,
-      themeMode: currentTheme.themeMode,
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       debugShowCheckedModeBanner: false,
       initialRoute: '/loading',
+      theme: styles.themeData(themeNotifer.themeIndex, context),
       routes: {
         '/loading': (context) => const LoadingScreen(),
         '/': (context) => const SkeletonScreen(),

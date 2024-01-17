@@ -10,10 +10,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../states/route/single_route_state.dart';
 
 class AddRouteScreen extends ConsumerStatefulWidget {
-RouteModel? routeModel;
-int? index; // get index for better search and find on the list in delete and edit
+  RouteModel? routeModel;
+  int? index; // get index for better search and find on the list in delete and edit
 
-AddRouteScreen({this.routeModel,this.index});
+  AddRouteScreen({super.key, this.routeModel,this.index});
 
   @override
   ConsumerState<AddRouteScreen> createState() => _AddRouteScreenState(routeModel: routeModel);
@@ -21,7 +21,7 @@ AddRouteScreen({this.routeModel,this.index});
 
 class _AddRouteScreenState extends ConsumerState<AddRouteScreen> {
   final Map<AddRouteEnum, AddRouteModel> data = HashMap();
-  TextEditingController _dialog_input_controller = TextEditingController();
+  final TextEditingController _dialog_input_controller = TextEditingController();
 
   late StateNotifierProvider<SingleRouteStateNotifier, RouteModel?> SinglerouteStateProvider;
   RouteModel? routeModel;
@@ -29,17 +29,21 @@ class _AddRouteScreenState extends ConsumerState<AddRouteScreen> {
 
   _AddRouteScreenState({this.routeModel}){
     SinglerouteStateProvider =
-     StateNotifierProvider<SingleRouteStateNotifier, RouteModel?>((ref) {
-       return SingleRouteStateNotifier(routeModel: routeModel??RouteModel());
-     });
+        StateNotifierProvider<SingleRouteStateNotifier, RouteModel?>((ref) {
+          return SingleRouteStateNotifier(routeModel: routeModel??RouteModel());
+        });
 
   }
-
   @override
   void initState() {
     super.initState();
     _fillDataList();
   }
+
+  /*
+  this method create an alertdialog with textfield to get new data for
+  updating the specific property of route model
+   */
 
   void _showAlertDialog(BuildContext context,{required String propertyName,String? value}) {
     _dialog_input_controller.text = value??"";
@@ -48,11 +52,11 @@ class _AddRouteScreenState extends ConsumerState<AddRouteScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Colors.white,
-          title:  Text('Route name'),
+          title:  Text(propertyName),
           content:  TextField(
             controller: _dialog_input_controller,
-            decoration: InputDecoration(
-              hintText: 'Enter value'
+            decoration: const InputDecoration(
+                hintText: 'Enter value'
             ),
           ),
           actions: <Widget>[
@@ -71,7 +75,7 @@ class _AddRouteScreenState extends ConsumerState<AddRouteScreen> {
 
                   debugPrint("Input: ${_dialog_input_controller.text}");
                   // update item
-                  ref.watch(SinglerouteStateProvider.notifier)?.UpdateRoute(propertyName: propertyName,newValue: _dialog_input_controller.text);
+                  ref.watch(SinglerouteStateProvider.notifier).UpdateRoute(propertyName: propertyName,newValue: _dialog_input_controller.text);
 
                   // set need update true
                   needUpdate = true;
@@ -97,7 +101,7 @@ class _AddRouteScreenState extends ConsumerState<AddRouteScreen> {
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Theme.of(context).colorScheme.primary,
-        title:  Text("Routing And Rules", style: TextStyle(color: Colors.white)),
+        title: const Text("Routing And Rules", style: TextStyle(color: Colors.white)),
         actions: [
           IconButton(
             onPressed: () {
@@ -106,8 +110,9 @@ class _AddRouteScreenState extends ConsumerState<AddRouteScreen> {
               /// before delete check [routeModel] is not null
               /// do this by checking [index] is null or not
 
-              if(widget.index!=null)
-                 ref.watch(routeStateProvider.notifier).DeleteRoute(widget.index!);
+              if(widget.index!=null) {
+                ref.watch(routeStateProvider.notifier).DeleteRoute(widget.index!);
+              }
               Navigator.pop(context);
             },
             icon: const Icon(Icons.delete),
@@ -118,8 +123,6 @@ class _AddRouteScreenState extends ConsumerState<AddRouteScreen> {
                 ref.watch(routeStateProvider.notifier).UpdateItem(routeModel!,widget.index!);
               }
               Navigator.pop(context);
-
-
             },
             icon: const Icon(Icons.check),
           ),
@@ -141,17 +144,16 @@ class _AddRouteScreenState extends ConsumerState<AddRouteScreen> {
   List<Widget> _headerWidget() {
     return [
       DefaultListItem(
-          onClick: () {
-            // open dialog
-            _showAlertDialog(context,value: routeModel?.routeName,propertyName: 'routeName');
-
-          },
           padding: const EdgeInsets.only(left: 16.0, right: 16, top: 6),
           prefixWidget: const Icon(Icons.my_library_music_outlined, color: Color(0xff605b5b)),
           title: "Route Name",
           body: routeModel?.routeName ?? 'Not Set',
-        ),
+          onClick: () {
+            // open dialog
+            _showAlertDialog(context,value: routeModel?.routeName,propertyName: 'routeName');
 
+          }
+      ),
       const SizedBox(
         height: 30,
       ),
@@ -184,7 +186,7 @@ class _AddRouteScreenState extends ConsumerState<AddRouteScreen> {
         body: routeModel?.domain ?? 'Not Set',
         onClick: () {
 
-            // open dialog
+          // open dialog
           _showAlertDialog(context,value: routeModel?.domain,propertyName: 'domain');
         },
       ),
