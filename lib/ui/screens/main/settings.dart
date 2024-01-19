@@ -179,7 +179,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     icon: const Icon(Icons.arrow_drop_down),
                     onChanged: (String? value) {
                       setState(() {
-                        dropdownValue = value!;
+                        serviceModeValue = value!;
                       });
                     },
                     items: serviceMode
@@ -198,7 +198,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     icon: const Icon(Icons.arrow_drop_down),
                     onChanged: (String? value) {
                       setState(() {
-                        dropdownValue = value!;
+                        tunImplementationValue = value!;
                       });
                     },
                     items: tunImplementation
@@ -217,7 +217,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     icon: const Icon(Icons.arrow_drop_down),
                     onChanged: (String? value) {
                       setState(() {
-                        dropdownValue = value!;
+                        mtuValue = value!;
                       });
                     },
                     items: mtu.map<DropdownMenuItem<String>>((String value) {
@@ -235,7 +235,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     icon: const Icon(Icons.arrow_drop_down),
                     onChanged: (String? value) {
                       setState(() {
-                        dropdownValue = value!;
+                        speedNotificationValue = value!;
                       });
                     },
                     items: speedNotification
@@ -282,7 +282,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     icon: const Icon(Icons.arrow_drop_down),
                     onChanged: (String? value) {
                       setState(() {
-                        dropdownValue = value!;
+                        logLevelValue = value!;
                       });
                     },
                     items:
@@ -351,7 +351,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       icon: const Icon(Icons.arrow_drop_down),
                       onChanged: (String? value) {
                         setState(() {
-                          dropdownValue = value!;
+                          ipv6Value = value!;
                         });
                       },
                       items: ipv6.map<DropdownMenuItem<String>>((String value) {
@@ -369,7 +369,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       icon: const Icon(Icons.arrow_drop_down),
                       onChanged: (String? value) {
                         setState(() {
-                          dropdownValue = value!;
+                          assetsproviderValue = value!;
                         });
                       },
                       items: assetsprovider
@@ -400,7 +400,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       icon: const Icon(Icons.arrow_drop_down),
                       onChanged: (String? value) {
                         setState(() {
-                          dropdownValue = value!;
+                          muxValue = value!;
                         });
                       },
                       items: mux.map<DropdownMenuItem<String>>((String value) {
@@ -442,7 +442,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     icon: const Icon(Icons.arrow_drop_down),
                     onChanged: (String? value) {
                       setState(() {
-                        dropdownValue = value!;
+                        dnsValue = value!;
                       });
                     },
                     items: dns.map<DropdownMenuItem<String>>((String value) {
@@ -467,7 +467,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     icon: const Icon(Icons.arrow_drop_down),
                     onChanged: (String? value) {
                       setState(() {
-                        dropdownValue = value!;
+                        dnsValue = value!;
                       });
                     },
                     items: dns.map<DropdownMenuItem<String>>((String value) {
@@ -485,7 +485,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     icon: const Icon(Icons.arrow_drop_down),
                     onChanged: (String? value) {
                       setState(() {
-                        dropdownValue = value!;
+                        dnsValue = value!;
                       });
                     },
                     items: dns.map<DropdownMenuItem<String>>((String value) {
@@ -570,7 +570,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     icon: const Icon(Icons.arrow_drop_down),
                     onChanged: (String? value) {
                       setState(() {
-                        dropdownValue = value!;
+                        tlsValue = value!;
                       });
                     },
                     items: minTls.map<DropdownMenuItem<String>>((String value) {
