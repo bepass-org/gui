@@ -10,10 +10,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../states/route/single_route_state.dart';
 
 class AddRouteScreen extends ConsumerStatefulWidget {
-RouteModel? routeModel;
-int? index; // get index for better search and find on the list in delete and edit
+  RouteModel? routeModel;
+  int? index; // get index for better search and find on the list in delete and edit
 
-AddRouteScreen({super.key, this.routeModel,this.index});
+  AddRouteScreen({super.key, this.routeModel,this.index});
 
   @override
   ConsumerState<AddRouteScreen> createState() => _AddRouteScreenState(routeModel: routeModel);
@@ -144,10 +144,10 @@ class _AddRouteScreenState extends ConsumerState<AddRouteScreen> {
   List<Widget> _headerWidget() {
     return [
       DefaultListItem(
-        padding: const EdgeInsets.only(left: 16.0, right: 16, top: 6),
-        prefixWidget: const Icon(Icons.my_library_music_outlined, color: Color(0xff605b5b)),
-        title: "Route Name",
-        body: routeModel?.routeName ?? 'Not Set',
+          padding: const EdgeInsets.only(left: 16.0, right: 16, top: 6),
+          prefixWidget: const Icon(Icons.my_library_music_outlined, color: Color(0xff605b5b)),
+          title: "Route Name",
+          body: routeModel?.routeName ?? 'Not Set',
           onClick: () {
             // open dialog
             _showAlertDialog(context,value: routeModel?.routeName,propertyName: 'routeName');

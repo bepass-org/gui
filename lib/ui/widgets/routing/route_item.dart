@@ -79,13 +79,18 @@ class RouteItem extends ConsumerWidget {
                       value: routeModel!.active!,
                       //value: rulesActive[rule]!,
                       onChanged: (newValue) {
-                        print("Toggle in build $newValue");
+                        debugPrint("Toggle in build $newValue");
                         // setState(() {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('${ routeModel!.active! ? "Disabled" : "Enabled"} ${routeModel.routeName}'),
+                            duration: const Duration(seconds: 1),
+                          ),
+                        );
                         routeModel!.active = newValue;
                         ref.watch(routeStateProvider.notifier).UpdateItem(routeModel!,index!);
 
-                        //   toggleSwitch(rule );
-                        // });
+
                       },
                     ),
                   ),
