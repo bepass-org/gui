@@ -1,14 +1,12 @@
-import 'package:defacto/enums/form_editable_types.dart';
+import 'package:defacto/ui/widgets/builder/buildfield.dart';
 import 'package:defacto/ui/widgets/form/group.dart';
-import 'package:defacto/ui/widgets/form/input_editable.dart';
 import 'package:defacto/ui/widgets/form/profile_name.dart';
-import 'package:defacto/ui/widgets/form/switch_editable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
 
 class NewProfilePage extends StatefulWidget {
-  const NewProfilePage({super.key});
+  const NewProfilePage({Key? key}) : super(key: key);
 
   @override
   State<NewProfilePage> createState() => _NewProfilePageState();
@@ -33,73 +31,54 @@ class _NewProfilePageState extends State<NewProfilePage> {
     });
   }
 
-  Widget buildField(Map<String, dynamic> field) {
-    String title = field['name'];
-    String defaultValue = field['defaultValue'].toString();
-    IconData icon = _getIcon(field['icon']);
-
-    if (field['type'] == 'boolean') {
-      return SwitchEditable(
-        icon: icon,
-        title: title,
-        value: defaultValue.toLowerCase() == 'true',
-        onChanged: (v) {},
-      );
-    } else {
-      FormEditableTypes dialogType = _getDialogType(field['type']);
-      return InputEditable(
-        icon: icon,
-        title: title,
-        defaultValue: defaultValue,
-        dialogType: dialogType,
-        onChanged: (v) {},
-      );
-    }
-  }
-
-  FormEditableTypes _getDialogType(String type) {
-    switch (type) {
-      case 'number':
-        return FormEditableTypes.number;
-      case 'url':
-        return FormEditableTypes.url;
-
-      default:
-        return FormEditableTypes.string;
-    }
-  }
-
-  IconData _getIcon(String iconName) {
-    switch (iconName) {
-      case 'security':
-        return Icons.security;
-      case 'http':
-        return Icons.http;
-
-      default:
-        return Icons.error;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        title: const Text('Profile Config'),
-        actions: const [],
+        iconTheme: const IconThemeData(color: Colors.white),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.delete),
+            onPressed: _saveConfiguration,
+          ),
+          IconButton(
+            icon: const Icon(Icons.check),
+            onPressed: _saveConfiguration,
+          ),
+          IconButton(
+            icon: const Icon(Icons.more_vert),
+            onPressed: _saveConfiguration,
+          ),
+        ],
+        title: const Text(
+          'Profile Config',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
-      body: ListView(
-        children: [
-          const ProfileName(),
-          for (var group in profile_template[0]['groups'])
-            GroupForm(
+      body: ListView.builder(
+        itemCount: profile_template.isEmpty
+            ? 0
+            : profile_template[0]['groups'].length + 1,
+        itemBuilder: (context, index) {
+          if (index == 0) {
+            return const ProfileName();
+          } else {
+            var group = profile_template[0]['groups'][index - 1];
+            return GroupForm(
               title: group['name'],
               children: [
                 for (var field in group['fields']) buildField(field),
               ],
-            ),
-        ],
+            );
+          }
+        },
       ),
     );
+  }
+
+  void _saveConfiguration() {
+    Navigator.pop(context);
   }
 }
