@@ -27,7 +27,8 @@ void main() async {
     await FlutterDisplayMode.setHighRefreshRate();
   }
   final Directory tmpDir = await getTemporaryDirectory();
-  await Hive.initFlutter(tmpDir.toString());
+  if(Platform.isWindows)
+  await Hive.initFlutter(tmpDir.path);
   await Hive.openBox('prefs');
 
   runApp(
