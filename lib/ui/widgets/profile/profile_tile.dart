@@ -63,106 +63,115 @@ class ProfileTile extends StatelessWidget {
           ),
         ),
         child: InkWell(
-          child: ListTile(
-            contentPadding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
             onTap: onTap,
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  title,
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleMedium!
-                      .apply(fontWeightDelta: 2),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleMedium!
+                          .apply(fontWeightDelta: 2),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      type,
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 10),
-                Text(
-                  type,
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
+
+                ConstrainedBox(
+                  constraints: const BoxConstraints(
+                    minWidth: 200,
+                    maxWidth: 200,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ConstrainedBox(
+                        constraints: const BoxConstraints(
+                          maxWidth: 120,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            SizedBox(
+                              height: 24.0,
+                              width: 24.0,
+                              child: IconButton(
+                                padding: const EdgeInsets.all(0.0),
+                                icon: const Icon(Icons.edit),
+                                onPressed: onEdit,
+                              ),
+                            ),
+                            const Spacer(),
+                            SizedBox(
+                              height: 24.0,
+                              width: 24.0,
+                              child: IconButton(
+                                padding: const EdgeInsets.all(0.0),
+                                icon: const Icon(Icons.share),
+                                onPressed: () {},
+                              ),
+                            ),
+                            const Spacer(),
+                            SizedBox(
+                              height: 24.0,
+                              width: 24.0,
+                              child: IconButton(
+                                padding: const EdgeInsets.all(0.0),
+                                icon: const Icon(Icons.delete),
+                                onPressed: onDelete,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      totalUploadTraffic != 0 && totalDownloadTraffic != 0 ? Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            formatDouble(totalUploadTraffic),
+                            style: Theme.of(context).textTheme.titleSmall,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            uploadMeasureUnit,
+                            style: Theme.of(context).textTheme.titleSmall,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            formatDouble(totalDownloadTraffic),
+                            style: Theme.of(context).textTheme.titleSmall,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            downloadMeasureUnit,
+                            style: Theme.of(context).textTheme.titleSmall,
+                          ),
+                        ],
+                      ) : const Row(
+                        children: [
+                          SizedBox(height: 10,)
+                        ],
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
-            trailing: ConstrainedBox(
-              constraints: const BoxConstraints(
-                minWidth: 200,
-                maxWidth: 200,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  ConstrainedBox(
-                    constraints: const BoxConstraints(
-                      maxWidth: 120,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        SizedBox(
-                          height: 24.0,
-                          width: 24.0,
-                          child: IconButton(
-                            padding: const EdgeInsets.all(0.0),
-                            icon: const Icon(Icons.edit),
-                            onPressed: onEdit,
-                          ),
-                        ),
-                        const Spacer(),
-                        SizedBox(
-                          height: 24.0,
-                          width: 24.0,
-                          child: IconButton(
-                            padding: const EdgeInsets.all(0.0),
-                            icon: const Icon(Icons.share),
-                            onPressed: () {},
-                          ),
-                        ),
-                        const Spacer(),
-                        SizedBox(
-                          height: 24.0,
-                          width: 24.0,
-                          child: IconButton(
-                            padding: const EdgeInsets.all(0.0),
-                            icon: const Icon(Icons.delete),
-                            onPressed: onDelete,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  totalUploadTraffic != 0 && totalDownloadTraffic != 0 ? Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        formatDouble(totalUploadTraffic),
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        uploadMeasureUnit,
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        formatDouble(totalDownloadTraffic),
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        downloadMeasureUnit,
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
-                    ],
-                  ) : const Row(
-                    children: [
-                      SizedBox(height: 10,)
-                    ],
-                  ),
-                ],
-              ),
-            ),
+
+
+
           ),
         ),
       ),
