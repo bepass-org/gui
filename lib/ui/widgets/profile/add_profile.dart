@@ -68,7 +68,7 @@ class AddProfile extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => NewProfilePage()),
+                  MaterialPageRoute(builder: (context) => const NewProfilePage()),
                 );
               },
               child: const Row(

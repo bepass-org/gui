@@ -45,7 +45,7 @@ class InputEditable extends StatelessWidget {
     String displayText = defaultValue;
     if (value != null && value!.isNotEmpty) {
       displayText = value!;
-    } else if (hint != null && hint!.isNotEmpty) {
+    } else if (hint != null && hint!.isNotEmpty && defaultValue.isEmpty) {
       displayText = hint!;
     }
 

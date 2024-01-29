@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
-
 class SkeletonScreen extends ConsumerWidget {
   const SkeletonScreen({super.key});
 

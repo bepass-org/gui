@@ -60,19 +60,17 @@ class _NewProfilePageState extends State<NewProfilePage> {
       body: ListView.builder(
         itemCount: profile_template.isEmpty
             ? 0
-            : profile_template[0]['groups'].length + 1,
+            : profile_template[0]['groups'].length,
         itemBuilder: (context, index) {
-          if (index == 0) {
-            return const ProfileName();
-          } else {
-            var group = profile_template[0]['groups'][index - 1];
-            return GroupForm(
-              title: group['name'],
-              children: [
-                for (var field in group['fields']) buildField(field),
-              ],
-            );
-          }
+          var group = profile_template[0]['groups'][index];
+          return GroupForm(
+            title: group['name'],
+            showTitle: group['showTitle'],
+            lastOne: !group['showBottomDivider'],
+            children: [
+              for (var field in group['fields']) buildField(field),
+            ],
+          );
         },
       ),
     );

@@ -27,7 +27,6 @@ void main() async {
     await FlutterDisplayMode.setHighRefreshRate();
   }
   final Directory tmpDir = await getTemporaryDirectory();
-  if(Platform.isWindows)
   await Hive.initFlutter(tmpDir.path);
   await Hive.openBox('prefs');
 
@@ -72,7 +71,8 @@ class MyApp extends ConsumerWidget {
         '/about': (context) => const AboutScreen(),
       },
       onGenerateRoute: (settings) {
-        // If the route is not found, just get moved to the skeleton screen
+        // todo: rework routing
+        // If the route is not found, just get moved to the loading screen
         return MaterialPageRoute(builder: (context) => const LoadingScreen());
       },
     );

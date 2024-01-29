@@ -54,7 +54,7 @@
   {
     "id": "profile5",
     "type": "bepass-v1",
-    "name": "profile5",
+    "name": "profile10",
     "fields": {
       "server": "10.0.0.1",
       "port": 8080

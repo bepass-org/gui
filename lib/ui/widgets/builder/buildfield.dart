@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 Widget buildField(Map<String, dynamic> field) {
   String title = field['name'];
   String defaultValue = field['defaultValue'].toString();
+  String description = field['description'].toString();
   IconData icon = _getIcon(field['icon']);
 
   if (field['type'] == 'boolean') {
@@ -22,6 +23,7 @@ Widget buildField(Map<String, dynamic> field) {
       icon: icon,
       title: title,
       defaultValue: defaultValue,
+      hint: description,
       dialogType: dialogType,
       onChanged: (v) {},
     );
