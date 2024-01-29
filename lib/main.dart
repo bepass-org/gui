@@ -24,11 +24,17 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   if (Platform.isAndroid) {
+    final Directory tmpDir = await getTemporaryDirectory();
     await FlutterDisplayMode.setHighRefreshRate();
+    await Hive.initFlutter(tmpDir.path);
+    await Hive.openBox('themeBox');
+  } else if (Platform.isLinux) {
+    final Directory tmpDir = await getTemporaryDirectory();
+    await Hive.initFlutter(tmpDir.path);
   }
+
   final Directory tmpDir = await getTemporaryDirectory();
-  if(Platform.isWindows)
-  await Hive.initFlutter(tmpDir.path);
+  if (Platform.isWindows) await Hive.initFlutter(tmpDir.path);
   await Hive.openBox('prefs');
 
   runApp(
