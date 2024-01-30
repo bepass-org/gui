@@ -4,6 +4,7 @@ import 'package:defacto/ui/widgets/form/group.dart';
 import 'package:defacto/ui/widgets/form/input_editable.dart';
 import 'package:defacto/ui/widgets/form/switch_editable.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 import 'configuration.dart';
 
@@ -57,6 +58,12 @@ class SettingsScreen extends StatefulWidget {
 
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+@HiveType(typeId: 0)
+class ThemeIndexModel extends HiveObject {
+  @HiveField(0)
+  late int themeIndex;
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
@@ -150,19 +157,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       return Consumer(
                         builder: (BuildContext context, WidgetRef ref,
                             Widget? child) {
-                          final themeNotifer = ref.watch(themeProvider);
+                          final themeNotifier = ref.watch(themeProvider);
+
                           return GestureDetector(
                             child: Container(
                               height: 100,
                               width: 57,
                               decoration: BoxDecoration(
-                                  border:
-                                      Border.all(color: Colors.black, width: 2),
-                                  color: colorsList[index],
-                                  shape: BoxShape.circle),
+                                border:
+                                    Border.all(color: Colors.black, width: 2),
+                                color: colorsList[index],
+                                shape: BoxShape.circle,
+                              ),
                             ),
                             onTap: () {
-                              themeNotifer.setTheme(index);
+                              themeNotifier.setTheme(index);
                             },
                           );
                         },
