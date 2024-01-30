@@ -5,6 +5,7 @@ import 'package:defacto/ui/widgets/routing/route_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../skeleton/skeleton_screen.dart';
 import 'configuration.dart';
 
 class RoutingScreen extends ConsumerStatefulWidget {
@@ -56,8 +57,8 @@ class _RoutingScreenState extends ConsumerState<RoutingScreen> {
           );
         }
       },
-      child: Scaffold(
-        key: _scaffoldKey,
+      child: BasePage(
+        scaffoldKey: _scaffoldKey,
         appBar: AppBar(
           iconTheme: const IconThemeData(color: Colors.white),
           backgroundColor: Theme.of(context).colorScheme.primary,
@@ -78,7 +79,7 @@ class _RoutingScreenState extends ConsumerState<RoutingScreen> {
             ),
           ],
         ),
-        drawer: const MainDrawer(),
+      //  drawer: const MainDrawer(),
         backgroundColor: Theme.of(context).colorScheme.background,
         body: Material(
           color: Theme.of(context).colorScheme.background,

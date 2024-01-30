@@ -65,7 +65,7 @@ class MyApp extends ConsumerWidget {
       theme: styles.themeData(themeNotifer.themeIndex, context),
       routes: {
         '/loading': (context) => const LoadingScreen(),
-        '/': (context) => const SkeletonScreen(),
+        '/': (context) =>  SkeletonScreen(),
         '/configuration': (context) => const ConfigurationScreen(),
         '/routingAndRules': (context) => const RoutingScreen(),
         '/settings': (context) => const SettingsScreen(),

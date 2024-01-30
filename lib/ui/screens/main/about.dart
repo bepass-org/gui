@@ -8,6 +8,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:defacto/ui/widgets/card/default_card.dart';
 
+import '../skeleton/skeleton_screen.dart';
+
 class AboutScreen extends StatefulWidget {
   const AboutScreen({super.key});
 
@@ -34,14 +36,14 @@ class _AboutScreenState extends State<AboutScreen> {
           );
         }
       },
-      child: Scaffold(
-        key: _scaffoldKey,
+      child: BasePage(
+        scaffoldKey: _scaffoldKey,
         appBar: AppBar(
           iconTheme: const IconThemeData(color: Colors.white),
           backgroundColor: Theme.of(context).colorScheme.background,
           title: const Text("About", style: TextStyle(color: Colors.white)),
         ),
-        drawer: const MainDrawer(),
+    //    drawer: const MainDrawer(),
         // backgroundColor: Theme.of(context).colorScheme.background,
         backgroundColor: Theme.of(context).colorScheme.background,
         body: Material(

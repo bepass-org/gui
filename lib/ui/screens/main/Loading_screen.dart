@@ -27,7 +27,7 @@ class _LoadingScreenState extends ConsumerState<LoadingScreen> {
     // After completing the tasks, navigate to the SkeletonScreen
     if (mounted) {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const SkeletonScreen()),
+        MaterialPageRoute(builder: (context) =>  SkeletonScreen()),
       );
     }
   }

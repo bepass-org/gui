@@ -2,6 +2,8 @@ import 'package:defacto/ui/screens/main/configuration.dart';
 import 'package:defacto/ui/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
 
+import '../skeleton/skeleton_screen.dart';
+
 class LogsScreen extends StatefulWidget {
   const LogsScreen({super.key});
 
@@ -32,8 +34,8 @@ class _LogsScreenState extends State<LogsScreen> {
           );
         }
       },
-      child: Scaffold(
-        key: _scaffoldKey,
+      child: BasePage(
+        scaffoldKey: _scaffoldKey,
         appBar: AppBar(
           iconTheme: const IconThemeData(color: Colors.white),
           backgroundColor: Theme.of(context).colorScheme.primary,
@@ -59,7 +61,7 @@ class _LogsScreenState extends State<LogsScreen> {
             ),
           ],
         ),
-        drawer: const MainDrawer(),
+       // drawer: const MainDrawer(),
         backgroundColor: Theme.of(context).colorScheme.background,
         body: Padding(
           padding: const EdgeInsets.all(16.0),

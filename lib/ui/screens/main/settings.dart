@@ -6,6 +6,7 @@ import 'package:defacto/ui/widgets/form/switch_editable.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
+import '../skeleton/skeleton_screen.dart';
 import 'configuration.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -130,15 +131,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
           );
         }
       },
-      child: Scaffold(
-        key: _scaffoldKey,
+      child: BasePage(
+        scaffoldKey: _scaffoldKey,
         appBar: AppBar(
             iconTheme: const IconThemeData(color: Colors.white),
             backgroundColor: Theme.of(context).colorScheme.background,
             title: const Text(
               "Settings",
             )),
-        drawer: const MainDrawer(),
+       // drawer: const MainDrawer(),
         backgroundColor: Theme.of(context).colorScheme.background,
         body: ListView(
           children: <Widget>[

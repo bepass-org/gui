@@ -49,16 +49,16 @@ class MainDrawer extends ConsumerWidget {
       onTap: () {
         ref.read(globalStateProvider.notifier).setActivePage(page);
         // Check if the page is already in the navigation stack
-        final isAlreadyInStack =
-            ModalRoute.of(context)?.settings is RouteSettings &&
-                (ModalRoute.of(context)!.settings).name == page.name;
-
-        // Only push a new route if it's not already in the stack
-        if (!isAlreadyInStack) {
-          Navigator.pushReplacementNamed(context, page.name);
-        } else {
-          Navigator.pop(context); // Close the drawer
-        }
+        // final isAlreadyInStack =
+        //     ModalRoute.of(context)?.settings is RouteSettings &&
+        //         (ModalRoute.of(context)!.settings).name == page.name;
+        //
+        // // Only push a new route if it's not already in the stack
+        // if (!isAlreadyInStack) {
+        //   Navigator.pushReplacementNamed(context, page.name);
+        // } else {
+        //   Navigator.pop(context); // Close the drawer
+        // }
       },
     );
   }

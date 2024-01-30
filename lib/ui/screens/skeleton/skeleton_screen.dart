@@ -8,6 +8,8 @@ import 'package:defacto/ui/screens/main/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../widgets/main_drawer.dart';
+
 
 class SkeletonScreen extends ConsumerWidget {
   const SkeletonScreen({super.key});
@@ -35,5 +37,37 @@ class SkeletonScreen extends ConsumerWidget {
     }
 
     return getPageWidget(currentPage);
+    // return Scaffold(
+    //   appBar: appBar,
+    //     drawer: const MainDrawer(),
+    //   body: getPageWidget(currentPage),
+    // );
+  }
+}
+class BasePage extends StatelessWidget {
+  final AppBar? appBar;
+  final Widget? body;
+  final Color? backgroundColor;
+  final FloatingActionButtonLocation? floatingActionButtonLocation;
+  final Widget? floatingActionButton;
+  final Widget? bottomNavigationBar;
+  final Key? scaffoldKey;
+
+  BasePage({required this.appBar,required this.body,this.backgroundColor,this.scaffoldKey,
+  this.floatingActionButtonLocation,this.floatingActionButton,this.bottomNavigationBar});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: appBar,
+      drawer: const MainDrawer(),
+      backgroundColor: backgroundColor,
+      floatingActionButtonLocation: floatingActionButtonLocation,
+      floatingActionButton: floatingActionButton,
+      bottomNavigationBar: bottomNavigationBar,
+
+      body: body,
+    );
   }
 }
