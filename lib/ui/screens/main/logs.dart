@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:defacto/ui/screens/main/configuration.dart';
 import 'package:defacto/ui/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
@@ -37,8 +39,9 @@ class _LogsScreenState extends State<LogsScreen> {
       child: BasePage(
         scaffoldKey: _scaffoldKey,
         appBar: AppBar(
+          automaticallyImplyLeading: Platform.isAndroid,
           iconTheme: const IconThemeData(color: Colors.white),
-          backgroundColor: Theme.of(context).colorScheme.primary,
+          backgroundColor: Platform.isAndroid?Theme.of(context).colorScheme.primary:Theme.of(context).colorScheme.background,
           title: const Text("Logs", style: TextStyle(color: Colors.white)),
           actions: [
             IconButton(

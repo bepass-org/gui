@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:defacto/ui/widgets/card/default_card_misc_data.dart';
 import 'package:defacto/ui/widgets/card/default_list_item.dart';
 import 'package:defacto/ui/screens/main/configuration.dart';
@@ -39,12 +41,11 @@ class _AboutScreenState extends State<AboutScreen> {
       child: BasePage(
         scaffoldKey: _scaffoldKey,
         appBar: AppBar(
+          automaticallyImplyLeading: Platform.isAndroid,
           iconTheme: const IconThemeData(color: Colors.white),
-          backgroundColor: Theme.of(context).colorScheme.background,
+          backgroundColor: Platform.isAndroid?Theme.of(context).colorScheme.primary:Theme.of(context).colorScheme.background,
           title: const Text("About", style: TextStyle(color: Colors.white)),
         ),
-    //    drawer: const MainDrawer(),
-        // backgroundColor: Theme.of(context).colorScheme.background,
         backgroundColor: Theme.of(context).colorScheme.background,
         body: Material(
           // color: Theme.of(context).colorScheme.background,

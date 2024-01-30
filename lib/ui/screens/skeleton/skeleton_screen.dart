@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:defacto/enums/app_pages.dart';
 import 'package:defacto/states/global/global_state.dart';
 import 'package:defacto/ui/screens/main/about.dart';
@@ -7,6 +9,7 @@ import 'package:defacto/ui/screens/main/routing.dart';
 import 'package:defacto/ui/screens/main/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive/hive.dart';
 
 import '../../widgets/main_drawer.dart';
 
@@ -37,37 +40,63 @@ class SkeletonScreen extends ConsumerWidget {
     }
 
     return getPageWidget(currentPage);
-    // return Scaffold(
-    //   appBar: appBar,
-    //     drawer: const MainDrawer(),
-    //   body: getPageWidget(currentPage),
-    // );
+
   }
 }
 class BasePage extends StatelessWidget {
-  final AppBar? appBar;
+   AppBar? appBar;
   final Widget? body;
   final Color? backgroundColor;
   final FloatingActionButtonLocation? floatingActionButtonLocation;
   final Widget? floatingActionButton;
   final Widget? bottomNavigationBar;
   final Key? scaffoldKey;
+  final List<Widget>? actions;
 
   BasePage({required this.appBar,required this.body,this.backgroundColor,this.scaffoldKey,
-  this.floatingActionButtonLocation,this.floatingActionButton,this.bottomNavigationBar});
+  this.floatingActionButtonLocation,this.floatingActionButton,this.bottomNavigationBar,
+  this.actions});
 
+  Widget WindowsUI(BuildContext context){
+    return Row(
+      children: [
+          Container(
+            height: double.infinity,
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.background,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  offset: Offset(0,2),
+                  spreadRadius: 2,
+                  blurRadius: 3
+                ),
+              ]
+            ),
+            child: MainDrawer(),),
+
+        Expanded(child: Column(
+          children: [
+            appBar!,
+            Expanded(child: body!)
+          ],
+        ))
+      ],
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      appBar: appBar,
-      drawer: const MainDrawer(),
+      appBar: Platform.isAndroid==true? appBar:null,
+      drawer:Platform.isAndroid==true? const MainDrawer():null,
       backgroundColor: backgroundColor,
       floatingActionButtonLocation: floatingActionButtonLocation,
       floatingActionButton: floatingActionButton,
       bottomNavigationBar: bottomNavigationBar,
 
-      body: body,
+
+      body:Platform.isAndroid? body: WindowsUI(context),
     );
   }
 }

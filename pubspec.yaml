@@ -23,6 +23,7 @@ dependencies:
   flutter_widget_from_html_core: ^0.14.11
   freezed_annotation : any
   json_annotation: any
+  window_manager: ^0.3.8
 
 
 dev_dependencies:

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:defacto/enums/form_editable_types.dart';
 import 'package:defacto/ui/widgets/main_drawer.dart';
 import 'package:defacto/ui/widgets/form/group.dart';
@@ -134,8 +136,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
       child: BasePage(
         scaffoldKey: _scaffoldKey,
         appBar: AppBar(
+            automaticallyImplyLeading: Platform.isAndroid,
             iconTheme: const IconThemeData(color: Colors.white),
-            backgroundColor: Theme.of(context).colorScheme.background,
+            backgroundColor: Platform.isAndroid?Theme.of(context).colorScheme.primary:Theme.of(context).colorScheme.background,
             title: const Text(
               "Settings",
             )),

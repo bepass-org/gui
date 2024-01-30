@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:defacto/states/global/global_state.dart';
 import 'package:defacto/ui/widgets/bottom_nav_bar.dart';
 import 'package:defacto/ui/widgets/main_drawer.dart';
@@ -65,6 +67,7 @@ class _ConfigurationScreen extends ConsumerState<ConfigurationScreen>
   late AnimationController _controller;
   late Animation<double> _animation;
 
+   List<Widget> actions=[];
   @override
   void initState() {
     super.initState();
@@ -73,6 +76,23 @@ class _ConfigurationScreen extends ConsumerState<ConfigurationScreen>
       vsync: this,
     );
     _animation = CurvedAnimation(parent: _controller, curve: Curves.easeOut);
+
+    // define appbar actions
+    actions = [
+      IconButton(
+        onPressed: () {
+          setState(() {
+            _isSearching = !_isSearching;
+          });
+        },
+        icon: Icon(
+          _isSearching ? Icons.close : Ionicons.search,
+          //color: Colors.white,
+        ),
+      ),
+      const AddProfile(),
+      const MoreOptions(),
+    ];
   }
 
   @override
@@ -135,11 +155,14 @@ class _ConfigurationScreen extends ConsumerState<ConfigurationScreen>
           SystemNavigator.pop();
         }
       },
-      child: BasePage(
+      child:
+      BasePage(
         scaffoldKey: _scaffoldKey,
         appBar: AppBar(
+       //   elevation: 4,
+          automaticallyImplyLeading: Platform.isAndroid,
           iconTheme: const IconThemeData(color: Colors.white),
-          backgroundColor: Theme.of(context).colorScheme.primary,
+            backgroundColor: Platform.isAndroid?Theme.of(context).colorScheme.primary:Theme.of(context).colorScheme.background,
           title: _isSearching
               ? TextField(
                   controller: _searchController,
@@ -154,21 +177,8 @@ class _ConfigurationScreen extends ConsumerState<ConfigurationScreen>
                   },
                 )
               : const Text("Bepass", style: TextStyle(color: Colors.white)),
-          actions: [
-            IconButton(
-              onPressed: () {
-                setState(() {
-                  _isSearching = !_isSearching;
-                });
-              },
-              icon: Icon(
-                _isSearching ? Icons.close : Ionicons.search,
-                color: Colors.white,
-              ),
-            ),
-            const AddProfile(),
-            const MoreOptions(),
-          ],
+          actions: actions
+
         ),
 
         backgroundColor: Theme.of(context).colorScheme.background,

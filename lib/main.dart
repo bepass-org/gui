@@ -13,6 +13,7 @@ import 'package:flutter_displaymode/flutter_displaymode.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:window_manager/window_manager.dart';
 
 import 'config/theme_provider.dart';
 import 'config/styles.dart';
@@ -26,6 +27,11 @@ void main() async {
 
   if (Platform.isAndroid) {
     await FlutterDisplayMode.setHighRefreshRate();
+  }
+  if (Platform.isWindows) {
+    await windowManager.ensureInitialized();
+    WindowManager.instance.setMinimumSize(const Size(800, 600));
+
   }
   final Directory tmpDir = await getTemporaryDirectory();
   await Hive.initFlutter(tmpDir.path);
