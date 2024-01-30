@@ -23,12 +23,14 @@ void main() async {
   /// Initialize packages
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+
   if (Platform.isAndroid) {
     await FlutterDisplayMode.setHighRefreshRate();
   }
   final Directory tmpDir = await getTemporaryDirectory();
   await Hive.initFlutter(tmpDir.path);
   await Hive.openBox('prefs');
+  await Hive.openBox('themeBox');
 
   runApp(
     ProviderScope(
