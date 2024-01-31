@@ -10,35 +10,36 @@ import 'bottom_nav_bar.dart';
 class MainDrawer extends ConsumerWidget {
   const MainDrawer({super.key});
 
-  Widget DesktopFooter(){
+  Widget DesktopFooter() {
     return Container();
   }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-
           DrawerHeader(
-
             decoration: BoxDecoration(
-
-              color: Platform.isWindows?Theme.of(context).colorScheme.primaryContainer:
-              Theme.of(context).primaryColor, // Customize the header color
+              color: Platform.isWindows || Platform.isLinux
+                  ? Theme.of(context).colorScheme.primaryContainer
+                  : Theme.of(context)
+                      .primaryColor, // Customize the header color
             ),
-            child: Platform.isWindows? BottomNavBar():Container(
-                alignment: Alignment.center,
-                child: Text(
-                  "Bepass",
-                  style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                )
-            ),
+            child: Platform.isWindows || Platform.isLinux
+                ? BottomNavBar()
+                : Container(
+                    alignment: Alignment.center,
+                    child: Text(
+                      "Bepass",
+                      style:
+                          Theme.of(context).textTheme.headlineLarge!.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                    )),
           ),
-
           buildDrawerItem(context, ref, AppPage.configuration,
               Icons.sticky_note_2, 'Configuration'),
           buildDrawerItem(context, ref, AppPage.routingAndRules,
@@ -48,8 +49,7 @@ class MainDrawer extends ConsumerWidget {
           buildDrawerItem(context, ref, AppPage.logs, Icons.bug_report, 'Logs'),
           buildDrawerItem(
               context, ref, AppPage.about, Icons.info_rounded, 'About'),
-         if(Platform.isWindows)
-           DesktopFooter()
+          if (Platform.isWindows) DesktopFooter()
         ],
       ),
     );

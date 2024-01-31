@@ -28,10 +28,9 @@ void main() async {
   if (Platform.isAndroid) {
     await FlutterDisplayMode.setHighRefreshRate();
   }
-  if (Platform.isWindows) {
+  if (Platform.isWindows || Platform.isLinux) {
     await windowManager.ensureInitialized();
     WindowManager.instance.setMinimumSize(const Size(800, 600));
-
   }
   final Directory tmpDir = await getTemporaryDirectory();
   await Hive.initFlutter(tmpDir.path);
@@ -71,7 +70,7 @@ class MyApp extends ConsumerWidget {
       theme: styles.themeData(themeNotifer.themeIndex, context),
       routes: {
         '/loading': (context) => const LoadingScreen(),
-        '/': (context) =>  SkeletonScreen(),
+        '/': (context) => SkeletonScreen(),
         '/configuration': (context) => const ConfigurationScreen(),
         '/routingAndRules': (context) => const RoutingScreen(),
         '/settings': (context) => const SettingsScreen(),
