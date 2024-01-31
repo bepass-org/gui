@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:defacto/enums/form_editable_types.dart';
 import 'package:defacto/ui/widgets/main_drawer.dart';
 import 'package:defacto/ui/widgets/form/group.dart';
@@ -6,6 +8,7 @@ import 'package:defacto/ui/widgets/form/switch_editable.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
+import '../skeleton/skeleton_screen.dart';
 import 'configuration.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -130,15 +133,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
           );
         }
       },
-      child: Scaffold(
-        key: _scaffoldKey,
+      child: BasePage(
+        scaffoldKey: _scaffoldKey,
         appBar: AppBar(
+            automaticallyImplyLeading: Platform.isAndroid,
             iconTheme: const IconThemeData(color: Colors.white),
-            backgroundColor: Theme.of(context).colorScheme.background,
+            backgroundColor: Platform.isAndroid?Theme.of(context).colorScheme.primary:Theme.of(context).colorScheme.background,
             title: const Text(
               "Settings",
             )),
-        drawer: const MainDrawer(),
+       // drawer: const MainDrawer(),
         backgroundColor: Theme.of(context).colorScheme.background,
         body: ListView(
           children: <Widget>[

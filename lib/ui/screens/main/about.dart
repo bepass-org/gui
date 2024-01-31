@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:defacto/ui/widgets/card/default_card_misc_data.dart';
 import 'package:defacto/ui/widgets/card/default_list_item.dart';
 import 'package:defacto/ui/screens/main/configuration.dart';
@@ -7,6 +9,8 @@ import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:defacto/ui/widgets/card/default_card.dart';
+
+import '../skeleton/skeleton_screen.dart';
 
 class AboutScreen extends StatefulWidget {
   const AboutScreen({super.key});
@@ -34,15 +38,14 @@ class _AboutScreenState extends State<AboutScreen> {
           );
         }
       },
-      child: Scaffold(
-        key: _scaffoldKey,
+      child: BasePage(
+        scaffoldKey: _scaffoldKey,
         appBar: AppBar(
+          automaticallyImplyLeading: Platform.isAndroid,
           iconTheme: const IconThemeData(color: Colors.white),
-          backgroundColor: Theme.of(context).colorScheme.background,
+          backgroundColor: Platform.isAndroid?Theme.of(context).colorScheme.primary:Theme.of(context).colorScheme.background,
           title: const Text("About", style: TextStyle(color: Colors.white)),
         ),
-        drawer: const MainDrawer(),
-        // backgroundColor: Theme.of(context).colorScheme.background,
         backgroundColor: Theme.of(context).colorScheme.background,
         body: Material(
           // color: Theme.of(context).colorScheme.background,

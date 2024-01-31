@@ -1,32 +1,44 @@
+import 'dart:io';
+
 import 'package:defacto/enums/app_pages.dart';
 import 'package:defacto/states/global/global_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'bottom_nav_bar.dart';
+
 class MainDrawer extends ConsumerWidget {
   const MainDrawer({super.key});
 
+  Widget DesktopFooter(){
+    return Container();
+  }
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
+
           DrawerHeader(
+
             decoration: BoxDecoration(
-              color:
-                  Theme.of(context).primaryColor, // Customize the header color
+
+              color: Platform.isWindows?Theme.of(context).colorScheme.primaryContainer:
+              Theme.of(context).primaryColor, // Customize the header color
             ),
-            child: Container(
+            child: Platform.isWindows? BottomNavBar():Container(
                 alignment: Alignment.center,
                 child: Text(
                   "Bepass",
                   style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                )),
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                )
+            ),
           ),
+
           buildDrawerItem(context, ref, AppPage.configuration,
               Icons.sticky_note_2, 'Configuration'),
           buildDrawerItem(context, ref, AppPage.routingAndRules,
@@ -36,6 +48,8 @@ class MainDrawer extends ConsumerWidget {
           buildDrawerItem(context, ref, AppPage.logs, Icons.bug_report, 'Logs'),
           buildDrawerItem(
               context, ref, AppPage.about, Icons.info_rounded, 'About'),
+         if(Platform.isWindows)
+           DesktopFooter()
         ],
       ),
     );
@@ -49,16 +63,16 @@ class MainDrawer extends ConsumerWidget {
       onTap: () {
         ref.read(globalStateProvider.notifier).setActivePage(page);
         // Check if the page is already in the navigation stack
-        final isAlreadyInStack =
-            ModalRoute.of(context)?.settings is RouteSettings &&
-                (ModalRoute.of(context)!.settings).name == page.name;
-
-        // Only push a new route if it's not already in the stack
-        if (!isAlreadyInStack) {
-          Navigator.pushReplacementNamed(context, page.name);
-        } else {
-          Navigator.pop(context); // Close the drawer
-        }
+        // final isAlreadyInStack =
+        //     ModalRoute.of(context)?.settings is RouteSettings &&
+        //         (ModalRoute.of(context)!.settings).name == page.name;
+        //
+        // // Only push a new route if it's not already in the stack
+        // if (!isAlreadyInStack) {
+        //   Navigator.pushReplacementNamed(context, page.name);
+        // } else {
+        //   Navigator.pop(context); // Close the drawer
+        // }
       },
     );
   }

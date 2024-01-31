@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:defacto/states/route/route_state.dart';
 import 'package:defacto/ui/screens/other/add_route_screen.dart';
 import 'package:defacto/ui/widgets/main_drawer.dart';
@@ -5,6 +7,7 @@ import 'package:defacto/ui/widgets/routing/route_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../skeleton/skeleton_screen.dart';
 import 'configuration.dart';
 
 class RoutingScreen extends ConsumerStatefulWidget {
@@ -56,11 +59,12 @@ class _RoutingScreenState extends ConsumerState<RoutingScreen> {
           );
         }
       },
-      child: Scaffold(
-        key: _scaffoldKey,
+      child: BasePage(
+        scaffoldKey: _scaffoldKey,
         appBar: AppBar(
+            automaticallyImplyLeading: Platform.isAndroid,
           iconTheme: const IconThemeData(color: Colors.white),
-          backgroundColor: Theme.of(context).colorScheme.primary,
+          backgroundColor: Platform.isAndroid?Theme.of(context).colorScheme.primary:Theme.of(context).colorScheme.background,
           title: const Text("Routing And Rules", style: TextStyle(color: Colors.white)),
           actions: [
             IconButton(
@@ -78,7 +82,7 @@ class _RoutingScreenState extends ConsumerState<RoutingScreen> {
             ),
           ],
         ),
-        drawer: const MainDrawer(),
+      //  drawer: const MainDrawer(),
         backgroundColor: Theme.of(context).colorScheme.background,
         body: Material(
           color: Theme.of(context).colorScheme.background,
