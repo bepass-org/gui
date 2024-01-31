@@ -1,4 +1,5 @@
 import 'package:defacto/ui/screens/other/new_profile.dart';
+import 'package:defacto/ui/widgets/profile/secondprofile_menu.dart';
 import 'package:flutter/material.dart';
 
 class AddProfile extends StatelessWidget {
@@ -24,8 +25,7 @@ class AddProfile extends StatelessWidget {
                 children: [
                   Padding(
                       padding: EdgeInsets.only(right: 8.0),
-                      child: Icon(Icons.qr_code, color: Colors.black45)
-                  ),
+                      child: Icon(Icons.qr_code, color: Colors.black45)),
                   Text(
                     'Scan QR Code',
                     style: TextStyle(fontSize: 15),
@@ -39,8 +39,7 @@ class AddProfile extends StatelessWidget {
                 children: [
                   Padding(
                       padding: EdgeInsets.only(right: 8.0),
-                      child: Icon(Icons.content_paste, color: Colors.black45)
-                  ),
+                      child: Icon(Icons.content_paste, color: Colors.black45)),
                   Text(
                     'Import from Clipboard',
                     style: TextStyle(fontSize: 15),
@@ -66,10 +65,7 @@ class AddProfile extends StatelessWidget {
             PopupMenuItem(
               value: "manual",
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const NewProfilePage()),
-                );
+                showSecondPopupMenu(context);
               },
               child: const Row(
                 children: [
