@@ -23,7 +23,7 @@
           "label": "Version",
           "description": "1.0.0",
           "descType": "text",
-          "icon": "mdi-history"
+          "icon": "update"
         },
         {
           "name": "core_version",
@@ -31,7 +31,7 @@
           "label": "Core Version",
           "description": "1.0.0",
           "descType": "text",
-          "icon": "mdi-history"
+          "icon": "update"
         }
       ]
     },
@@ -45,33 +45,33 @@
           "name": "email",
           "id": "email",
           "label": "Email",
-          "description": "example@example.com",
+          "description": "<a href='mailto:example@example.com'>example@example.com</a>",
           "descType": "email",
-          "icon": "mdi-email"
+          "icon": "email"
         },
         {
           "name": "twitter",
           "id": "twitter",
           "label": "Twitter",
-          "description": "https://twitter.com/example",
+          "description": "<a href='https://twitter.com/example'>https://twitter.com/example</a>",
           "descType": "url",
-          "icon": "mdi-twitter"
+          "icon": "twitter"
         },
         {
           "name": "telegram",
           "id": "telegram",
           "label": "Telegram",
-          "description": "https://t.me/example",
+          "description": "<a href='https://t.me/example'>https://t.me/example</a>",
           "descType": "url",
-          "icon": "mdi-telegram"
+          "icon": "send"
         },
         {
           "name": "github",
           "id": "github",
           "label": "GitHub",
-          "description": "https://github.com/bepass-org/gui",
+          "description": "<a href='https://github.com/bepass-org/gui'>https://github.com/bepass-org/gui</a>",
           "descType": "url",
-          "icon": "mdi-github"
+          "icon": "github"
         }
       ]
     },
@@ -88,7 +88,7 @@
           "label": "Bitcoin",
           "description": "1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2",
           "descType": "text",
-          "icon": "mdi-bitcoin"
+          "icon": "bitcoin"
         },
         {
           "name": "ethereum",
@@ -96,7 +96,7 @@
           "label": "Ethereum",
           "description": "0x4A1E1D37462a422873BFf3073C638Cf5b7C0d37F",
           "descType": "text",
-          "icon": "mdi-ethereum"
+          "icon": "ethereum"
         },
         {
           "name": "litecoin",
@@ -104,7 +104,7 @@
           "label": "Litecoin",
           "description": "LbTjM6vHd3cK5yJFvzvLc6Tf5g9z5Yz3Vb",
           "descType": "text",
-          "icon": "mdi-litecoin"
+          "icon": "litecoin"
         }
       ]
     },
@@ -121,7 +121,7 @@
           "label": "License",
           "description": "<a href='https://www.gnu.org/licenses/gpl-3.0.html' target='_blank'>GNU General Public License v3.0</a>",
           "descType": "html",
-          "icon": "mdi-license"
+          "icon": "license"
         }
       ]
     }

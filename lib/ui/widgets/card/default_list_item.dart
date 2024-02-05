@@ -7,21 +7,26 @@ class DefaultListItem extends StatefulWidget {
   final Widget? prefixWidget;
   final Widget? suffixWidget;
   final String? title;
+  // Retain the existing 'body' property for backward compatibility
   final String? body;
+  // Introduce a new property for Widget body
+  final Widget? bodyWidget;
   final String? additionalInput;
   final bool addDivider;
 
-  const DefaultListItem(
-      {super.key,
-      this.padding,
-      this.margin,
-      this.onClick,
-      this.prefixWidget,
-      this.suffixWidget,
-      this.title,
-      this.body,
-      this.additionalInput,
-      this.addDivider = false});
+  const DefaultListItem({
+    super.key,
+    this.padding,
+    this.margin,
+    this.onClick,
+    this.prefixWidget,
+    this.suffixWidget,
+    this.title,
+    this.body,
+    this.bodyWidget,
+    this.additionalInput,
+    this.addDivider = false,
+  });
 
   @override
   State<DefaultListItem> createState() => _DefaultListItemState();
@@ -48,12 +53,11 @@ class _DefaultListItemState extends State<DefaultListItem> {
                     Center(
                       child: Text(
                         widget.title!,
-                        style:
-                            Theme.of(context).textTheme.titleMedium!.copyWith(
-                                  color: Theme.of(context).colorScheme.primary,
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                        style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                              color: Theme.of(context).colorScheme.primary,
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
                     ),
                   if (widget.addDivider) const SizedBox(height: 4),
@@ -63,8 +67,9 @@ class _DefaultListItemState extends State<DefaultListItem> {
                     Text(
                       widget.additionalInput!,
                       style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                          color: Theme.of(context).colorScheme.secondary),
+                            color: Theme.of(context).colorScheme.secondary),
                     ),
+                  // Conditionally display either the String body or the Widget body
                   if (widget.body != null)
                     Text(
                       widget.body!,
@@ -73,6 +78,9 @@ class _DefaultListItemState extends State<DefaultListItem> {
                           .labelLarge!
                           .copyWith(color: const Color(0xff605b5b)),
                     ),
+                  // Render the widget body if it is provided
+                  if (widget.bodyWidget != null)
+                    widget.bodyWidget!,
                 ],
               ),
             ),
