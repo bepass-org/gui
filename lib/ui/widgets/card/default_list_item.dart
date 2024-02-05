@@ -8,8 +8,20 @@ class DefaultListItem extends StatefulWidget {
   final Widget? suffixWidget;
   final String? title;
   final String? body;
+  final String? additionalInput;
+  final bool addDivider;
 
-  const DefaultListItem({super.key, this.padding, this.margin, this.onClick, this.prefixWidget, this.suffixWidget, this.title, this.body});
+  const DefaultListItem(
+      {super.key,
+      this.padding,
+      this.margin,
+      this.onClick,
+      this.prefixWidget,
+      this.suffixWidget,
+      this.title,
+      this.body,
+      this.additionalInput,
+      this.addDivider = false});
 
   @override
   State<DefaultListItem> createState() => _DefaultListItemState();
@@ -33,16 +45,33 @@ class _DefaultListItemState extends State<DefaultListItem> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   if (widget.title != null)
-                    Text(
-                      widget.title!,
-                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        color: Colors.black,
+                    Center(
+                      child: Text(
+                        widget.title!,
+                        style:
+                            Theme.of(context).textTheme.titleMedium!.copyWith(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
                       ),
+                    ),
+                  if (widget.addDivider) const SizedBox(height: 4),
+                  if (widget.addDivider)
+                    Divider(color: Theme.of(context).colorScheme.secondary),
+                  if (widget.additionalInput != null)
+                    Text(
+                      widget.additionalInput!,
+                      style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                          color: Theme.of(context).colorScheme.secondary),
                     ),
                   if (widget.body != null)
                     Text(
                       widget.body!,
-                      style: Theme.of(context).textTheme.labelLarge!.copyWith(color: const Color(0xff605b5b)),
+                      style: Theme.of(context)
+                          .textTheme
+                          .labelLarge!
+                          .copyWith(color: const Color(0xff605b5b)),
                     ),
                 ],
               ),
