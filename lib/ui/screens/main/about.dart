@@ -1,192 +1,94 @@
-import 'dart:io';
-
-import 'package:defacto/ui/widgets/card/default_card_misc_data.dart';
-import 'package:defacto/ui/widgets/card/default_list_item.dart';
-import 'package:defacto/ui/screens/main/configuration.dart';
-import 'package:defacto/ui/widgets/main_drawer.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
-import 'package:url_launcher/url_launcher.dart';
-
+import 'dart:convert';
+import 'package:defacto/helpers/material_icons.dart';
 import 'package:defacto/ui/widgets/card/default_card.dart';
-
-import '../skeleton/skeleton_screen.dart';
+import 'package:defacto/ui/widgets/card/default_list_item.dart';
+import 'package:defacto/ui/widgets/form/group.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AboutScreen extends StatefulWidget {
-  const AboutScreen({super.key});
+  const AboutScreen({Key? key}) : super(key: key);
 
   @override
   State<AboutScreen> createState() => _AboutScreenState();
 }
 
 class _AboutScreenState extends State<AboutScreen> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  List<Map<String, dynamic>> about_template = [];
+
+  @override
+  void initState() {
+    super.initState();
+    loadSettings();
+  }
+
+  Future<void> loadSettings() async {
+    String aboutContent =
+        await rootBundle.loadString('assets/fake_data/about_template.json');
+
+    setState(() {
+      about_template = (json.decode(aboutContent) as List<dynamic>)
+          .cast<Map<String, dynamic>>();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: false,
-      onPopInvoked: (didPop) {
-        if (_scaffoldKey.currentState!.isDrawerOpen) {
-          _scaffoldKey.currentState!.closeDrawer();
-        } else {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const ConfigurationScreen(),
-            ),
+    return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
+      appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.white),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        title: const Text(
+          'About',
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
+      body: ListView.builder(
+        itemCount:
+            about_template.isEmpty ? 0 : about_template[0]['groups'].length,
+        itemBuilder: (context, index) {
+          var group = about_template[0]['groups'][index];
+          return GroupForm(
+            title: group['name'],
+            children: [
+              Column(
+                children: [
+                  DefaultCard(child: _appInfoWidget(context, group)),
+                  for (var field in group['fields'])
+                    DefaultCard(child: _fieldInfoWidget(context, field)),
+                ],
+              )
+            ],
           );
-        }
-      },
-      child: BasePage(
-        scaffoldKey: _scaffoldKey,
-        appBar: AppBar(
-          automaticallyImplyLeading: Platform.isAndroid,
-          iconTheme: const IconThemeData(color: Colors.white),
-          backgroundColor: Platform.isAndroid?Theme.of(context).colorScheme.primary:Theme.of(context).colorScheme.background,
-          title: const Text("About", style: TextStyle(color: Colors.white)),
-        ),
-        backgroundColor: Theme.of(context).colorScheme.background,
-        body: Material(
-          // color: Theme.of(context).colorScheme.background,
-          color: Theme.of(context).colorScheme.background,
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                DefaultCard(
-                  child: _bepassWidget(context),
-                ),
-                DefaultCard(child: _appInfoWidget(context)),
-                DefaultCard(child: _projectWidget(context)),
-                DefaultCard(
-                    child: HtmlWidget(_htmlContent(), onTapUrl: _launchUrl)),
-              ],
-            ),
-          ),
-        ),
+        },
       ),
     );
   }
+}
 
-  Widget _bepassWidget(BuildContext context) {
-    final data = DefaultCardMiscData(
-      title: "Bepass Mobile",
-      body:
-          "Bepass is a simple tool to overcome State provisioned internet censorship. like iran, china, etc.",
-    );
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          data.title,
-          style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-        ),
-        const SizedBox(
-          height: 14,
-        ),
-        Text(data.body, style: Theme.of(context).textTheme.labelLarge),
-      ],
-    );
-  }
+Widget _appInfoWidget(BuildContext context, Map<String, dynamic> group) {
+  String capitalizedTitle = group['id'].toUpperCase();
 
-  Widget _appInfoWidget(BuildContext context) {
-    return const Column(
-      children: [
-        DefaultListItem(
-          title: "Version",
-          body: "1.2.3",
-          prefixWidget: Icon(Icons.history),
-        ),
-        SizedBox(
-          height: 14,
-        ),
-        DefaultListItem(
-          title: "Version (bepass-core)",
-          body:
-              "bepass-extra: 1.4.0-rc3\ngo1.21.0@android/arm64\nwith_contract...",
-          prefixWidget: Icon(Icons.add_chart),
-        ),
-        SizedBox(
-          height: 14,
-        ),
-        DefaultListItem(
-          title: "Donate",
-          body: "I love money",
-          prefixWidget: Icon(Icons.card_giftcard),
-        ),
-        SizedBox(
-          height: 14,
-        ),
-        DefaultListItem(
-          title: "Ignore battery optimizations",
-          body: "Remove some restrictions",
-          prefixWidget: Icon(Icons.av_timer_outlined),
-        ),
-      ],
-    );
-  }
+  return Column(children: [
+    DefaultListItem(
+      title: capitalizedTitle,
+      addDivider: true,
+      additionalInput: group['label'],
+      body: (group['descType'] != 'hidden') ? group['description'] : null,
+      prefixWidget: Icon(Icons.history),
+    ),
+  ]);
+}
 
-  Widget _projectWidget(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Project',
-          style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        const DefaultListItem(
-          title: "Source code",
-          prefixWidget: Icon(Icons.bloodtype_outlined),
-        ),
-        const SizedBox(
-          height: 14,
-        ),
-        const DefaultListItem(
-          title: "Telegram update channel",
-          prefixWidget: Icon(Icons.telegram_sharp),
-        ),
-      ],
-    );
-  }
-
-  Future<bool> _launchUrl(url) async => await canLaunchUrl(Uri.parse(url))
-      ? await launchUrl(Uri.parse(url))
-      : throw Exception('Could not launch $url');
-
-  String _htmlContent() {
-    return '''
-    <h4>License</h4>
-    <p style="font-size: 12px;color: #605b5b;">
-    Copyright (C) 2023 by bepass-org &lt;<a href="mailto:contact-sagernet@sekai.icu">contact-bepass@bepass.org</a>&gt;<br><br>
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.<br><br>
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.<br><br>
-
-    You should have received a copy of the GNU General Public License
-    along with this program. If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.<br><br>
-
-    In addition, no derivative work may use the name or imply association
-    with this application without prior consent.<br><br>
-</p>
-
-  ''';
-  }
+Widget _fieldInfoWidget(BuildContext context, Map<String, dynamic> field) {
+  String capitalizedTitle = field['id'].toUpperCase();
+  return Column(children: [
+    DefaultListItem(
+        title: capitalizedTitle,
+        addDivider: false,
+        additionalInput: field['label'],
+        body: (field['descType'] != 'hidden') ? field['description'] : null,
+        prefixWidget: Icon(MaterialIconHelper.stringToIconData(field['icon']))),
+  ]);
 }

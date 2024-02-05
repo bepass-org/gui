@@ -1,0 +1,129 @@
+[{
+  "name": "about",
+  "id": "about",
+  "groups": [
+    {
+      "name": "intro",
+      "id": "intro",
+      "label": "Bepass GUI",
+      "description": "Bepass GUI is an application that allows you to manage your Bepass account from your smartphone. You can check your balance, see your transactions, and top up your account. You can also use the app to pay for your meals in the canteen, or to access the library. The app is available for both Android and iOS.",
+      "descType": "text",
+      "fields": []
+    },
+    {
+      "name": "version",
+      "id": "version",
+      "label": "",
+      "description": "",
+      "descType": "hidden",
+      "fields": [
+        {
+          "name": "version",
+          "id": "version",
+          "label": "Version",
+          "description": "1.0.0",
+          "descType": "text",
+          "icon": "mdi-history"
+        },
+        {
+          "name": "core_version",
+          "id": "core_version",
+          "label": "Core Version",
+          "description": "1.0.0",
+          "descType": "text",
+          "icon": "mdi-history"
+        }
+      ]
+    },
+    {
+      "name": "project",
+      "id": "project",
+      "label": "Project",
+      "description": "If you have any questions or feedback, please don't hesitate to contact us.",
+      "fields": [
+        {
+          "name": "email",
+          "id": "email",
+          "label": "Email",
+          "description": "example@example.com",
+          "descType": "email",
+          "icon": "mdi-email"
+        },
+        {
+          "name": "twitter",
+          "id": "twitter",
+          "label": "Twitter",
+          "description": "https://twitter.com/example",
+          "descType": "url",
+          "icon": "mdi-twitter"
+        },
+        {
+          "name": "telegram",
+          "id": "telegram",
+          "label": "Telegram",
+          "description": "https://t.me/example",
+          "descType": "url",
+          "icon": "mdi-telegram"
+        },
+        {
+          "name": "github",
+          "id": "github",
+          "label": "GitHub",
+          "description": "https://github.com/bepass-org/gui",
+          "descType": "url",
+          "icon": "mdi-github"
+        }
+      ]
+    },
+    {
+      "name": "donate",
+      "id": "donate",
+      "label": "Donate",
+      "description": "If you like this project, please consider donating to help us maintain and improve it.",
+      "descType": "text",
+      "fields": [
+        {
+          "name": "bitcoin",
+          "id": "bitcoin",
+          "label": "Bitcoin",
+          "description": "1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2",
+          "descType": "text",
+          "icon": "mdi-bitcoin"
+        },
+        {
+          "name": "ethereum",
+          "id": "ethereum",
+          "label": "Ethereum",
+          "description": "0x4A1E1D37462a422873BFf3073C638Cf5b7C0d37F",
+          "descType": "text",
+          "icon": "mdi-ethereum"
+        },
+        {
+          "name": "litecoin",
+          "id": "litecoin",
+          "label": "Litecoin",
+          "description": "LbTjM6vHd3cK5yJFvzvLc6Tf5g9z5Yz3Vb",
+          "descType": "text",
+          "icon": "mdi-litecoin"
+        }
+      ]
+    },
+    {
+      "name": "license",
+      "id": "license",
+      "label": "License",
+      "description": "",
+      "descType": "hidden",
+      "fields": [
+        {
+          "name": "license",
+          "id": "license",
+          "label": "License",
+          "description": "<a href='https://www.gnu.org/licenses/gpl-3.0.html' target='_blank'>GNU General Public License v3.0</a>",
+          "descType": "html",
+          "icon": "mdi-license"
+        }
+      ]
+    }
+  ]
+}]
