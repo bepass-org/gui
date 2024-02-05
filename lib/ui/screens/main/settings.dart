@@ -141,6 +141,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             backgroundColor: Platform.isAndroid?Theme.of(context).colorScheme.primary:Theme.of(context).colorScheme.background,
             title: const Text(
               "Settings",
+              style: TextStyle(color: Colors.white),
             )),
        // drawer: const MainDrawer(),
         backgroundColor: Theme.of(context).colorScheme.background,
