@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:defacto/helpers/material_icons.dart';
 import 'package:defacto/ui/widgets/card/default_card.dart';
 import 'package:defacto/ui/widgets/card/default_list_item.dart';
 import 'package:defacto/ui/widgets/form/group.dart';
+import 'package:defacto/ui/widgets/main_drawer.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -42,13 +44,16 @@ class _AboutScreenState extends State<AboutScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.white),
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        title: const Text(
-          'About',
-          style: TextStyle(color: Colors.white),
-        ),
-      ),
+          automaticallyImplyLeading: Platform.isAndroid,
+          iconTheme: const IconThemeData(color: Colors.white),
+          backgroundColor: Platform.isAndroid
+              ? Theme.of(context).colorScheme.primary
+              : Theme.of(context).colorScheme.background,
+          title: const Text(
+            "Settings",
+            style: TextStyle(color: Colors.white),
+          )),
+      drawer: const MainDrawer(),
       body: ListView.builder(
         itemCount:
             about_template.isEmpty ? 0 : about_template[0]['groups'].length,
