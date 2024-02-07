@@ -1,6 +1,5 @@
 import 'package:defacto/ui/widgets/builder/buildfield.dart';
 import 'package:defacto/ui/widgets/form/group.dart';
-import 'package:defacto/ui/widgets/form/profile_name.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
@@ -58,9 +57,8 @@ class _NewProfilePageState extends State<NewProfilePage> {
         ),
       ),
       body: ListView.builder(
-        itemCount: profile_template.isEmpty
-            ? 0
-            : profile_template[0]['groups'].length,
+        itemCount:
+            profile_template.isEmpty ? 0 : profile_template[0]['groups'].length,
         itemBuilder: (context, index) {
           var group = profile_template[0]['groups'][index];
           return GroupForm(

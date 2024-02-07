@@ -1,0 +1,99 @@
+{
+    "id": "route-settings",
+    "title": "Route Settings",
+    "groups": [
+      {
+        "id": "route-name",
+        "title": "",
+        "showBottomDivider": true,
+        "fields": [
+          {
+            "id": "route-name",
+            "name": "Route Name",
+            "type": "text",
+            "icon": "edit_road",
+            "defaultValue": "not set"
+          },
+          {
+            "id": "applications",
+            "name": "Applications",
+            "type": "text",
+            "icon": "apps",
+            "defaultValue": "not set"
+          }
+        ]
+      },
+      {
+        "id": "route-settings",
+        "title": "",
+        "showBottomDivider": false,
+        "fields": [
+          {
+            "id": "domain",
+            "name": "Domain",
+            "type": "text",
+            "icon": "language",
+            "defaultValue": "not set"
+          },
+          {
+            "id": "ip",
+            "name": "IP",
+            "type": "text",
+            "icon": "computer",
+            "defaultValue": "not set"
+          },
+          {
+            "id": "port",
+            "name": "Port",
+            "type": "number",
+            "icon": "numbers",
+            "defaultValue": "not set"
+          },
+          {
+            "id": "source-port",
+            "name": "Source Port",
+            "type": "number",
+            "icon": "swap_calls",
+            "defaultValue": "not set"
+          },
+          {
+            "id": "network",
+            "name": "Network",
+            "type": "select",
+            "icon": "router",
+            "options": [
+              "TCP",
+              "UDP",
+              "TCP and UDP"
+            ],
+            "defaultValue": "TCP and UDP"
+          },
+          {
+            "id": "source",
+            "name": "Source",
+            "type": "text",
+            "icon": "source",
+            "defaultValue": "not set"
+          },
+          {
+            "id": "protocol",
+            "name": "Protocol",
+            "type": "text",
+            "icon": "protocol",
+            "defaultValue": "not set"
+          },
+          {
+            "id": "outbound",
+            "name": "Outbound",
+            "type": "select",
+            "icon": "call_made",
+            "options": [
+              "Proxy",
+              "Direct"
+            ],
+            "defaultValue": "Proxy"
+          }
+        ]
+      }
+    ]
+  }
