@@ -1,5 +1,6 @@
 import 'dart:convert';
-import 'package:defacto/helpers/material_icons.dart';
+import 'dart:io';
+import 'package:defacto/ui/screens/skeleton/skeleton_screen.dart';
 import 'package:defacto/ui/widgets/card/default_card.dart';
 import 'package:defacto/ui/widgets/card/default_list_item.dart';
 import 'package:defacto/ui/widgets/form/group.dart';
@@ -39,16 +40,22 @@ class _AboutScreenState extends State<AboutScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BasePage(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.white),
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        title: const Text(
-          'About',
-          style: TextStyle(color: Colors.white),
-        ),
-      ),
+          automaticallyImplyLeading: Platform.isAndroid,
+          iconTheme: const IconThemeData(color: Colors.white),
+          backgroundColor: Platform.isAndroid
+              ? Theme.of(context).colorScheme.primary
+              : Theme.of(context).colorScheme.background,
+          title: Text(
+            "About",
+            style: TextStyle(
+                color: Platform.isAndroid
+                    ? Colors.white
+                    : Theme.of(context).colorScheme.primary),
+          )),
+      // drawer: const MainDrawer(),
       body: ListView.builder(
         itemCount:
             about_template.isEmpty ? 0 : about_template[0]['groups'].length,

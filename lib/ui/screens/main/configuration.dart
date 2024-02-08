@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:defacto/states/global/global_state.dart';
 import 'package:defacto/ui/widgets/bottom_nav_bar.dart';
-import 'package:defacto/ui/widgets/main_drawer.dart';
 import 'package:defacto/ui/widgets/profile/add_profile.dart';
 import 'package:defacto/ui/widgets/profile/more_options.dart';
 import 'package:defacto/ui/widgets/profile/profile_widget.dart';
@@ -20,7 +19,6 @@ class ConfigurationScreen extends ConsumerStatefulWidget {
   ConsumerState<ConfigurationScreen> createState() {
     return _ConfigurationScreen();
   }
-
 
   // var conf_app = AppBar(
   //   iconTheme: const IconThemeData(color: Colors.white),
@@ -67,7 +65,7 @@ class _ConfigurationScreen extends ConsumerState<ConfigurationScreen>
   late AnimationController _controller;
   late Animation<double> _animation;
 
-   List<Widget> actions=[];
+  List<Widget> actions = [];
   @override
   void initState() {
     super.initState();
@@ -124,7 +122,7 @@ class _ConfigurationScreen extends ConsumerState<ConfigurationScreen>
                 onTap: () => ref
                     .read(globalStateProvider.notifier)
                     .setActiveProfileId(removedItem.id),
-                onEdit: (){},
+                onEdit: () {},
                 onDelete: () => _deleteProfile(removedItem.id),
               ),
             ),
@@ -155,32 +153,38 @@ class _ConfigurationScreen extends ConsumerState<ConfigurationScreen>
           SystemNavigator.pop();
         }
       },
-      child:
-      BasePage(
+      child: BasePage(
         scaffoldKey: _scaffoldKey,
         appBar: AppBar(
-       //   elevation: 4,
-          automaticallyImplyLeading: Platform.isAndroid,
-          iconTheme: const IconThemeData(color: Colors.white),
-            backgroundColor: Platform.isAndroid?Theme.of(context).colorScheme.primary:Theme.of(context).colorScheme.background,
-          title: _isSearching
-              ? TextField(
-                  controller: _searchController,
-                  decoration: const InputDecoration(
-                    hintText: 'Search...',
-                    hintStyle: TextStyle(color: Colors.white70),
-                    border: InputBorder.none,
+            //   elevation: 4,
+
+            automaticallyImplyLeading: Platform.isAndroid,
+            iconTheme: IconThemeData(
+                color: Platform.isAndroid ? Colors.white : Colors.black38),
+            backgroundColor: Platform.isAndroid
+                ? Theme.of(context).colorScheme.primary
+                : Theme.of(context).colorScheme.background,
+            title: _isSearching
+                ? TextField(
+                    controller: _searchController,
+                    decoration: const InputDecoration(
+                      hintText: 'Search...',
+                      hintStyle: TextStyle(color: Colors.white70),
+                      border: InputBorder.none,
+                    ),
+                    style: const TextStyle(color: Colors.white),
+                    onChanged: (value) {
+                      // Implement your search logic here
+                    },
+                  )
+                : Text(
+                    "Bepass",
+                    style: TextStyle(
+                        color: Platform.isAndroid
+                            ? Colors.white
+                            : Theme.of(context).colorScheme.primary),
                   ),
-                  style: const TextStyle(color: Colors.white),
-                  onChanged: (value) {
-                    // Implement your search logic here
-                  },
-                )
-              : const Text("Bepass", style: TextStyle(color: Colors.white)),
-          actions: actions
-
-        ),
-
+            actions: actions),
         backgroundColor: Theme.of(context).colorScheme.background,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: AnimatedContainer(
@@ -219,7 +223,7 @@ class _ConfigurationScreen extends ConsumerState<ConfigurationScreen>
                 onTap: () => ref
                     .read(globalStateProvider.notifier)
                     .setActiveProfileId(profile.id),
-                onEdit: (){},
+                onEdit: () {},
                 onDelete: () => _deleteProfile(profile.id),
               );
             },
@@ -235,27 +239,26 @@ class _ConfigurationScreen extends ConsumerState<ConfigurationScreen>
       _searchController.clear();
     });
   }
-
-
 }
 
-AppBar conf_app(BuildContext context,{required bool isSearching,var searchController}){
-  return  AppBar(
+AppBar conf_app(BuildContext context,
+    {required bool isSearching, var searchController}) {
+  return AppBar(
     iconTheme: const IconThemeData(color: Colors.white),
     backgroundColor: Theme.of(context).colorScheme.primary,
     title: isSearching
         ? TextField(
-      controller: searchController,
-      decoration: const InputDecoration(
-        hintText: 'Search...',
-        hintStyle: TextStyle(color: Colors.white70),
-        border: InputBorder.none,
-      ),
-      style: const TextStyle(color: Colors.white),
-      onChanged: (value) {
-        // Implement your search logic here
-      },
-    )
+            controller: searchController,
+            decoration: const InputDecoration(
+              hintText: 'Search...',
+              hintStyle: TextStyle(color: Colors.white70),
+              border: InputBorder.none,
+            ),
+            style: const TextStyle(color: Colors.white),
+            onChanged: (value) {
+              // Implement your search logic here
+            },
+          )
         : const Text("Bepass", style: TextStyle(color: Colors.white)),
     actions: [
       IconButton(
