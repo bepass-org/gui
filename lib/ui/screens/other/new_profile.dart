@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'dart:convert';
 
 class NewProfilePage extends StatefulWidget {
-  const NewProfilePage({Key? key}) : super(key: key);
+  const NewProfilePage({super.key});
 
   @override
   State<NewProfilePage> createState() => _NewProfilePageState();

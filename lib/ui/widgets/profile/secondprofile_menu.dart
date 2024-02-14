@@ -11,7 +11,7 @@ void showSecondPopupMenu(BuildContext context) {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => NewProfilePage()),
+              MaterialPageRoute(builder: (context) => const NewProfilePage()),
             );
           },
           child: const Row(

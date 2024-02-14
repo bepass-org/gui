@@ -1,9 +1,7 @@
 import 'package:defacto/enums/form_editable_types.dart';
 import 'package:flutter/material.dart';
 
-import 'editable_dialog.dart';
-
-class SelectEditable extends StatelessWidget {
+class SelectEditable extends StatefulWidget {
   const SelectEditable({
     super.key,
     required this.icon,
@@ -27,41 +25,44 @@ class SelectEditable extends StatelessWidget {
   final bool showTitleOnDialog;
   final List? options;
 
-  void _showEditDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return EditableDialog(
-          title: showTitleOnDialog ? 'Edit $title' : null,
-          type: dialogType,
-          currentValue: value ?? defaultValue,
-          placeholder: hint ?? 'Enter $title',
-          onSuccess: onChanged,
-        );
-      },
-    );
+  @override
+  _SelectEditableState createState() => _SelectEditableState();
+}
+
+class _SelectEditableState extends State<SelectEditable> {
+  late String _selectedValue;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedValue = widget.value ?? widget.defaultValue;
   }
 
   @override
   Widget build(BuildContext context) {
-    String displayText = defaultValue;
-    if (value != null && value!.isNotEmpty) {
-      displayText = value!;
-    } else if (hint != null && hint!.isNotEmpty && defaultValue.isEmpty) {
-      displayText = hint!;
+    String displayText = widget.defaultValue;
+    if (widget.value != null && widget.value!.isNotEmpty) {
+      displayText = widget.value!;
+    } else if (widget.hint != null &&
+        widget.hint!.isNotEmpty &&
+        widget.defaultValue.isEmpty) {
+      displayText = widget.hint!;
     }
 
     return ListTile(
-      leading: Icon(icon),
-      title: Text(title, style: Theme.of(context).textTheme.titleMedium),
+      leading: Icon(widget.icon),
+      title: Text(widget.title, style: Theme.of(context).textTheme.titleMedium),
       subtitle: Text(displayText),
       trailing: DropdownButton(
-        value: value ?? defaultValue,
+        value: _selectedValue,
         icon: const Icon(Icons.arrow_drop_down),
         onChanged: (String? newValue) {
-          onChanged(newValue!);
+          setState(() {
+            _selectedValue = newValue!;
+          });
+          widget.onChanged(newValue!);
         },
-        items: options?.map((value) {
+        items: widget.options?.map((value) {
           return DropdownMenuItem<String>(
             value: value,
             child: Text(value),

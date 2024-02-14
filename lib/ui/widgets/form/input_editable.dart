@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'editable_dialog.dart';
 
-class InputEditable extends StatelessWidget {
+class InputEditable extends StatefulWidget {
   const InputEditable({
     super.key,
     required this.icon,
@@ -25,16 +25,34 @@ class InputEditable extends StatelessWidget {
   final Function(String) onChanged;
   final bool showTitleOnDialog;
 
+  @override
+  _InputEditableState createState() => _InputEditableState();
+}
+
+class _InputEditableState extends State<InputEditable> {
+  late String _internalValue;
+
+  @override
+  void initState() {
+    super.initState();
+    _internalValue = widget.value ?? widget.defaultValue;
+  }
+
   void _showEditDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return EditableDialog(
-          title: showTitleOnDialog ? 'Edit $title' : null,
-          type: dialogType,
-          currentValue: value ?? defaultValue,
-          placeholder: hint ?? 'Enter $title',
-          onSuccess: onChanged,
+          title: widget.showTitleOnDialog ? 'Edit ${widget.title}' : null,
+          type: widget.dialogType,
+          currentValue: _internalValue,
+          placeholder: widget.hint ?? 'Enter ${widget.title}',
+          onSuccess: (newValue) {
+            setState(() {
+              _internalValue = newValue;
+            });
+            widget.onChanged(newValue);
+          },
         );
       },
     );
@@ -42,16 +60,18 @@ class InputEditable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String displayText = defaultValue;
-    if (value != null && value!.isNotEmpty) {
-      displayText = value!;
-    } else if (hint != null && hint!.isNotEmpty && defaultValue.isEmpty) {
-      displayText = hint!;
+    String displayText = widget.defaultValue;
+    if (widget.value != null && widget.value!.isNotEmpty) {
+      displayText = widget.value!;
+    } else if (widget.hint != null &&
+        widget.hint!.isNotEmpty &&
+        widget.defaultValue.isEmpty) {
+      displayText = widget.hint!;
     }
 
     return ListTile(
-      leading: Icon(icon),
-      title: Text(title, style: Theme.of(context).textTheme.titleMedium),
+      leading: Icon(widget.icon),
+      title: Text(widget.title, style: Theme.of(context).textTheme.titleMedium),
       subtitle: Text(displayText),
       onTap: () => _showEditDialog(context),
     );

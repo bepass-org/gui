@@ -1,4 +1,4 @@
-{
+[{
     "id": "settings",
     "title": "Settings",
     "groups": [
@@ -372,4 +372,4 @@
         ]
     }
     ]
-  }
+  }]

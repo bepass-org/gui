@@ -52,7 +52,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ? Theme.of(context).colorScheme.primary
                 : Theme.of(context).colorScheme.background,
             title: Text(
-              "About",
+              "Settings",
               style: TextStyle(
                   color: Platform.isAndroid
                       ? Colors.white
