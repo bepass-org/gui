@@ -1,20 +1,23 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:defacto/enums/app_pages.dart';
+import 'package:defacto/states/global/global_state.dart';
 import 'package:defacto/ui/screens/other/theme_select.dart';
 import 'package:defacto/ui/widgets/builder/build_settings.dart';
 import 'package:defacto/ui/widgets/form/group.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
 
 import '../skeleton/skeleton_screen.dart';
 
-class SettingsScreen extends StatefulWidget {
+class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
 
   @override
-  State<SettingsScreen> createState() => _SettingsScreenState();
+  ConsumerState<SettingsScreen> createState() => _SettingsScreenState();
 }
 
 @HiveType(typeId: 0)
@@ -23,7 +26,7 @@ class ThemeIndexModel extends HiveObject {
   late int themeIndex;
 }
 
-class _SettingsScreenState extends State<SettingsScreen> {
+class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   List<Map<String, dynamic>> settings_template = [];
 
   @override
@@ -44,7 +47,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BasePage(
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) {
+        ref
+            .read(globalStateProvider.notifier)
+            .setActivePage(AppPage.configuration);
+      },
+      child: BasePage(
         appBar: AppBar(
             automaticallyImplyLeading: Platform.isAndroid,
             iconTheme: const IconThemeData(color: Colors.white),
@@ -80,6 +90,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ),
           ],
-        ));
+        ),
+      ),
+    );
   }
 }

@@ -1,19 +1,21 @@
 import 'dart:io';
 
+import 'package:defacto/enums/app_pages.dart';
+import 'package:defacto/states/global/global_state.dart';
 import 'package:defacto/ui/screens/main/configuration.dart';
-import 'package:defacto/ui/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../skeleton/skeleton_screen.dart';
 
-class LogsScreen extends StatefulWidget {
+class LogsScreen extends ConsumerStatefulWidget {
   const LogsScreen({super.key});
 
   @override
-  State<LogsScreen> createState() => _LogsScreenState();
+  ConsumerState<LogsScreen> createState() => _LogsScreenState();
 }
 
-class _LogsScreenState extends State<LogsScreen> {
+class _LogsScreenState extends ConsumerState<LogsScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   // List to store log entries
@@ -24,16 +26,10 @@ class _LogsScreenState extends State<LogsScreen> {
     return PopScope(
       canPop: false,
       onPopInvoked: (didPop) {
-        if(_scaffoldKey.currentState!.isDrawerOpen){
+        if (_scaffoldKey.currentState!.isDrawerOpen) {
           _scaffoldKey.currentState!.closeDrawer();
-        }
-        else{
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const ConfigurationScreen(),
-            ),
-          );
+        } else {
+          ref.read(globalStateProvider.notifier).setActivePage(AppPage.configuration);
         }
       },
       child: BasePage(
@@ -41,7 +37,9 @@ class _LogsScreenState extends State<LogsScreen> {
         appBar: AppBar(
           automaticallyImplyLeading: Platform.isAndroid,
           iconTheme: const IconThemeData(color: Colors.white),
-          backgroundColor: Platform.isAndroid?Theme.of(context).colorScheme.primary:Theme.of(context).colorScheme.background,
+          backgroundColor: Platform.isAndroid
+              ? Theme.of(context).colorScheme.primary
+              : Theme.of(context).colorScheme.background,
           title: const Text("Logs", style: TextStyle(color: Colors.white)),
           actions: [
             IconButton(
@@ -64,7 +62,7 @@ class _LogsScreenState extends State<LogsScreen> {
             ),
           ],
         ),
-       // drawer: const MainDrawer(),
+        // drawer: const MainDrawer(),
         backgroundColor: Theme.of(context).colorScheme.background,
         body: Padding(
           padding: const EdgeInsets.all(16.0),

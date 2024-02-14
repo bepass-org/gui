@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:defacto/enums/app_pages.dart';
+import 'package:defacto/states/global/global_state.dart';
 import 'package:defacto/states/route/route_state.dart';
 import 'package:defacto/ui/screens/other/add_route_screen.dart';
 import 'package:defacto/ui/widgets/routing/route_item.dart';
@@ -43,18 +45,15 @@ class _RoutingScreenState extends ConsumerState<RoutingScreen> {
   @override
   Widget build(BuildContext context) {
     final globalState = ref.watch(routeStateProvider);
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
     return PopScope(
       canPop: false,
       onPopInvoked: (didPop) {
         if (_scaffoldKey.currentState!.isDrawerOpen) {
           _scaffoldKey.currentState!.closeDrawer();
         } else {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const ConfigurationScreen(),
-            ),
-          );
+          ref.read(globalStateProvider.notifier).setActivePage(AppPage.configuration);
         }
       },
       child: BasePage(

@@ -13,24 +13,25 @@ class MainDrawer extends ConsumerWidget {
 
   Widget DesktopFooter(String timer_value) {
     return Container(
-               padding: EdgeInsets.symmetric(vertical: 25,),
-
-        child: Column(
-          children: [
-
-            Padding(padding: EdgeInsets.symmetric(vertical: 15),
-                child: Divider(thickness: 0.5,
-            ),),
-            // timer text
-            Text(timer_value, style:  TextStyle(fontSize: 17),)
-
-
-
-          ],
-        ),
-
-
-      );
+      padding: EdgeInsets.symmetric(
+        vertical: 25,
+      ),
+      child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 15),
+            child: Divider(
+              thickness: 0.5,
+            ),
+          ),
+          // timer text
+          Text(
+            timer_value,
+            style: TextStyle(fontSize: 17),
+          )
+        ],
+      ),
+    );
   }
 
   @override
@@ -41,7 +42,7 @@ class MainDrawer extends ConsumerWidget {
         child: Container(
           height: MediaQuery.of(context).size.height,
           child: Column(
-           // padding: EdgeInsets.zero,
+            // padding: EdgeInsets.zero,
             children: [
               DrawerHeader(
                 decoration: BoxDecoration(
@@ -56,29 +57,32 @@ class MainDrawer extends ConsumerWidget {
                         alignment: Alignment.center,
                         child: Text(
                           "Bepass",
-                          style:
-                              Theme.of(context).textTheme.headlineLarge!.copyWith(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineLarge!
+                              .copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
                         )),
               ),
-             Expanded(child: Container(
-               child: Column(
-                 children: [
-                   buildDrawerItem(context, ref, AppPage.configuration,
-                       Icons.sticky_note_2, 'Configuration'),
-                   buildDrawerItem(context, ref, AppPage.routingAndRules,
-                       Icons.turn_right_outlined, 'Routing and rules'),
-                   buildDrawerItem(
-                       context, ref, AppPage.settings, Icons.settings, 'Settings'),
-                   buildDrawerItem(context, ref, AppPage.logs, Icons.bug_report, 'Logs'),
-                   buildDrawerItem(
-                       context, ref, AppPage.about, Icons.info_rounded, 'About'),
-
-                 ],
-               ),
-             )),
+              Expanded(
+                  child: Container(
+                child: Column(
+                  children: [
+                    buildDrawerItem(context, ref, AppPage.configuration,
+                        Icons.sticky_note_2, 'Configuration'),
+                    buildDrawerItem(context, ref, AppPage.routingAndRules,
+                        Icons.turn_right_outlined, 'Routing and rules'),
+                    buildDrawerItem(context, ref, AppPage.settings,
+                        Icons.settings, 'Settings'),
+                    buildDrawerItem(
+                        context, ref, AppPage.logs, Icons.bug_report, 'Logs'),
+                    buildDrawerItem(context, ref, AppPage.about,
+                        Icons.info_rounded, 'About'),
+                  ],
+                ),
+              )),
               if (Platform.isWindows) DesktopFooter(globalState)
             ],
           ),
@@ -94,17 +98,6 @@ class MainDrawer extends ConsumerWidget {
       title: Text(title),
       onTap: () {
         ref.read(globalStateProvider.notifier).setActivePage(page);
-        // Check if the page is already in the navigation stack
-        // final isAlreadyInStack =
-        //     ModalRoute.of(context)?.settings is RouteSettings &&
-        //         (ModalRoute.of(context)!.settings).name == page.name;
-        //
-        // // Only push a new route if it's not already in the stack
-        // if (!isAlreadyInStack) {
-        //   Navigator.pushReplacementNamed(context, page.name);
-        // } else {
-        //   Navigator.pop(context); // Close the drawer
-        // }
       },
     );
   }

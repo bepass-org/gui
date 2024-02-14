@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:defacto/enums/app_pages.dart';
+import 'package:defacto/states/global/global_state.dart';
 import 'package:defacto/ui/screens/skeleton/skeleton_screen.dart';
 import 'package:defacto/ui/widgets/card/default_card.dart';
 import 'package:defacto/ui/widgets/card/default_list_item.dart';
@@ -7,19 +9,20 @@ import 'package:defacto/ui/widgets/form/group.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:html/dom.dart' as DOOM;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:html/parser.dart' show parse;
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-class AboutScreen extends StatefulWidget {
-  const AboutScreen({Key? key}) : super(key: key);
+class AboutScreen extends ConsumerStatefulWidget {
+  const AboutScreen({super.key});
 
   @override
-  State<AboutScreen> createState() => _AboutScreenState();
+  ConsumerState<AboutScreen> createState() => _AboutScreenState();
 }
 
-class _AboutScreenState extends State<AboutScreen> {
+class _AboutScreenState extends ConsumerState<AboutScreen> {
   List<Map<String, dynamic>> about_template = [];
 
   @override
@@ -40,40 +43,54 @@ class _AboutScreenState extends State<AboutScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BasePage(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      appBar: AppBar(
-          automaticallyImplyLeading: Platform.isAndroid,
-          iconTheme: const IconThemeData(color: Colors.white),
-          backgroundColor: Platform.isAndroid
-              ? Theme.of(context).colorScheme.primary
-              : Theme.of(context).colorScheme.background,
-          title: Text(
-            "About",
-            style: TextStyle(
-                color: Platform.isAndroid
-                    ? Colors.white
-                    : Theme.of(context).colorScheme.primary),
-          )),
-      // drawer: const MainDrawer(),
-      body: ListView.builder(
-        itemCount:
-            about_template.isEmpty ? 0 : about_template[0]['groups'].length,
-        itemBuilder: (context, index) {
-          var group = about_template[0]['groups'][index];
-          return GroupForm(
-            title: group['name'],
-            children: [
-              Column(
-                children: [
-                  DefaultCard(child: _appInfoWidget(context, group)),
-                  for (var field in group['fields'])
-                    DefaultCard(child: _fieldInfoWidget(context, field)),
-                ],
-              )
-            ],
-          );
-        },
+    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) {
+        if (_scaffoldKey.currentState!.isDrawerOpen) {
+          _scaffoldKey.currentState!.closeDrawer();
+        } else {
+          ref
+              .read(globalStateProvider.notifier)
+              .setActivePage(AppPage.configuration);
+        }
+      },
+      child: BasePage(
+        scaffoldKey: _scaffoldKey,
+        backgroundColor: Theme.of(context).colorScheme.background,
+        appBar: AppBar(
+            automaticallyImplyLeading: Platform.isAndroid,
+            iconTheme: const IconThemeData(color: Colors.white),
+            backgroundColor: Platform.isAndroid
+                ? Theme.of(context).colorScheme.primary
+                : Theme.of(context).colorScheme.background,
+            title: Text(
+              "About",
+              style: TextStyle(
+                  color: Platform.isAndroid
+                      ? Colors.white
+                      : Theme.of(context).colorScheme.primary),
+            )),
+        // drawer: const MainDrawer(),
+        body: ListView.builder(
+          itemCount:
+              about_template.isEmpty ? 0 : about_template[0]['groups'].length,
+          itemBuilder: (context, index) {
+            var group = about_template[0]['groups'][index];
+            return GroupForm(
+              title: group['name'],
+              children: [
+                Column(
+                  children: [
+                    DefaultCard(child: _appInfoWidget(context, group)),
+                    for (var field in group['fields'])
+                      DefaultCard(child: _fieldInfoWidget(context, field)),
+                  ],
+                )
+              ],
+            );
+          },
+        ),
       ),
     );
   }
@@ -120,7 +137,7 @@ Widget _createBodyWidget(BuildContext context, String? text) {
     if (node.nodeType == DOOM.Node.TEXT_NODE) {
       // Handle text nodes
       spans.add(
-        TextSpan(text: node.text, style: TextStyle(color: Colors.black)),
+        TextSpan(text: node.text, style: const TextStyle(color: Colors.black)),
       );
     } else if (node.nodeType == DOOM.Node.ELEMENT_NODE) {
       DOOM.Element element = node as DOOM.Element;
@@ -134,7 +151,7 @@ Widget _createBodyWidget(BuildContext context, String? text) {
           spans.add(
             TextSpan(
               text: element.text,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.blue,
                 decoration: TextDecoration.underline,
               ),
@@ -150,7 +167,7 @@ Widget _createBodyWidget(BuildContext context, String? text) {
           spans.add(
             TextSpan(
               text: element.text,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.blue,
                 decoration: TextDecoration.underline,
               ),
