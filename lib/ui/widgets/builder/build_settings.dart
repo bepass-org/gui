@@ -38,7 +38,9 @@ Widget buildSettings(Map<String, dynamic> field) {
       defaultValue: defaultValue,
       hint: description,
       dialogType: dialogType,
-      onChanged: (v) {},
+      onChanged: (v) {
+        field['defaultValue'] = v;
+      },
     );
   }
 }

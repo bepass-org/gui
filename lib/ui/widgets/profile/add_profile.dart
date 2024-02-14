@@ -1,4 +1,3 @@
-import 'package:defacto/ui/screens/other/new_profile.dart';
 import 'package:defacto/ui/widgets/profile/secondprofile_menu.dart';
 import 'package:flutter/material.dart';
 
